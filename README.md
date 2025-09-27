@@ -13,9 +13,13 @@ Outside of coding, I love public speaking and hosting events, which sharpen my a
 - 🎨 **Image Generation with GAN** – Designed and trained a Generative Adversarial Network to generate realistic pistachio images, exploring adversarial training, data augmentation, and creative AI applications.  
 - 🏨 **Hotel Booking Cancellation Prediction** – Developed and deployed an ML model with FastAPI + Streamlit to predict booking cancellations, complete with real-time probability scores and SHAP explanations.  
 - 🚢 **Ships Detection with YOLO** – Trained YOLOv8 for real-time ship detection in aerial images, achieving 0.75 precision and 0.52 mAP50 through preprocessing, augmentation, and parameter tuning.  
-- 📚 **Quality of Education in Indonesia** – Conducted data analysis with BPS & Kemendikbud datasets and built an interactive R Shiny dashboard revealing disparities in resources and correlations with poverty.  
+- 📚 **Quality of Education in Indonesia** – Conducted data analysis with BPS & Kemendikbud datasets and built an interactive R Shiny dashboard revealing disparities in resources and correlations with poverty.
+
 ---
-## 💼 Experience  
+## 💼 Experience 
+
+- 👾 **Game Creator & Master (2025)**
+ Created interactive games as side projects, experimenting with logic, design, and storytelling in playful ways.
 
 - 🎤 **PIC of Event Organizer – Data Science Club (2025–Now)**  
   Led and coordinated three major events:  
@@ -23,11 +27,13 @@ Outside of coding, I love public speaking and hosting events, which sharpen my a
   - 🏸 **Smash N Fest** – teamwork & bonding through sports  
   - 🤝 **DSC Kind** – social outreach at an orphanage  
 
-- 🎙️ **Moderator DSC Cascade (2024)**  
+- 🎙️ **Moderator DSC Cascade - BINUS University (2024)**  
   Facilitated event sessions with energy & clarity.  
 
 - 📝 **Vice Secretary OSIS – SMAK PENABUR (2021–2022)**  
   Coordinated administration, documentation, and event planning.
+
+  
 ---
 ## 🌟 Interests  
 - Data Analysis & Engineering for real-world impact  
