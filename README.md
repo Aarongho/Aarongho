@@ -19,7 +19,7 @@ Outside of coding, I love public speaking and hosting events, which sharpen my a
 ## 💼 Experience 
 
 - 👾 **Game Creator & Master (2025)**
- Created interactive games as side projects, experimenting with logic, design, and storytelling in playful ways.
+  Created interactive games as side projects, experimenting with logic, design, and storytelling in playful ways.
 
 - 🎤 **PIC of Event Organizer – Data Science Club (2025–Now)**  
   Led and coordinated three major events:  
