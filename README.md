@@ -5,7 +5,8 @@
 
 🎓 I'm an undergraduate Data Science student passionate about Machine Learning, Deep Learning, Data Analysis, and Data Engineering.  
 I enjoy exploring structured and unstructured data, designing pipelines, and building applications that make insights clear and impactful.  
-Outside of coding, I love public speaking and hosting events, which sharpen my ability to communicate ideas and engage people.  
+Outside of coding, I love public speaking and hosting events, which sharpen my ability to communicate ideas and engage people.
+
 ---
 ## 📂 Featured Projects  
 - 🥑 **Avocado LSTM Forecasting** – Built and tuned an LSTM model to forecast avocado prices, gaining hands-on experience in time series forecasting, feature engineering, and evaluation metrics.  
