@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Card QR Codes</title>
+  <style>
+    :root { --ink: #1c1a17; --paper: #fdf3e4; --line: #d8c9b0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px 16px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
+    header { max-width: 900px; margin: 0 auto 20px; }
+    h1 { margin: 0 0 6px; font-size: 24px; }
+    p { margin: 0 0 12px; line-height: 1.5; }
+    label { display: grid; gap: 4px; font-weight: 600; font-size: 14px; }
+    input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; width: 100%; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+    .row label { flex: 1 1 260px; }
+    button { font: inherit; padding: 9px 16px; border-radius: 8px; border: 0; background: var(--ink); color: var(--paper); cursor: pointer; }
+    .grid { max-width: 900px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; }
+    .tag { width: var(--size); border: 1px dashed var(--line); border-radius: 8px; padding: 6px; text-align: center; background: #fff; break-inside: avoid; }
+    .tag svg { width: 100%; height: auto; display: block; }
+    .tag b { display: block; font-size: 11px; margin-top: 2px; }
+    @media print {
+      header { display: none; }
+      body { padding: 0; background: #fff; }
+      .tag { border-color: #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Printable QR codes</h1>
+    <p>Print these and stick one on each card (e.g. in the empty space next to the Bible reference). Scanning with the app — or with a phone's normal camera — opens the hologram for that card.</p>
+    <div class="row">
+      <label>Scanner app address
+        <input id="base">
+      </label>
+      <label style="flex:0 1 140px">Size (cm)
+        <input id="size" type="number" min="1.5" max="6" step="0.5" value="2.5">
+      </label>
+      <button onclick="print()">Print</button>
+    </div>
+  </header>
+  <div id="grid" class="grid"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script src="cards.js"></script>
+  <script>
+    const base = document.getElementById("base");
+    const size = document.getElementById("size");
+    base.value = new URL("index.html", location.href).href;
+
+    function render() {
+      document.getElementById("grid").style.setProperty("--size", size.value + "cm");
+      document.getElementById("grid").innerHTML = window.CARDS.map((c) => {
+        const qr = qrcode(0, "M");
+        qr.addData(base.value.split("?")[0] + "?card=" + c.id);
+        qr.make();
+        return `<div class="tag">${qr.createSvgTag({ cellSize: 4, margin: 1, scalable: true })}<b>${c.name}</b></div>`;
+      }).join("");
+    }
+    base.oninput = size.oninput = render;
+    render();
+  </script>
+</body>
+</html>

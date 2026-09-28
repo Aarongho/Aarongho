@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#02060b">
+  <title>Card Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Patrick+Hand&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Start screen -->
+  <section id="start" class="view">
+    <div class="start-inner">
+      <div class="logo">✦</div>
+      <h1>Card Scanner</h1>
+      <p>Scan a card to reveal its Bible verse as a hologram.</p>
+      <button id="btnStart" class="btn primary">Start scanner</button>
+      <button id="btnPickStart" class="btn ghost">Choose a card</button>
+    </div>
+  </section>
+
+  <!-- Camera scanner -->
+  <section id="scanner" class="view" hidden>
+    <video id="video" playsinline muted></video>
+    <div class="guide" id="guide"><i></i><i></i><i></i><i></i><div class="laser"></div></div>
+    <div id="status" class="status">Starting camera…</div>
+    <div class="bar">
+      <button id="btnOcr" class="btn">Read title</button>
+      <button id="btnPick" class="btn ghost">Choose card</button>
+    </div>
+    <canvas id="canvas" hidden></canvas>
+  </section>
+
+  <!-- Hologram -->
+  <section id="holo" hidden>
+    <div class="holo-top">
+      <button id="btnClose" class="icon" aria-label="Back to scanner">✕</button>
+      <div id="dots" class="dots"></div>
+      <div class="holo-actions">
+        <button id="btnPlay" class="icon" aria-label="Pause slideshow" title="Pause / play">❚❚</button>
+        <button id="btnMirror" class="icon" title="Flip panels (if text looks upside-down in your pyramid)" hidden>⇅</button>
+        <button id="btnPyr" class="icon" title="Pyramid hologram mode">△</button>
+        <button id="btnFs" class="icon" title="Fullscreen">⛶</button>
+      </div>
+    </div>
+    <div id="stage" class="stage"></div>
+    <button class="nav prev" id="btnPrev" aria-label="Previous slide">‹</button>
+    <button class="nav next" id="btnNext" aria-label="Next slide">›</button>
+  </section>
+
+  <dialog id="picker">
+    <h2>Choose a card</h2>
+    <div id="pickList" class="pick-list"></div>
+    <form method="dialog"><button class="btn ghost">Cancel</button></form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="cards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
