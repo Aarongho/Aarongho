@@ -49,6 +49,9 @@ def post(path, payload, retries=5):
             r = session.post(f"{BASE}/{path}", json=payload, timeout=30)
             if r.status_code == 200:
                 return r.json()
+            if r.status_code == 404:  # produk ada di list tapi detailnya tidak ditemukan
+                print(f"  404 {path} {payload} -> dilewati")
+                return {}
             print(f"  HTTP {r.status_code} {path} {payload} (percobaan {attempt + 1})")
         except requests.RequestException as e:
             print(f"  Error {path} {payload}: {e} (percobaan {attempt + 1})")
@@ -218,9 +221,15 @@ def fetch_packagings(kfa_code):
 
 
 def fetch_all(kfa_code):
-    d = fetch_detail(kfa_code)
-    d["_packagings"] = fetch_packagings(kfa_code)
-    return d
+    try:
+        d = fetch_detail(kfa_code)
+        if not d:
+            d = {"_status": "detail tidak ditemukan (404)"}
+        d["_packagings"] = fetch_packagings(kfa_code)
+        return d
+    except Exception as e:  # jangan hentikan seluruh proses; tidak disimpan ke cache
+        print(f"  GAGAL {kfa_code}: {e}")
+        return None
 
 
 # --------------------------------------------------------------------- main
@@ -260,16 +269,28 @@ def main():
     todo = [r["Kode KFA"] for r in rows if r["Kode KFA"] not in cache]
     print(f"Detail: {len(cache)} dari cache, {len(todo)} perlu diambil")
 
+    failed = []
     with open(cache_file, "a", encoding="utf-8") as f, ThreadPoolExecutor(args.workers) as ex:
         for n, (code, d) in enumerate(zip(todo, ex.map(fetch_all, todo)), 1):
+            if d is None:
+                failed.append(code)
+                continue
             d["kfaCode"] = code
             cache[code] = d
             f.write(json.dumps(d, ensure_ascii=False) + "\n")
             if n % 50 == 0 or n == len(todo):
                 print(f"  detail {n}/{len(todo)}")
 
+    if failed:
+        print(f"PERHATIAN: {len(failed)} produk gagal diambil, jalankan ulang untuk mencoba lagi: {failed[:20]}")
+
     # 3. Gabungkan & simpan
-    full = [{**r, **parse_detail(cache[r["Kode KFA"]])} for r in rows]
+    full = []
+    for r in rows:
+        d = cache.get(r["Kode KFA"])
+        row = {**r, **parse_detail(d)} if d and "_status" not in d else dict(r)
+        row["Status Scrape"] = (d or {}).get("_status", "ok") if d else "gagal"
+        full.append(row)
     df = pd.DataFrame(full)
     df.to_csv(f"{args.out}.csv", index=False, encoding="utf-8-sig")
     df.to_excel(f"{args.out}.xlsx", index=False)
