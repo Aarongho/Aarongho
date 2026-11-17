@@ -6,9 +6,13 @@ https://satusehat.kemkes.go.id/kfa-browser/farmasi/
 Mengambil:
   1. Tabel "Daftar Produk Varian" (Kode KFA, Nama Produk, Merk Dagang, Unit Logistik
      Terkecil, Bentuk Sediaan, Golongan Obat, Nomor Izin Edar, Fornas)
-  2. Detail tiap produk (/product-variant/<kode>) tab "Informasi Umum", semua section:
-     Informasi Umum, ATC Kelas Terapi, Informasi Dagang, Bahan Zat Aktif & Kekuatan,
-     Produk Hierarki -> ditambahkan sebagai kolom baru (yang belum ada di tabel list).
+  2. Detail tiap produk (/product-variant/<kode>), semua tab, sebagai kolom tambahan:
+     - Informasi Umum (Informasi Umum, ATC, Informasi Dagang, Zat Aktif, Hierarki)
+     - Produk Aktual Info (Deskripsi, Penggunaan, Peringatan, Efek Samping)
+     - Referensi Identifier (nama identifier produk aktual & virtual)
+     - Program & Kemandirian (LKPP, KBKI, TKDN, negara registrar/manufacturer, ...)
+     - Inventory (Packaging, Harga Kemasan, Contained Quantity Type; dipisah "; ")
+     - Formula Nasional (Kelas Terapi, Sub Kelas Terapi, Tingkat Faskes; start date terbaru)
 
 Data diambil dari API JSON yang dipakai website itu sendiri (bukan parsing HTML).
 
@@ -18,7 +22,9 @@ Contoh:
   python scrape_kfa.py                            # semua data (~22rb produk)
 """
 import argparse
+import html
 import json
+import re
 import os
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -66,7 +72,8 @@ def parse_list_row(r):
         "Merk Dagang": r.get("tradeName"),
         "Unit Logistik Terkecil": r.get("uomName"),
         "Bentuk Sediaan": r.get("dosageFormName"),
-        "Golongan Obat": (r.get("farmalkesType") or {}).get("name"),
+        "Tipe": (r.get("farmalkesType") or {}).get("name"),
+        "Golongan Obat": None,  # diisi dari detail (Obat Keras / Obat Bebas / ...)
         "Nomor Izin Edar": r.get("nie"),
         "Fornas": "Ya" if r.get("isFornas") else "Tidak",
     }
@@ -91,12 +98,11 @@ def parse_detail(d):
     out = {}
     tmpl = d.get("template") or {}
 
+    # ===================== TAB: Informasi Umum =====================
     # --- Section: Informasi Umum
     out["Tipe"] = (d.get("farmalkesType") or {}).get("name")
+    out["Golongan Obat"] = d.get("controlledDrugName")
     out["Unit of Measure (UCUM)"] = d.get("ucumSymbol")
-    # Di list "Golongan Obat" = jenis farmalkes (Obat/Vaksin/...),
-    # di detail "Golongan Obat" = Obat Keras / Obat Bebas / dst.
-    out["Golongan Obat (Detail)"] = d.get("controlledDrugName")
     out["Cara Pemakaian Obat"] = d.get("routeAdministrationName")
 
     # --- Section: ATC Kelas Terapi (bisa lebih dari satu ATC -> digabung "; ")
@@ -128,7 +134,93 @@ def parse_detail(d):
         val = f"{h.get('kfaCode')} - {h.get('name')}"
         out[f"Hierarki {t}"] = f"{out[f'Hierarki {t}']}; {val}" if out.get(f"Hierarki {t}") else val
 
+    # ===================== TAB: Produk Aktual Info =====================
+    out["Deskripsi"] = html_to_text(d.get("description"))
+    out["Penggunaan"] = html_to_text(d.get("indication"))
+    out["Peringatan"] = html_to_text(d.get("warning"))
+    out["Efek Samping"] = html_to_text(d.get("sideEffect"))
+
+    # ===================== TAB: Referensi Identifier (nama saja) =====================
+    out["Referensi Identifier Produk Aktual"] = join_unique(i.get("name") for i in d.get("identifiers") or [])
+    out["Referensi Identifier Produk Virtual"] = join_unique(i.get("name") for i in d.get("templateIdentifiers") or [])
+
+    # ===================== TAB: Program & Kemandirian =====================
+    out["Tayang LKPP"] = "Ya" if d.get("isTayangLkpp") else "-"
+    out["Kode LKPP"] = d.get("lkppCode") or None
+    out["Kode KBKI"] = d.get("kbkiCode") or None
+    out["Dapat Dibeli (LKPP)"] = "Ya" if d.get("isDapatDibeliLkpp") else "-"
+    out["Izin Edar"] = d.get("ijinEdar") or "-"
+    out["Produksi Buatan"] = d.get("produksiBuatan") or None
+    out["Skor TKDN"] = d.get("scoreTkdn")
+    out["Skor BMP"] = d.get("scoreBmp")
+    out["Skor TKDN BMP"] = d.get("scoreTkdnBmp")
+    out["Negara Registrar"] = d.get("registrarCountryName") or None
+    out["Negara Manufacturer"] = d.get("manufacturerCountryName") or None
+
+    # ===================== TAB: Inventory (Kemasan) =====================
+    pk = d.get("_packagings") or []
+    out["Packaging"] = "; ".join(p.get("packageName") or "" for p in pk) or None
+    out["Harga Kemasan"] = "; ".join(fmt_num(p.get("price")) for p in pk) or None
+    out["Contained Quantity Type"] = "; ".join(fmt_num(p.get("qty")) for p in pk) or None
+
+    # ===================== TAB: Formula Nasional (start date terbaru) =====================
+    fornas = [f for f in tmpl.get("fornases") or [] if f.get("startDate")]
+    if fornas:
+        latest = max(f["startDate"] for f in fornas)
+        rows = [f for f in fornas if f["startDate"] == latest]
+        def fkt(level):
+            return join_unique(f"{x.get('code')} - {x.get('name')}" for f in rows
+                               for x in f.get("fkts") or [] if str(x.get("level")) == level)
+        out["Kelas Terapi"] = fkt("1")
+        out["Sub Kelas Terapi"] = fkt("2")
+        out["Tingkat Faskes"] = join_unique(f.get("tingkatFaskesName") for f in rows)
+        out["Fornas Start Date"] = latest[:10]
+    else:
+        out["Kelas Terapi"] = out["Sub Kelas Terapi"] = out["Tingkat Faskes"] = out["Fornas Start Date"] = None
+
     return out
+
+
+def html_to_text(h):
+    if not h:
+        return None
+    t = re.sub(r"<br\s*/?>|</p>|</li>|</div>", "\n", h, flags=re.I)
+    t = html.unescape(re.sub(r"<[^>]+>", "", t)).replace("\xa0", " ")
+    t = re.sub(r"[ \t]+\n", "\n", t)
+    return re.sub(r"\n{3,}", "\n\n", t).strip() or None
+
+
+def join_unique(items):
+    seen = []
+    for x in items:
+        x = re.sub(r"\s+", " ", x or "").strip()
+        if x and x not in seen:
+            seen.append(x)
+    return "; ".join(seen) or None
+
+
+def fmt_num(v):
+    if v is None:
+        return ""
+    return str(int(v)) if float(v).is_integer() else str(v)
+
+
+def fetch_packagings(kfa_code):
+    out, page = [], 1
+    while True:
+        res = post("search/product-packagings", {
+            "search": kfa_code, "search_by": "variant_kfa_code", "page": page,
+            "size": 100, "farmalkes_type": "", "sorts": {}})
+        out += res.get("data") or []
+        if page >= ((res.get("meta") or {}).get("totalPage") or 0):
+            return out
+        page += 1
+
+
+def fetch_all(kfa_code):
+    d = fetch_detail(kfa_code)
+    d["_packagings"] = fetch_packagings(kfa_code)
+    return d
 
 
 # --------------------------------------------------------------------- main
@@ -163,12 +255,13 @@ def main():
         with open(cache_file, encoding="utf-8") as f:
             for line in f:
                 j = json.loads(line)
-                cache[j["kfaCode"]] = j
+                if "_packagings" in j:  # cache versi lama belum punya data kemasan
+                    cache[j["kfaCode"]] = j
     todo = [r["Kode KFA"] for r in rows if r["Kode KFA"] not in cache]
     print(f"Detail: {len(cache)} dari cache, {len(todo)} perlu diambil")
 
     with open(cache_file, "a", encoding="utf-8") as f, ThreadPoolExecutor(args.workers) as ex:
-        for n, (code, d) in enumerate(zip(todo, ex.map(fetch_detail, todo)), 1):
+        for n, (code, d) in enumerate(zip(todo, ex.map(fetch_all, todo)), 1):
             d["kfaCode"] = code
             cache[code] = d
             f.write(json.dumps(d, ensure_ascii=False) + "\n")

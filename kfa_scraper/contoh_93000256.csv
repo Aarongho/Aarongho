@@ -1,2 +1,43 @@
-﻿Kode KFA,Nama Produk,Merk Dagang,Unit Logistik Terkecil,Bentuk Sediaan,Golongan Obat,Nomor Izin Edar,Fornas,Tipe,Unit of Measure (UCUM),Golongan Obat (Detail),Cara Pemakaian Obat,Substansi Kimia (ATC),Kelompok Utama Anatomi,Subkelompok Terapeutik,Subkelompok Farmakologi,Subgrup Kimia,Referensi Zat Aktif,Discontinued,Registrar,Manufacturer,Zat Aktif,Kekuatan Zat Aktif,Zat Aktif & Kekuatan,Hierarki POV,Hierarki POA
-93000256,Amoxicillin Trihydrate 100 mg/mL Sirup Kering (PHARMA LABORATORIES),AMOXICILLIN TRIHYDRATE,Botol,Sirup Kering,Obat,GKL2040702438C1,Tidak,Obat,mL,Obat Keras,Oral,J01CA04 - Amoxicillin,J - ANTIINFECTIVES FOR SYSTEMIC USE,J01 - ANTIBACTERIALS FOR SYSTEMIC USE,"J01C - BETA-LACTAM ANTIBACTERIALS, PENICILLINS",J01CA - Penicillins with extended spectrum,amoxicillin,-,PHARMA LABORATORIES,PHARMA LABORATORIES,Amoxicillin,100 mg/1 mL,Amoxicillin 100 mg/1 mL,92000234 - Amoxicillin Trihydrate 100 mg/mL Sirup Kering,93000256 - Amoxicillin Trihydrate 100 mg/mL Sirup Kering (PHARMA LABORATORIES)
+﻿Kode KFA,Nama Produk,Merk Dagang,Unit Logistik Terkecil,Bentuk Sediaan,Tipe,Golongan Obat,Nomor Izin Edar,Fornas,Unit of Measure (UCUM),Cara Pemakaian Obat,Substansi Kimia (ATC),Kelompok Utama Anatomi,Subkelompok Terapeutik,Subkelompok Farmakologi,Subgrup Kimia,Referensi Zat Aktif,Discontinued,Registrar,Manufacturer,Zat Aktif,Kekuatan Zat Aktif,Zat Aktif & Kekuatan,Hierarki POV,Hierarki POA,Deskripsi,Penggunaan,Peringatan,Efek Samping,Referensi Identifier Produk Aktual,Referensi Identifier Produk Virtual,Tayang LKPP,Kode LKPP,Kode KBKI,Dapat Dibeli (LKPP),Izin Edar,Produksi Buatan,Skor TKDN,Skor BMP,Skor TKDN BMP,Negara Registrar,Negara Manufacturer,Packaging,Harga Kemasan,Contained Quantity Type,Kelas Terapi,Sub Kelas Terapi,Tingkat Faskes,Fornas Start Date
+93000256,Amoxicillin Trihydrate 100 mg/mL Sirup Kering (PHARMA LABORATORIES),AMOXICILLIN TRIHYDRATE,Botol,Sirup Kering,Obat,Obat Keras,GKL2040702438C1,Tidak,mL,Oral,J01CA04 - Amoxicillin,J - ANTIINFECTIVES FOR SYSTEMIC USE,J01 - ANTIBACTERIALS FOR SYSTEMIC USE,"J01C - BETA-LACTAM ANTIBACTERIALS, PENICILLINS",J01CA - Penicillins with extended spectrum,amoxicillin,-,PHARMA LABORATORIES,PHARMA LABORATORIES,Amoxicillin,100 mg/1 mL,Amoxicillin 100 mg/1 mL,92000234 - Amoxicillin Trihydrate 100 mg/mL Sirup Kering,93000256 - Amoxicillin Trihydrate 100 mg/mL Sirup Kering (PHARMA LABORATORIES),"AmoxicillinTrihydrate adalah turunan penisilin semi sintetik dan stabil dalam suasana asam lambung. AmoxicillinTrihydrate diabsorpsi dengan cepat dan baik pada saluran pencernaan makanan, tidak tergantung adanya makanan. AmoxicillinTrihydrate terutama diekskresikan dalam bentuk tidak berubah di dalam urin. Ekskresi dihambat saat pemberian bersamaan dengan Probenesid, sehingga memperpanjang efek terapi. AmoxicillinTrihydrate aktif terhadap organisme gram-positif dan gram-negatif.","INDIKASI :
+Infeksi yang disebabkan oleh strain-strain bakteri yang peka :
+1. Infeksi kulit dan jaringan lunak : Stafilococcus bukan penghasil penisilinase, Streptococcus, E. Coli.
+2. Infeksi saluran pernapasan atas seperti tonsilitis, sinusitis, dan otitis media
+3. Infeksi saluran pernafasan bawah seperti bronkitis akut dan kronik, lobar, dan bronkopneumonia
+4. Infeksi saluran kemih seperti sistitis, urethritis,pielonefritis, septic abortion, dan puerperal sepsis
+5. Gonore yang disebabkan oleh strain-strain bakteri yang peka terhadap N. Gonorrhoae (bukan penghasil penisilinase)
+6. Infeksi tulang
+
+DOSIS :
+1. Dewasa dan anak-anak dengan berat badan di atas 20 kg : sehari 250 – 500 mg tiap 8 jam.
+2. Anak-anak dengan berat badan kurang dari 20 kg : 20-40 mg/ kg berat badan sehari dalam dosis terbagi, diberikan tiap 8 jam.
+3. Untuk penderita dengan gangguan ginjal, perlu dilakukan pengurangan dosis.
+4. Pada penderita yang menerima dialisa peritonial, dosis maksimum yang dianjurkan 500 mg sehari.
+5. Gonokokis uretritis : Amoxicillin 3 g sebagai dosis tunggal.
+6. Tetes Pediatrik dianjurkan untuk anak dibawah usia 6 bulan.
+Dosis lazim untuk seluruh indikasi kecuali infeksi pada saluran nafas bawah :
+- < 6 kg : 0,25 ml - 0,50 ml tiap 8 jam
+- 6 - 8 kg : 0,50 ml - 1,0 ml tiap 8 jam
+Infeksi pada saluran nafas bawah :
+- < 6 kg : 0,50 ml - 1,0 ml tiap 8 jam
+- 6 - 8 kg : 1,0 ml - 1,5 ml tiap 8 jam
+
+CARA PEMBUATAN SUSPENSI :
+
+Sirup kering (15 ml)
+Tambahkan 10 ml air minum ke dalam botol. Kocok sampai terbentuk suspensi yang homogen. Simpan suspensi dalam wadah tertutup rapat. Gunakan suspensi dalam waktu tidak lebih dari 7 hari.
+
+.","1. Sebelum memulai terapi dengan Amoxicillin, sebaiknya dilakukan penyelidikan secara seksama mengenai hipersensitivitas sebelumnya terhadap Penicillin dan Cephalosporin
+2. Reaksi hipersensitivitas fatal (anafilaksis) yang serius yang kadang-kadang terjadi pada pasien dengan terapi Penicillin. Jika terjadi reaksi alergi, pemakaian Amoxicillin harus dihentikan dan harus diberikan terapi yang cocok
+3. Kolitis pseudomembran telah dilaporkan terjadi pada hampir semua obat antibakteri, termasuk Amoxicillin
+4. Hati-hati pemberian obat ini pada penderita leukimia limphatik, karena kepekaan terhadap rash kulit yang disebabkan Amoxicillin Trihydrate.
+5. Amoxicillin Trihydrate harus digunakan dengan hati-hati pada wanita hamil dan menyusui
+6. Pengobatan dengan Amoxicillin Trihydrate dalam jangka waktu lama harus disertai dengan pemeriksaan terhadap fungsi ginjal, hati dan darah
+7. Dapat menimbulkan superinfeksi (biasanya penyebabnya Enterobacterium, Pseudomonas, S. Aureus, Candida). Bila terjadi hal tersebut, hentikan pengobatan dan diberikan alternatif lain
+8. Untuk penderita dengan gagal fungsi ginjal monitor tingkat plasma dan urine harus dilakukan penyesuaian dosis
+9. Jangan untuk pengobatan meningitis atau infeksi pada tulang sendi karena Amoxicillin Trihydrate oral tidak menembus ke dalam cairan serebospinal atau sinorial.","1. Reaksi kepekaan seperti ruam eritem makulopapular, urtikaria, ruam kulit, serum sickness
+2. Reaksi kepekaan yang serius dan fatal adalah anafilaksis terutama terjadi pada penderita yang hipersensitif terhadap penisilin
+3. Gangguan saluran pencernaan seperti mual, muntah, diare
+4. Reaksi-reaksi hematologi (biasanya bersifat reversibel)
+5. Ginjal : Kristaluria
+6. Sistem saraf pusat : Hiperaktif reversibel, agitasi, ansietas, insomnia, bingung, kejang, perubahan kebiasaan dan/atau pusing","AMOXICILLIN TRIHYDRATE; Amoksisilin/Amoxicillin/Amoxicillin trihydrate 100 mg/mL drops/ sirup kering, botol 15 mL; Amoxicillin Trihydrate 100 mg / mL Sirup Kering",Amoxicillin Trihydrate 100 mg/mL Sirup Kering,Ya,1481938,3525005002,-,-,lokal,31.05,0,31.05,Indonesia,Indonesia,Dus isi 1,15000,1,6 - Antiinfeksi,6.2 - Antibakteri,FPKTP; FPKTL,2026-04-01

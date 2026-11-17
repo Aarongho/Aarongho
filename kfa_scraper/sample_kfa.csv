@@ -1,11 +1,235 @@
-﻿Kode KFA,Nama Produk,Merk Dagang,Unit Logistik Terkecil,Bentuk Sediaan,Golongan Obat,Nomor Izin Edar,Fornas,Tipe,Unit of Measure (UCUM),Golongan Obat (Detail),Cara Pemakaian Obat,Substansi Kimia (ATC),Kelompok Utama Anatomi,Subkelompok Terapeutik,Subkelompok Farmakologi,Subgrup Kimia,Referensi Zat Aktif,Discontinued,Registrar,Manufacturer,Zat Aktif,Kekuatan Zat Aktif,Zat Aktif & Kekuatan,Hierarki POV,Hierarki POA
-93000108,Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi (ABINGEM),ABINGEM 1000,Vial,Serbuk Injeksi Liofilisasi,Obat,DKI1235000244B1,Tidak,Obat,mg,Obat Keras,Parenteral,L01BC05 - Gemcitabine,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01B - ANTIMETABOLITES,L01BC - Pyrimidine analogues,gemcitabine,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,GEMCITABINE,1000 mg,GEMCITABINE 1000 mg,92000106 - Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi,93000108 - Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi (ABINGEM)
-93000121,Morphine Sulfate 15 mg Tablet Pelepasan Lambat (MST CONTINUS),MST CONTINUS,Tablet,Tablet Pelepasan Lambat,Obat,DNL9613701614C1,Tidak,Obat,mg,Obat Narkotika,Oral,N02AA01 - Morphine,N - NERVOUS SYSTEM,N02 - ANALGESICS,N02A - OPIOIDS,N02AA - Natural opium alkaloids,morphine,-,MAHAKAM BETA FARMA,MAHAKAM BETA FARMA,Morphine,15 mg,Morphine 15 mg,92000113 - Morphine Sulfate 15 mg Tablet Pelepasan Lambat,93000121 - Morphine Sulfate 15 mg Tablet Pelepasan Lambat (MST CONTINUS)
-93000124,Iloprost 10 mcg/mL Larutan Inhalasi (VENTAVIS),VENTAVIS,Ampul,Larutan Inhalasi,Obat,DKI0707200468A1,Tidak,Obat,mL,Obat Keras,Inhalasi (dihirup),B01AC11 - Iloprost,B - BLOOD AND BLOOD FORMING ORGANS,B01 - ANTITHROMBOTIC AGENTS,B01A - ANTITHROMBOTIC AGENTS,B01AC - Platelet aggregation inhibitors excl. heparin,iloprost,-,BAYER INDONESIA,"BERLIMED, S.A.",Iloprost,10 ug/1 mL,Iloprost 10 ug/1 mL,92000130 - Iloprost 10 mcg/mL Larutan Inhalasi,93000124 - Iloprost 10 mcg/mL Larutan Inhalasi (VENTAVIS)
-93000126,Diazepam 2 mg Tablet (VALISANBE),VALISANBE,Tablet,Tablet,Obat,DPL7822233810A1,Tidak,Obat,mg,Obat Psikotropika,Oral,N05BA01 - Diazepam,N - NERVOUS SYSTEM,N05 - PSYCHOLEPTICS,N05B - ANXIOLYTICS,N05BA - Benzodiazepine derivatives,diazepam,-,SANBE FARMA,SANBE FARMA (UNIT 1),Diazepam,2 mg,Diazepam 2 mg,92000132 - Diazepam 2 mg Tablet,93000126 - Diazepam 2 mg Tablet (VALISANBE)
-93000131,"Paclitaxel 6 mg/mL Injeksi (16,7 mL, NAPRO-TAX)",NAPRO-TAX,Vial,Larutan Injeksi,Obat,DKI1235000643A1,Tidak,Obat,mL,Obat Keras,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000131 - Paclitaxel 6 mg/mL Injeksi (16,7 mL, NAPRO-TAX)"
-93000132,"Paclitaxel 6 mg/mL Injeksi (5 mL, NAPRO-TAX)",NAPRO-TAX,Vial,Larutan Injeksi,Obat,DKI1235000643A1,Tidak,Obat,mL,Obat Keras,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000132 - Paclitaxel 6 mg/mL Injeksi (5 mL, NAPRO-TAX)"
-93000133,"Olopatadine Hydrochloride 0,1% Tetes Mata (FERRON PAR PHARMACEUTICALS)",OLOPATADINE HCL,Botol Plastik,Tetes Mata,Obat,GKL1934614346A1,Tidak,Obat,mg,Obat Keras,Ocular (mata),S01GX09 - Olopatadine,S - SENSORY ORGANS,S01 - OPHTHALMOLOGICALS,S01G - DECONGESTANTS AND ANTIALLERGICS,S01GX - Other antiallergics,olopatadine hydrochloride,-,FERRON PAR PHARMACEUTICALS,FERRON PAR PHARMACEUTICALS,Olopatadine Hydrochloride,0.1 %,Olopatadine Hydrochloride 0.1 %,"92000111 - Olopatadine Hydrochloride 0,1% Tetes Mata","93000133 - Olopatadine Hydrochloride 0,1% Tetes Mata (FERRON PAR PHARMACEUTICALS)"
-93000135,Ibuprofen 200 mg Tablet (NOVAPHARIN),IBUPROFEN,Tablet,Tablet,Obat,GTL0934008817A1,Tidak,Obat,mg,Obat Bebas Terbatas,Oral,M01AE01 - Ibuprofen,M - MUSCULO-SKELETAL SYSTEM,M01 - ANTIINFLAMMATORY AND ANTIRHEUMATIC PRODUCTS,"M01A - ANTIINFLAMMATORY AND ANTIRHEUMATIC PRODUCTS, NON-STEROIDS",M01AE - Propionic acid derivatives,ibuprofen,-,NOVAPHARIN,NOVAPHARIN,IBUPROFEN,200 mg,IBUPROFEN 200 mg,92000112 - Ibuprofen 200 mg Tablet,93000135 - Ibuprofen 200 mg Tablet (NOVAPHARIN)
-93000136,"Paclitaxel 6 mg/mL Injeksi (5 mL, PAXOMED)",PAXOMED,Vial,Larutan Injeksi,Obat,DKI1435500243A1,Tidak,Obat,mL,Obat Keras,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,PT. MEGA LIFESCIENCES INDONESIA,"VENUS REMEDIES LIMITED, HIMACHAL PRADESH",PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000136 - Paclitaxel 6 mg/mL Injeksi (5 mL, PAXOMED)"
-93000137,Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi (ABINGEM),ABINGEM 200,Vial,Serbuk Injeksi Liofilisasi,Obat,DKI1235000244A1,Tidak,Obat,mg,Obat Keras,Parenteral,L01BC05 - Gemcitabine,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01B - ANTIMETABOLITES,L01BC - Pyrimidine analogues,gemcitabine,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,GEMCITABINE,200 mg,GEMCITABINE 200 mg,92000107 - Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi,93000137 - Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi (ABINGEM)
+﻿Kode KFA,Nama Produk,Merk Dagang,Unit Logistik Terkecil,Bentuk Sediaan,Tipe,Golongan Obat,Nomor Izin Edar,Fornas,Unit of Measure (UCUM),Cara Pemakaian Obat,Substansi Kimia (ATC),Kelompok Utama Anatomi,Subkelompok Terapeutik,Subkelompok Farmakologi,Subgrup Kimia,Referensi Zat Aktif,Discontinued,Registrar,Manufacturer,Zat Aktif,Kekuatan Zat Aktif,Zat Aktif & Kekuatan,Hierarki POV,Hierarki POA,Deskripsi,Penggunaan,Peringatan,Efek Samping,Referensi Identifier Produk Aktual,Referensi Identifier Produk Virtual,Tayang LKPP,Kode LKPP,Kode KBKI,Dapat Dibeli (LKPP),Izin Edar,Produksi Buatan,Skor TKDN,Skor BMP,Skor TKDN BMP,Negara Registrar,Negara Manufacturer,Packaging,Harga Kemasan,Contained Quantity Type,Kelas Terapi,Sub Kelas Terapi,Tingkat Faskes,Fornas Start Date
+93000108,Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi (ABINGEM),ABINGEM 1000,Vial,Serbuk Injeksi Liofilisasi,Obat,Obat Keras,DKI1235000244B1,Tidak,mg,Parenteral,L01BC05 - Gemcitabine,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01B - ANTIMETABOLITES,L01BC - Pyrimidine analogues,gemcitabine,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,GEMCITABINE,1000 mg,GEMCITABINE 1000 mg,92000106 - Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi,93000108 - Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi (ABINGEM),,,,,Gemcitabin Hydrochloride 1000 mg; ABINGEM 1000; Gemsitabin/ Gemcitabine / Gemcitabine HCl serb inj / lar inj 1000 mg,Gemcitabine Hydrochloride 1000 mg Serbuk Injeksi Liofilisasi,-,1287347,3526003047,-,-,import,0.0,0.0,0.0,Indonesia,India,Dus isi 1,308934.5,1,8 - Antineoplastik Dan Imunomodulator,8.1 - Antineoplastik,FPKTL,2026-04-01
+93000121,Morphine Sulfate 15 mg Tablet Pelepasan Lambat (MST CONTINUS),MST CONTINUS,Tablet,Tablet Pelepasan Lambat,Obat,Obat Narkotika,DNL9613701614C1,Tidak,mg,Oral,N02AA01 - Morphine,N - NERVOUS SYSTEM,N02 - ANALGESICS,N02A - OPIOIDS,N02AA - Natural opium alkaloids,morphine,-,MAHAKAM BETA FARMA,MAHAKAM BETA FARMA,Morphine,15 mg,Morphine 15 mg,92000113 - Morphine Sulfate 15 mg Tablet Pelepasan Lambat,93000121 - Morphine Sulfate 15 mg Tablet Pelepasan Lambat (MST CONTINUS),"Morfin,
+ analgesik opioid, adalah turunan fenantrena yang bekerja terutama pada
+SSP dan otot polos. Ini mengikat reseptor opiat di SSP mengubah persepsi
+ dan respons nyeri dengan memodulasi jalur penghambatan turun dari otak.
+ Analgesia, euforia dan ketergantungan diduga karena aksinya pada
+reseptor -1 sedangkan depresi pernafasan dan penghambatan gerakan usus
+disebabkan oleh aksi pada reseptor -2. Analgesia spinal diperantarai
+oleh aksi agonis morfin pada reseptor .","Penatalaksanaan nyeri kronik yang perlu analgesik opioid
+
+Nyeri sedang sampai berat
+Dewasa:
+ Sebagai morfin sulfat: Dosis bersifat individual berdasarkan tingkat
+keparahan nyeri, respons pasien, dan pengalaman analgesik sebelumnya.
+Sebagai persiapan konvensional: 5-20 mg 4 jam. Sebagai tab/tutup rilis
+diperpanjang: Dosis awal yang direkomendasikan: 1 atau 2 (10 mg) tab
+12-24 jam.
+
+Anak: Sebagai morfin sulfat: Dosis bersifat
+individual berdasarkan tingkat keparahan nyeri, respons pasien, dan
+pengalaman analgesik sebelumnya. Sebagai persiapan konvensional: 1-5
+tahun 5 mg 4 jam (Maks: 30 mg setiap hari); 6-12 tahun 5-10 mg 4 jam
+(Maks: 60 mg setiap hari); 13 tahun Sama seperti dosis dewasa.","Pasien dengan
+hipovolemia, penyakit KV (termasuk MI akut), syok sirkulasi,
+insufisiensi adrenal, penyakit Addison, disfungsi saluran empedu,
+pankreatitis akut, delirium tremens, hiperplasia prostat, striktur urin,
+ psikosis toksik, miastenia gravis, kondisi kesehatan mental (mis.
+kecemasan, gangguan stres pasca-trauma), kejang, disfungsi tiroid,
+riwayat penyalahgunaan obat atau alkoholisme akut, obesitas. Gangguan
+ginjal dan hati berat. Kehamilan dan menyusui.","Signifikan: Depresi SSP, hipotensi ortostatik, hipotensi berat, konstipasi sinkop.
+Gangguan sistem darah dan limfatik: Anemia.
+Gangguan jantung: Bradikardia, palpitasi, takikardia.
+Gangguan mata: Penglihatan kabur atau ganda, miosis.
+Gangguan
+ gastrointestinal: Sakit perut, sembelit, pengosongan lambung tertunda,
+diare, dispepsia, perut kembung, mual, muntah, xerostomia, mulut kering,
+ anoreksia.
+Gangguan umum dan kondisi tempat pemberian: Kondisi astenik, hiperhidrosis, sindrom putus zat.
+Gangguan hepatobilier: kolik bilier, hipoestesia, hipokalemia.
+Gangguan metabolisme dan nutrisi: Anoreksia.
+Gangguan muskuloskeletal dan jaringan ikat: Sakit punggung.
+Gangguan sistem saraf: Pusing, sakit kepala, parestesia, ileus paralitik, mioklonus.
+Gangguan psikiatri: Kecemasan, kebingungan, ketergantungan, halusinasi insomnia, euforia, agitasi, perubahan suasana hati.
+Gangguan ginjal dan saluran kemih: Spasme kandung kemih, oliguria, retensi urin.
+Gangguan sistem reproduksi dan payudara: Penurunan libido atau potensi (penggunaan jangka panjang).
+Gangguan pernapasan, toraks dan mediastinum: Dispnea, hipoksia, kekakuan, bronkospasme, edema paru.
+Gangguan kulit dan jaringan subkutan: Pruritus, ruam kulit, urtikaria, berkeringat.
+Gangguan vaskular: Hipertensi, kemerahan pada wajah.
+Berpotensi Fatal: Hipersensitivitas. Depresi pernapasan.",Morphine Sulfate 15 mg; MST CONTINUS; Morphine sulfate/ Morphine/ Morfin tablet lepas lambat/ kaplet lepas lambat 15 mg,Morphine Sulfate 15 mg Tablet Pelepasan Lambat,Ya,48540875,3525004001,-,-,lokal,32.44,9.0,41.44,Indonesia,Indonesia,Dus isi 60,1856475,60,"1 - Analgesik, Antipiretik, Antiinflamasi Non Steroid, Antipirai",1.1 - Analgesik Narkotik,FPKTL,2026-04-01
+93000124,Iloprost 10 mcg/mL Larutan Inhalasi (VENTAVIS),VENTAVIS,Ampul,Larutan Inhalasi,Obat,Obat Keras,DKI0707200468A1,Tidak,mL,Inhalasi (dihirup),B01AC11 - Iloprost,B - BLOOD AND BLOOD FORMING ORGANS,B01 - ANTITHROMBOTIC AGENTS,B01A - ANTITHROMBOTIC AGENTS,B01AC - Platelet aggregation inhibitors excl. heparin,iloprost,-,BAYER INDONESIA,"BERLIMED, S.A.",Iloprost,10 ug/1 mL,Iloprost 10 ug/1 mL,92000130 - Iloprost 10 mcg/mL Larutan Inhalasi,93000124 - Iloprost 10 mcg/mL Larutan Inhalasi (VENTAVIS),"Dose :
+...see Box leaflet insert….","Pengobatan pasien dengan hipertensi pulmonal primer atau hipertensi pulmonal sekunder akibat penyakit jaringan ikat atau akibat obat, pada stadium penyakit sedang atau berat.
+Selain itu, pengobatan hipertensi pulmonal sekunder sedang atau berat akibat tromboemboli paru kronis, yang tidak memungkinkan dilakukan pembedahan.",see Box leaflet insert,see Box leaflet insert,VENTAVIS; Iloprost 10 mcg / mL; Iloprost ih 10 mcg/mL; Iloprost IH 10 MCG/ML; VENTAVIS ILOPROST IH 10 MCG/ML,Iloprost 10 mcg / mL Larutan Inhalasi,Ya,50459494,3526003113,-,-,import,0.0,0.0,0.0,Indonesia,Spain,Dus isi 30,11624500,30,17 - Obat Kardiovaskular,17.3 - Antihipertensi,FPKTL,2026-04-01
+93000126,Diazepam 2 mg Tablet (VALISANBE),VALISANBE,Tablet,Tablet,Obat,Obat Psikotropika,DPL7822233810A1,Tidak,mg,Oral,N05BA01 - Diazepam,N - NERVOUS SYSTEM,N05 - PSYCHOLEPTICS,N05B - ANXIOLYTICS,N05BA - Benzodiazepine derivatives,diazepam,-,SANBE FARMA,SANBE FARMA (UNIT 1),Diazepam,2 mg,Diazepam 2 mg,92000132 - Diazepam 2 mg Tablet,93000126 - Diazepam 2 mg Tablet (VALISANBE),,,,,Diazepam 2 mg Tablet; VALISANBE; VALISANBE 2,Diazepam 2 mg Tablet,-,,,-,-,lokal,,,0.0,Indonesia,Indonesia,Strip isi 10; Dus isi 100,0; 0,10; 100,23 - Psikofarmaka,23.1 - Antiansietas,FPKTP; FPKTL,2026-04-01
+93000131,"Paclitaxel 6 mg/mL Injeksi (16,7 mL, NAPRO-TAX)",NAPRO-TAX,Vial,Larutan Injeksi,Obat,Obat Keras,DKI1235000643A1,Tidak,mL,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000131 - Paclitaxel 6 mg/mL Injeksi (16,7 mL, NAPRO-TAX)",,,,,"NAPRO-TAX; Paclitaxel/ paklitaksel inj 6 mg/mL, vial @ 16,7 mL(inj 100 mg); Paclitaxel 6 mg / mL",Paclitaxel 6 mg/mL Injeksi,Ya,1287771,3526003047,-,-,import,0.0,0.0,0.0,Indonesia,India,Dus isi 1,0,1,8 - Antineoplastik Dan Imunomodulator,8.1 - Antineoplastik,FPKTL,2026-04-01
+93000132,"Paclitaxel 6 mg/mL Injeksi (5 mL, NAPRO-TAX)",NAPRO-TAX,Vial,Larutan Injeksi,Obat,Obat Keras,DKI1235000643A1,Tidak,mL,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000132 - Paclitaxel 6 mg/mL Injeksi (5 mL, NAPRO-TAX)",,,,,"NAPRO-TAX; Paclitaxel/ paklitaksel inj 6 mg/mL, vial @ 5 mL (inj 30 mg); Paclitaxel 6 mg / mL",Paclitaxel 6 mg/mL Injeksi,Ya,47136333,3526003047,-,-,import,0.0,0.0,0.0,Indonesia,India,Dus isi 1,114514,1,8 - Antineoplastik Dan Imunomodulator,8.1 - Antineoplastik,FPKTL,2026-04-01
+93000133,"Olopatadine Hydrochloride 0,1% Tetes Mata (FERRON PAR PHARMACEUTICALS)",OLOPATADINE HCL,Botol Plastik,Tetes Mata,Obat,Obat Keras,GKL1934614346A1,Tidak,mg,Ocular (mata),S01GX09 - Olopatadine,S - SENSORY ORGANS,S01 - OPHTHALMOLOGICALS,S01G - DECONGESTANTS AND ANTIALLERGICS,S01GX - Other antiallergics,olopatadine hydrochloride,-,FERRON PAR PHARMACEUTICALS,FERRON PAR PHARMACEUTICALS,Olopatadine Hydrochloride,0.1 %,Olopatadine Hydrochloride 0.1 %,"92000111 - Olopatadine Hydrochloride 0,1% Tetes Mata","93000133 - Olopatadine Hydrochloride 0,1% Tetes Mata (FERRON PAR PHARMACEUTICALS)","Olopatadine merupakan inhibitor
+pelepasan histamin dari sel mast dan
+secara relatif selektif pada antagonis histamin H1 yang dapat
+menghambat reaksi hipersensitivitas segera tipe 1 secara in vivo dan in vitro
+termasuk penghambatan terhadap efek-efek pada sel epitel konjungtiva manusia
+yang diinduksi oleh histamin. Olopatadine
+tidak memiliki efek pada reseptor alpha-adrenergic,
+dopamine, dan muscarinic tipe 1 dan 2, serta serotonin.
+Setelah pemberian sediaan mata topikal, olopatadine menunjukkan jumlah paparan sistemik
+yang rendah.","Olopatadine
+hydrochloride
+tetes mata diindikasikan untuk pengobatan pada tanda dan gejala konjungtivitis
+alergi.","-   Olopatadine hydrochloride tetes mata 0,1% hanya untuk penggunaan topikal dan tidak untuk
+penggunaan injeksi atau oral.
+
+-   Untuk mencegah kontaminasi pada ujung botol dan larutan, pasien harus
+berhati-hati untuk tidak menyentuh kelopak mata atau area sekitarnya dengan
+ujung botol. Botol harus tetap tertutup rapat jika sedang tidak digunakan.
+
+Karsinogenesis, mutagenesis, dan gangguan fertilitas:
+
+Pemberian olopatadine secara oral pada mencit dan tikus hingga dosis masing-masing
+500 mg/kg/hari dan 200 mg/kg/hari tidak menunjukkan efek karsinogenik. Dosis
+tersebut 78.125 dan 31.250 kali lebih besar dari dosis maksimum sediaan mata
+yang direkomendasikan untuk manusia (MROHD). Tidak ada potensi mutagenik yang
+diamati pada pengujian olopatadine
+secara in vitro dengan tes mutasi
+balik (tes Ames) pada bakteri, tes in
+vitro chromosome aberration pada mamalia atau tes in vivo mikronukleus pada tikus. Pemberian olopatadine pada tikus jantan dan betina dengan dosis oral 62.500
+kali lipat dari kadar MROHD memberikan sedikit penurunan indeks fertilitas dan
+angka  implantasi (implantation rate); tidak diamati adanya efek pada fungsi reproduksi
+saat pemberian olopatadine dengan dosis
+7.800 kali lipat dari dosis maksimum sediaan mata yang direkomendasikan untuk manusia.
+
+Kehamilan: Kategori C
+
+Olopatadine diamati tidak bersifat teratogenik
+pada tikus dan kelinci. Namun, pemberian dosis 600 mg/kg/hari pada tikus atau
+93.750 kali lipat MROHD dan dosis 400 mg/kg/hari pada kelinci atau 62.500 kali
+lipat MROHD, selama organogenesis menunjukkan adanya penurunan pada jumlah
+fetus yang hidup. Meskipun demikian, tidak ada studi yang
+memadai dan terkontrol pada wanita hamil.
+
+Karena penelitian pada hewan tidak
+selalu dapat memprediksi respons pada manusia, obat ini dapat digunakan pada
+ibu hamil hanya jika potensi manfaatnya lebih besar daripada kemungkinan risiko
+pada janin.
+
+Ibu menyusui:
+
+Setelah pemberian oral, olopatadine ditemukan pada air susu tikus yang menyusui. Tidak
+diketahui apakah pemberian topikal pada okular dapat menyebabkan absorpsi
+sistemik yang cukup untuk menghasilkan jumlah yang dapat terdeteksi pada air
+susu ibu (ASI) di manusia. Namun demikian, perhatian harus diberikan ketika olopatadine hydrochloride  tetes mata 0,1% diberikan pada ibu menyusui.
+
+Penggunaan pada pasien pediatri:
+
+Keamanan dan efektivitas pada pasien pediatri di bawah
+umur 3 tahun masih belum diketahui.
+
+Penggunaan pada pasien geriatri:
+
+Secara keseluruhan, tidak ada perbedaan pada keamanan
+dan efektivitas yang teramati antara pasien usia lanjut dan pasien yang lebih
+muda.","Sakit kepala pernah dilaporkan terjadi
+dengan insidensi sekitar 7%. Efek samping berikut pernah
+dilaporkan terjadi pada kurang dari 5% pasien:
+sakit kepala, astenia, pandangan kabur, rasa terbakar atau menyengat, cold syndrome, mata kering, sensasi
+benda asing, hiperemia, hipersensitivitas, keratitis, edema kelopak mata, mual,
+faringitis, pruritus, rinitis, sinusitis dan perubahan rasa pada indra pengecap.","OLOPATADINE HCL; Olopatadine hydrochloride (HCl)/ Olopatadine/ Olopatadin tts mata 0,1% (G); Olopatadine Hydrochloride 0,1 %","Olopatadine Hydrochloride 0,1% Tetes Mata",Ya,48342235,3526002027,-,-,lokal,35.5,0.0,35.5,Indonesia,Indonesia,Dus isi 1,0,1,21 - Obat Untuk Mata,21.3 - Antiinflamasi,FPKTP; FPKTL,2026-04-01
+93000135,Ibuprofen 200 mg Tablet (NOVAPHARIN),IBUPROFEN,Tablet,Tablet,Obat,Obat Bebas Terbatas,GTL0934008817A1,Tidak,mg,Oral,M01AE01 - Ibuprofen,M - MUSCULO-SKELETAL SYSTEM,M01 - ANTIINFLAMMATORY AND ANTIRHEUMATIC PRODUCTS,"M01A - ANTIINFLAMMATORY AND ANTIRHEUMATIC PRODUCTS, NON-STEROIDS",M01AE - Propionic acid derivatives,ibuprofen,-,NOVAPHARIN,NOVAPHARIN,IBUPROFEN,200 mg,IBUPROFEN 200 mg,92000112 - Ibuprofen 200 mg Tablet,93000135 - Ibuprofen 200 mg Tablet (NOVAPHARIN),"Ibuprofen, NSAID, memiliki sifat analgesik, anti-inflamasi dan antipiretik. Ini menghambat siklooksigenase-1 dan 2 dengan demikian, juga menghambat sintesis prostaglandin.
+Onset: Analgesik: 30-60 menit. Anti-inflamasi: 7 hari (oral).
+Durasi: 4-6 jam (oral).
+Farmakokinetik:
+Penyerapan: Diserap dari saluran pencernaan, sebagian ke dalam kulit, dan hampir sepenuhnya diserap setelah pemberian rektal. Asupan makanan menurunkan tingkat penyerapan. Waktu untuk mencapai konsentrasi plasma puncak: 1-2 jam (oral); 0,75 jam (rektal).
+Distribusi: Memasuki ASI. Ikatan protein plasma: 90-99%.
+Metabolisme: Dimetabolisme di hati melalui oksidasi.
+Ekskresi: Terutama melalui urin (45-80% sebagai metabolit, kira-kira 1% sebagai obat yang tidak berubah); kotoran. Waktu paruh eliminasi: Kira-kira 2 jam.","Artritis reumatoid remaja (Rute Oral)
+Anak: Sebagai tablet: 30-40 mg/kg setiap hari dalam 3-4 dosis terbagi. Maks: 2,4 gram setiap hari. 12 tahun Sama seperti dosis dewasa.
+
+Dismenorea (Rute Oral)
+Dewasa: Sebagai tablet: 200-400 mg setiap 4-6 jam. Maks: 3,2 g setiap hari. Sebagai tablet atau tablet salut lepas lambat yang dimodifikasi: Hingga 1,6 g sekali sehari (malam). Jika diperlukan, dapat ditingkatkan lebih lanjut menjadi 2,4 g setiap hari dalam 2 dosis terbagi.
+
+Demam (Rute Oral)
+Dewasa: 200-400 mg setiap 4-6 jam. Maks: 1,2 (OTC) atau 3,2 g setiap hari. Durasi maksimal: 3 hari (OTC).
+Anak: 6 bulan 5-10 mg/kg setiap 6-8 jam. Maks: 40 mg/kg setiap hari (Maks 400 mg/dosis).
+
+Osteoarthritis, Rheumatoid arthritis (Rute Oral)
+Dewasa: Sebagai tablet atau tablet salut: 400-800 mg 3-4 kali sehari. Maks: 3,2 g setiap hari. Sebagai tablet atau tablet salut lepas lambat yang dimodifikasi: Hingga 1,6 g sekali sehari (malam). Jika diperlukan, dapat ditingkatkan lebih lanjut menjadi 2,4 g setiap hari dalam 2 dosis terbagi.","Pasien dengan penyakit KV atau faktor risiko (misalnya CHF, penyakit jantung iskemik, CVA, hipertensi, hiperlipidemia, diabetes mellitus), gangguan perdarahan, SLE, gangguan jaringan ikat campuran, porfiria. Operasi. Gangguan hati dan ginjal. Lansia, anak-anak (terutama neonatus prematur dengan faktor risiko infeksi dan bayi dengan peningkatan kadar bilirubin). Kehamilan (trimester 1-2) dan menyusui. Penggunaan bersama NSAID lainnya, antiplatelet, antikoagulan. Tidak untuk penggunaan jangka panjang.","Signifikan: Reaksi anafilaktoid, risiko hiperkalemia, edema, hipertensi, kelainan fungsi hati, anemia, penglihatan kabur, skotoma, perubahan penglihatan warna. Jarang, diskrasia darah yang parah (misalnya agranulositosis, trombositopenia, anemia aplastik).
+Gangguan telinga dan labirin: Tinnitus.
+Gangguan gastrointestinal: Mual, muntah, diare, perut kembung, sembelit, dispepsia, mulas, sakit perut; enterokolitis (IV).
+Gangguan umum dan kondisi tempat pemberian: Retensi cairan.
+Infeksi dan infestasi: Sepsis (IV).
+Cedera, keracunan dan komplikasi prosedural: Reaksi di tempat suntikan.
+Pemeriksaan penunjang: Peningkatan BUN (IV).
+Gangguan metabolisme dan nutrisi: Nafsu makan menurun; hipoalbuminemia, hipoglikemia, hipokalsemia, hipokalemia, hipernatremia, insufisiensi adrenal (IV).
+Gangguan sistem saraf: Sakit kepala, pusing; perdarahan intraventrikular (IV).
+Gangguan jiwa: Gugup.
+Gangguan ginjal dan saluran kemih: Hematuria, ISK.
+Gangguan pernapasan, toraks dan mediastinum: Apnea, batuk, infeksi pernapasan.
+Gangguan kulit dan jaringan subkutan: Ruam, pruritus; iritasi kulit (IV).
+Berpotensi Fatal: kejadian trombotik CV (misalnya MI, stroke), ulserasi gastrointestinal, perforasi atau perdarahan; jarang, hepatotoksisitas (misalnya hepatitis fulminan, nekrosis atau kegagalan hati), sindrom Stevens-Johnson, dermatitis eksfoliatif, nekrolisis epidermal toksik.",IBUPROFEN; Ibuprofen tablet/kapsul/kaplet 200 mg; Ibuprofen 200 mg Tablet,Ibuprofen 200 mg Tablet,Ya,,3526003087,Ya,nie,lokal,33.19,2.25,35.44,Indonesia,Indonesia,Dus isi 100,59000,100,"1 - Analgesik, Antipiretik, Antiinflamasi Non Steroid, Antipirai",1.2 - Analgesik Non Narkotik,FPKTP; FPKTL,2026-04-01
+93000136,"Paclitaxel 6 mg/mL Injeksi (5 mL, PAXOMED)",PAXOMED,Vial,Larutan Injeksi,Obat,Obat Keras,DKI1435500243A1,Tidak,mL,Parenteral,L01CD01 - Paclitaxel,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01C - PLANT ALKALOIDS AND OTHER NATURAL PRODUCTS,L01CD - Taxanes,paclitaxel,-,PT. MEGA LIFESCIENCES INDONESIA,"VENUS REMEDIES LIMITED, HIMACHAL PRADESH",PACLITAXEL,6 mg/1 mL,PACLITAXEL 6 mg/1 mL,92000108 - Paclitaxel 6 mg/mL Injeksi,"93000136 - Paclitaxel 6 mg/mL Injeksi (5 mL, PAXOMED)","Paclitaxel adalah turunan taxane antineoplastik, awalnya berasal dari pohon yew Pasifik, Taxus brevifolia, dan saat ini diperoleh secara semisintetik dari jarum yew Eropa, Taxus baccata. Ini mempromosikan pembentukan mikrotubulus dengan meningkatkan aksi dimer tubulin, menstabilkan mikrotubulus yang ada, dan menghambat pembongkarannya, mengganggu fase mitosis G2 akhir dan menghambat replikasi sel. Ini juga menekan proliferasi sel dan mengatur respon imun.","Kanker payudara metastatik (Rute Intravena)
+Dewasa: Sebagai nanopartikel paclitaxel terikat albumin: 260 mg/m2 selama 30 menit setiap 3 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Kanker payudara (Rute Intravena)
+Dewasa: Sebagai larutan konvensional 6 mg/mL: Terapi ajuvan pada pasien dengan kasus node-positif setelah rejimen yang mengandung antrasiklin: 175 mg/m2 diinfuskan selama 3 jam sekali setiap 3 minggu selama 4 siklus. Pengobatan lini pertama dalam kombinasi dengan doksorubisin: 220 mg/m2 melalui infus selama 3 jam sekali setiap 3 minggu. Pengobatan lini kedua sebagai monoterapi: 175 mg/m2 melalui infus selama 3 jam sekali setiap 3 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan tolerabilitas individu (lihat pedoman produk terperinci).
+
+Kanker payudara stadium lanjut atau metastatik yang diekspresikan berlebihan oleh HER2 (Rute Intravena)
+Dewasa: Sebagai larutan konvensional 6 mg/mL dalam kombinasi dengan trastuzumab: 175 mg/m2 diinfuskan selama 3 jam sekali setiap 3 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Karsinoma ovarium stadium lanjut. (Rute Intravena)
+Dewasa: Sebagai larutan konvensional 6 mg/mL: Pengobatan primer dalam kombinasi dengan cisplatin: 175 mg/m2 diinfuskan selama 3 jam setiap 3 minggu. Sebagai alternatif, 135 mg/m2 diinfuskan selama 24 jam, diulang dengan interval 3 minggu. Pengobatan sekunder sebagai monoterapi: 175 mg/m2 diinfuskan selama 3 jam sekali setiap 3 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Karsinoma paru non-sel kecil stadium lanjut lokal, Karsinoma paru non-sel kecil metastatik (Rute Intravena)
+Dewasa: Sebagai nanopartikel paclitaxel terikat albumin dalam kombinasi dengan carboplatin: 100 mg/m2 diinfuskan selama 30 menit, pada hari 1, 8, dan 15 dari siklus 21 hari. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Kanker paru-paru non-sel kecil tingkat lanjut (Rute Intravena)
+Dewasa: Sebagai larutan konvensional 6 mg/mL dalam kombinasi dengan cisplatin: 175 mg/m2 diinfuskan selama 3 jam atau 135 mg/m2 selama 24 jam, diulang dengan interval 3 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Adenokarsinoma pankreas metastatik (Rute Intravena)
+Dewasa: Sebagai nanopartikel paclitaxel terikat albumin dalam kombinasi gemcitabine: 125 mg/m2 selama 30 menit pada hari 1, 8 dan 15 dari siklus 28 hari. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).
+
+Sarkoma Kaposi terkait AIDS (Rute Intravena)
+Dewasa: Sebagai larutan konvensional 6 mg/mL: 100 mg/m2 diinfuskan selama 3 jam setiap 2 minggu. Pengurangan dosis, penghentian dosis, atau penghentian mungkin diperlukan sesuai dengan keamanan dan toleransi individu (lihat pedoman produk terperinci).","Pasien dengan neuropati yang sudah ada sebelumnya, kelainan konduksi. Kerusakan hati. Tua. Kehamilan. Premedikasi dengan kortikosteroid, antihistamin dan antagonis reseptor histamin H2 mungkin diperlukan untuk mengurangi risiko reaksi hipersensitivitas.","Signifikan: Penekanan sumsum tulang (misalnya neutropenia); hipotensi, hipertensi, bradikardia; ekstravasasi, reaksi di tempat suntikan; neuropati sensorik/perifer. sepsis, mual, muntah, diare. Jarang, kelainan konduksi, CHF, disfungsi ventrikel kiri. Gangguan sistem darah dan limfatik: Anemia, leukopenia, trombositopenia, neutropenia demam. Gangguan jantung: Takikardia, aritmia, takikardia supraventrikular, nyeri dada, bradikardia, dispnea. Gangguan mata: Peningkatan lakrimasi, penglihatan kabur. Gangguan gastrointestinal: Sembelit, stomatitis, sakit perut dan distensi. Gangguan umum dan kondisi situs admin: Kelelahan, asthenia, pireksia, malaise, ataksia. Infeksi dan infestasi: Kandidiasis, konjungtivitis. Cedera, keracunan dan komplikasi prosedural: Reaksi di tempat suntikan (termasuk nyeri, eritema, edema lokal, indurasi). Pemeriksaan penunjang: Peningkatan AST, gamma-glutamyltransferase, alkalin fosfatase darah, kreatinin serum; kelainan EKG. Gangguan metabolisme dan nutrisi: Anoreksia, dehidrasi, edema. Gangguan muskuloskeletal dan jaringan ikat: Artralgia, mialgia, nyeri punggung. Gangguan sistem saraf: Paraestesia, sakit kepala, pusing, vertigo. Gangguan ginjal dan saluran kemih: ISK.signifikan: Penekanan sumsum tulang (misalnya neutropenia); hipotensi, hipertensi, bradikardia; ekstravasasi, reaksi di tempat suntikan; neuropati sensorik/perifer. sepsis, mual, muntah, diare. Jarang, kelainan konduksi, CHF, disfungsi ventrikel kiri.Gangguan sistem darah dan limfatik: Anemia, leukopenia, trombositopenia, neutropenia demam.Gangguan jantung: Takikardia, aritmia, takikardia supraventrikular, nyeri dada, bradikardia, dispnea.Gangguan mata: Peningkatan lakrimasi, penglihatan kabur.Gangguan gastrointestinal: Sembelit, stomatitis, sakit perut dan distensi.Gangguan umum dan kondisi situs admin: Kelelahan, asthenia, pireksia, malaise, ataksia.Infeksi dan infestasi: Kandidiasis, konjungtivitis.Cedera, keracunan dan komplikasi prosedural: Reaksi di tempat suntikan (termasuk nyeri, eritema, edema lokal, indurasi).Pemeriksaan penunjang: Peningkatan AST, gamma-glutamyltransferase, alkalin fosfatase darah, kreatinin serum; kelainan EKG.Gangguan metabolisme dan nutrisi: Anoreksia, dehidrasi, edema.Gangguan muskuloskeletal dan jaringan ikat: Artralgia, mialgia, nyeri punggung.Gangguan sistem saraf: Paraestesia, sakit kepala, pusing, vertigo.Gangguan ginjal dan saluran kemih: ISK.
+Signifikan: Penekanan sumsum tulang (misalnya neutropenia); hipotensi, hipertensi, bradikardia; ekstravasasi, reaksi di tempat suntikan; neuropati sensorik/perifer. sepsis, mual, muntah, diare. Jarang, kelainan konduksi, CHF, disfungsi ventrikel kiri.
+Gangguan sistem darah dan limfatik: Anemia, leukopenia, trombositopenia, neutropenia demam.
+Gangguan jantung: Takikardia, aritmia, takikardia supraventrikular, nyeri dada, bradikardia, dispnea.
+Gangguan mata: Peningkatan lakrimasi, penglihatan kabur.
+Gangguan gastrointestinal: Sembelit, stomatitis, sakit perut dan distensi.
+Gangguan umum dan kondisi situs admin: Kelelahan, asthenia, pireksia, malaise, ataksia.
+Infeksi dan infestasi: Kandidiasis, konjungtivitis.
+Cedera, keracunan dan komplikasi prosedural: Reaksi di tempat suntikan (termasuk nyeri, eritema, edema lokal, indurasi).
+Pemeriksaan penunjang: Peningkatan AST, gamma-glutamyltransferase, alkalin fosfatase darah, kreatinin serum; kelainan EKG.
+Gangguan metabolisme dan nutrisi: Anoreksia, dehidrasi, edema.
+Gangguan muskuloskeletal dan jaringan ikat: Artralgia, mialgia, nyeri punggung.
+Gangguan sistem saraf: Paraestesia, sakit kepala, pusing, vertigo.
+Gangguan ginjal dan saluran kemih: ISK.
+
+Gangguan pernapasan, toraks dan mediastinum: Infeksi saluran pernapasan atas, batuk, emboli paru.
+Gangguan kulit dan jaringan subkutan: Alopecia, ruam, pruritus, eritema, perubahan warna kuku, hiperpigmentasi kulit, perubahan kuku.
+Gangguan vaskular: Flushing, hipertensi, hipotensi, trombosis vena.
+Berpotensi Fatal: Anafilaksis dan reaksi hipersensitivitas parah,","PAXOMED; Paclitaxel/ paklitaksel inj 6 mg/mL, vial @ 5 mL(inj 30 mg); Paclitaxel 6 mg / mL; Paklitaksel Injeksi 30/ PAXOMED 30",Paclitaxel 6 mg/mL Injeksi,Ya,82080270,3526003047,-,nie,import,0.0,0.0,0.0,Indonesia,India,Dus isi 1,147330,1,8 - Antineoplastik Dan Imunomodulator,8.1 - Antineoplastik,FPKTL,2026-04-01
+93000137,Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi (ABINGEM),ABINGEM 200,Vial,Serbuk Injeksi Liofilisasi,Obat,Obat Keras,DKI1235000244A1,Tidak,mg,Parenteral,L01BC05 - Gemcitabine,L - ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS,L01 - ANTINEOPLASTIC AGENTS,L01B - ANTIMETABOLITES,L01BC - Pyrimidine analogues,gemcitabine,-,KIMIA FARMA Tbk.,NAPROD LIFE SCIENCES PVT. LTD.,GEMCITABINE,200 mg,GEMCITABINE 200 mg,92000107 - Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi,93000137 - Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi (ABINGEM),"Gemcitabine, nukleosida pirimidin sintetis dan analog sitarabin, menghambat sintesis DNA dengan memblokir DNA polimerase dan ribonukleotida reduktase. Ini adalah siklus sel spesifik yang bekerja terutama pada fase S, tetapi juga dapat memblokir perkembangan seluler di perbatasan G1-S.
+
+Farmakokinetik:
+Distribusi: Didistribusikan secara luas ke dalam jaringan; terdapat dalam cairan asites. Volume distribusi: 50 L/m2 (<70 menit waktu infus); 370 L/m2 (waktu infus 70-285 menit).
+Metabolisme: Dimetabolisme dengan cepat di hati, ginjal, darah, dan jaringan lain oleh cytidine deaminase menjadi metabolit inaktif 2'-deoxy-2',2'-difluorouridine (dFdU); mengalami metabolisme intraseluler oleh nukleosida kinase menjadi metabolit aktif, gemcitabine difosfat dan nukleosida trifosfat.
+Ekskresi: Terutama melalui urin (92-98% terutama sebagai dFdU; <10% sebagai obat yang tidak berubah) dan feses (<1%). Waktu paruh eliminasi: Gemcitabine: Kira-kira 42-94 menit (≤70 menit waktu infus); 4-10,5 jam (waktu infus 3-4 jam). Gemcitabine trifosfat: 1,7-19,4 jam.","Kanker, pankreas
+
+Dewasa: Pasien dengan kasus lanjut atau metastasis lokal: 1.000 mg/m2 sekali seminggu melalui infus selama 30 menit selama 7 minggu diikuti dengan istirahat 1 minggu, kemudian sekali seminggu selama 3 minggu berturut-turut dari setiap siklus 4 minggu. Dosis dapat dikurangi dengan setiap siklus atau dengan siklus berdasarkan toksisitas.
+
+Kanker payudara
+
+Dewasa: Pasien dengan kasus yang tidak dapat direseksi, berulang secara lokal, atau metastasis: Terapi kombinasi dengan paclitaxel: 1.250 mg/m2 melalui infus selama 30 menit pada hari 1 dan 8 dari siklus 21 hari. Dosis dapat dikurangi dengan setiap siklus atau dengan siklus berdasarkan toksisitas. Pasien harus memiliki jumlah granulosit absolut 1.500 x 106/L sebelum memulai terapi.
+
+Kanker kandung kemih
+
+Dewasa: Pasien dengan kasus lanjut atau metastasis lokal: Terapi kombinasi dengan cisplatin: 1.000 mg/m2 melalui infus selama 30 menit pada hari 1, 8 dan 15 dari siklus 28 hari. Siklus 4 minggu ini kemudian diulang. Dosis dapat dikurangi dengan setiap siklus atau dengan siklus berdasarkan toksisitas.
+
+Kanker paru-paru non-sel kecil
+
+Dewasa: Pasien dengan kasus lanjut atau metastasis lokal: Monoterapi: 1.000 mg/m2 sekali seminggu melalui infus selama 30 menit selama 3 minggu diikuti dengan istirahat 1 minggu untuk kasus lanjut atau metastasis lokal. Siklus 4 minggu ini kemudian diulang. Terapi kombinasi dg cisplatin: 1.000 mg/m2 melalui infus selama 30 menit pada hari 1, 8, dan 15 dari siklus 28 hari. Alternatifnya, 1.250 mg/m2 melalui infus selama 30 menit pada hari 1 dan 8 dari siklus 21 hari. Dosis dapat dikurangi dengan setiap siklus atau dengan siklus berdasarkan toksisitas.
+
+Kanker ovarium
+
+Dewasa: Pasien dengan kasus epitel stadium lanjut atau metastasis lokal: Terapi kombinasi dengan carboplatin: 1.000 mg/m2 melalui infus selama 30 menit pada hari 1 dan 8 dari siklus 21 hari. Dosis dapat dikurangi dengan setiap siklus atau dengan siklus berdasarkan toksisitas.","Pasien dengan riwayat sirosis, hepatitis, alkoholisme, kejadian KV. Pasien yang menjalani radioterapi. Hepatik (misalnya metastasis hati) dan gangguan ginjal. Kehamilan. Durasi infus berkepanjangan >60 menit atau lebih sering daripada dosis mingguan dapat meningkatkan toksisitas.","Signifikan: Supresi sumsum tulang yang dimanifestasikan oleh neutropenia, trombositopenia, dan anemia; sindrom kebocoran kapiler, sindrom ensefalopati reversibel posterior (PRES).
+Gugup: Somnolen, gejala mirip flu, parestesia.
+CV: Edema perifer.
+GI: Mual, muntah, diare, stomatitis, konstipasi.
+Resp: Dispnea.
+Hepatik: Peningkatan enzim hati sementara (misalnya AST, ALT, bilirubin, alkaline phosphatase).
+Genitourinari: Hematuria, proteinuria, peningkatan BUN.
+Hematologi : Perdarahan
+Muskuloskeletal: Mialgia.
+Dermatologis: Ruam, pruritus, edema, purpura trombositopenik, alopesia, vaskulitis perifer, gangren.
+Imunologi: Infeksi.
+Lainnya: Nyeri, demam, ekstravasasi, reaksi di tempat suntikan.
+Berpotensi Fatal: Hepatotoksisitas berat (misalnya gagal hati), toksisitas paru (misalnya edema paru, fibrosis paru, pneumonitis interstisial, sindrom gangguan pernapasan dewasa), kolitis iskemik dengan nekrosis. Jarang, sindrom uremik hemolitik yang menyebabkan gagal ginjal.",ABINGEM 200; Gemsitabin/ Gemcitabine / Gemcitabine HCl serb inj / lar inj 200 mg; Gemcitabine Hydrochloride 200 mg,Gemcitabine Hydrochloride 200 mg Serbuk Injeksi Liofilisasi,Ya,47136251,3526003047,-,-,import,0.0,0.0,0.0,Indonesia,India,Dus isi 1,738816,1,8 - Antineoplastik Dan Imunomodulator,8.1 - Antineoplastik,FPKTL,2026-04-01
