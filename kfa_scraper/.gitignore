@@ -1,3 +1,4 @@
 *_detail_cache.jsonl
 __pycache__/
 output/scrape.log
+output/*.csv
