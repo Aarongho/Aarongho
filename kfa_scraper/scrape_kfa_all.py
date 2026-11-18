@@ -147,8 +147,8 @@ def packaging_list_row(r):
         "Kode KFA": r.get("kfaCode"),
         "Nama Produk": r.get("variantDisplayName"),
         "Packaging": r.get("packageName"),
-        "Harga Kemasan": r.get("price"),
-        "Contained Quantity Type": r.get("qty"),
+        "Harga Kemasan": fmt_num(r.get("price")) or None,
+        "Contained Quantity Type": fmt_num(r.get("qty")) or None,
         "Unit of Measure": r.get("uomName"),
         "Tipe": (r.get("farmalkesType") or {}).get("name"),
     }
