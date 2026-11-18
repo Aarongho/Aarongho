@@ -161,8 +161,17 @@ def packaging_parse(d):
         "Golongan Obat": (d.get("farmalkesType") or {}).get("name") or "-",
         "Kode LKPP": d.get("lkppCode") or "-",
         "Discontinued": yes(d.get("isDiscontinued")),
-        "Referensi Identifier (Nama)": names(d.get("identifiers")),
     }
+    # Referensi Identifier Produk Aktual Kemasan: satu kolom per field, urutan sama
+    ids = d.get("identifiers") or []
+    for col, get in [("Nama", lambda i: i.get("name")),
+                     ("Kode", lambda i: i.get("code")),
+                     ("Harga", lambda i: fmt_num(i.get("price"))),
+                     ("Sumber", lambda i: i.get("sourceName")),
+                     ("URL", lambda i: i.get("url")),
+                     ("Start Date", lambda i: (i.get("startDate") or "")[:10]),
+                     ("End Date", lambda i: (i.get("endDate") or "")[:10])]:
+        out[f"Referensi Identifier ({col})"] = "; ".join((get(i) or "-") for i in ids) or None
     out.update(hierarchy_cols(d, ["POV", "POA", "POAK"]))
     poa = [h for h in d.get("hierarchies") or [] if h.get("type") == "POA"]
     pov = [h for h in d.get("hierarchies") or [] if h.get("type") == "POV"]
