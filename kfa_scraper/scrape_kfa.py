@@ -167,21 +167,31 @@ def parse_detail(d):
     out["Contained Quantity Type"] = "; ".join(fmt_num(p.get("qty")) for p in pk) or None
 
     # ===================== TAB: Formula Nasional (start date terbaru) =====================
-    fornas = [f for f in tmpl.get("fornases") or [] if f.get("startDate")]
-    if fornas:
-        latest = max(f["startDate"] for f in fornas)
-        rows = [f for f in fornas if f["startDate"] == latest]
-        def fkt(level):
-            return join_unique(f"{x.get('code')} - {x.get('name')}" for f in rows
-                               for x in f.get("fkts") or [] if str(x.get("level")) == level)
-        out["Kelas Terapi"] = fkt("1")
-        out["Sub Kelas Terapi"] = fkt("2")
-        out["Tingkat Faskes"] = join_unique(f.get("tingkatFaskesName") for f in rows)
-        out["Fornas Start Date"] = latest[:10]
-    else:
-        out["Kelas Terapi"] = out["Sub Kelas Terapi"] = out["Tingkat Faskes"] = out["Fornas Start Date"] = None
+    out.update(parse_fornas(tmpl.get("fornases")))
 
     return out
+
+
+def parse_fornas(fornases):
+    """Kolom Formula Nasional, diambil dari baris dengan start date terbaru."""
+    cols = ["Formula Nasional (Nama Produk)", "Kelas Terapi", "Sub Kelas Terapi",
+            "Tingkat Faskes", "Fornas Start Date"]
+    fornas = [f for f in fornases or [] if f.get("startDate")]
+    if not fornas:
+        return dict.fromkeys(cols)
+    latest = max(f["startDate"] for f in fornas)
+    rows = [f for f in fornas if f["startDate"] == latest]
+
+    def fkt(level):
+        return join_unique(f"{x.get('code')} - {x.get('name')}" for f in rows
+                           for x in f.get("fkts") or [] if str(x.get("level")) == level)
+    return {
+        "Formula Nasional (Nama Produk)": join_unique(f.get("name") for f in rows),
+        "Kelas Terapi": fkt("1"),
+        "Sub Kelas Terapi": fkt("2"),
+        "Tingkat Faskes": join_unique(f.get("tingkatFaskesName") for f in rows),
+        "Fornas Start Date": latest[:10],
+    }
 
 
 def html_to_text(h):
