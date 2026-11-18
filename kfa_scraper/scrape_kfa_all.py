@@ -265,7 +265,10 @@ def run_tab(name, cfg, outdir, limit, workers):
     full = []
     for r in rows:
         d = cache.get(r["Kode KFA"])
-        row = {**r, **cfg["parse"](d)} if d and "_status" not in d else dict(r)
+        if d and "_status" in d:  # detail 404 di website -> tidak dimasukkan
+            print(f"  dilewati {r['Kode KFA']}: {d['_status']}")
+            continue
+        row = {**r, **cfg["parse"](d)} if d else dict(r)
         row["Status Scrape"] = "gagal" if not d else d.get("_status", "ok")
         full.append(row)
     df = pd.DataFrame(full)
