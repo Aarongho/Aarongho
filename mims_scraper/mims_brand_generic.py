@@ -304,7 +304,11 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                     continue
                 info = await scrape_detail(detail_page, link)
                 if info:
-                    mtype = fixed_mtype or mtype_of(link)
+                    # tipe dari link obat (halaman brand juga memuat link generic); kalau
+                    # link tidak menyebut tipe, pakai tipe halaman pencarian
+                    mtype = mtype_of(link)
+                    if mtype == "unknown" and fixed_mtype:
+                        mtype = fixed_mtype
                     rows.append({"Type": mtype, "Category Code": category or "", "Link": link, **info})
                     done.add(link)
                     print(f"  ✅ [{mtype}] {info['Name']}")
@@ -355,6 +359,9 @@ def merge_to_excel():
         print("⚠️ Belum ada data di output_mims/parts")
         return
     df = pd.concat([pd.read_csv(f, dtype=str) for f in files], ignore_index=True)
+    # perbaiki tipe dari link (data lama bisa tertandai brand padahal link generic)
+    from_link = df["Link"].map(mtype_of)
+    df["Type"] = from_link.where(from_link != "unknown", df["Type"])
     df["Category Code"] = df["Category Code"].fillna("")
     cats = df.groupby("Link")["Category Code"].apply(lambda s: "; ".join(dict.fromkeys(x for x in s if x)))
     df = df.drop_duplicates("Link").copy()
