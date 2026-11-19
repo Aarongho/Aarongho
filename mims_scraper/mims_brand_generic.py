@@ -406,6 +406,11 @@ async def scrape_detail(page, link):
                     if (!packRows.length)   // gagal dipecah -> simpan teks utuh
                         document.querySelectorAll(".packing-price-header")
                             .forEach(h => addSection(h, ".packing-price-content"));
+                    // Disclaimer di bawah halaman
+                    const disc = Array.from(document.querySelectorAll("p,div,span,small,footer,section"))
+                        .filter(e => /^\\s*Disclaimer:/i.test(e.innerText || ""))
+                        .sort((a, b) => a.innerText.length - b.innerText.length)[0];
+                    if (disc) data["Disclaimer"] = disc.innerText.trim().replace(/^Disclaimer:\\s*/i, "");
                     // Cadangan: SEMUA teks halaman obat, supaya tidak ada isi yang hilang
                     const main = document.querySelector(".monograph, #monograph, main, .main-content, article")
                                  || document.body;
@@ -548,10 +553,50 @@ def split_packing(text):
     return [tuple(p) for p in pairs if p[0] or p[1]]
 
 
+ACTION_KEYS = ("Mechanism of Action", "Duration", "Onset", "Absorption", "Distribution", "Metabolism",
+               "Excretion", "Toxicology", "Pharmacodynamics")
+
+
+def split_action(text):
+    """Action -> Action (Mechanism of Action), Action (Absorption), dst."""
+    out, cur = {}, None
+    for line in str(text).splitlines():
+        line = line.strip()
+        if not line or line.rstrip(":") in ("Description", "Pharmacokinetics"):
+            continue
+        m = re.match(r"^([A-Za-z ]{3,30}):\s*(.*)$", line)
+        if m and m.group(1).strip() in ACTION_KEYS:
+            cur = f"Action ({m.group(1).strip()})"; out[cur] = m.group(2).strip()
+        elif cur:
+            out[cur] += " " + line
+    return out
+
+
+def tidy_tables(x):
+    """Tabel (mis. Renal Impairment: CrCl | Dosage) -> baris 'sel | sel', tanpa baris kosong berlebih."""
+    if not isinstance(x, str) or "\t" not in x:
+        return x
+    lines = [" | ".join(c.strip() for c in l.split("\t") if c.strip()) for l in x.splitlines()]
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
+
+
 def clean_df(df):
     # buang teks tombol/link seperti "Click to view ... prescribing information"
     for c in df.columns:
         df[c] = df[c].map(lambda x: NOISE.sub("", x).strip() if isinstance(x, str) else x)
+    for c in df.columns:
+        df[c] = df[c].map(tidy_tables)
+    if "Action" in df:
+        parts = df["Action"].map(lambda x: split_action(x) if isinstance(x, str) else {})
+        for d in parts:
+            for k in d:
+                if k not in df:
+                    df[k] = None
+        for i, d in parts.items():
+            for k, v in d.items():
+                df.at[i, k] = v
+            if d:
+                df.at[i, "Action"] = None   # sudah dipecah per sub-bagian
     # satukan kolom "What are the brands available for X in Indonesia?"
     qcols = [c for c in df.columns if c.lower().startswith("what are the brands available")]
     if qcols:
@@ -580,6 +625,61 @@ def clean_df(df):
     return df.replace("", None)
 
 
+POP_RE = re.compile(r"^([A-Z][A-Za-z /-]{1,30}):\s*(.*)$")
+
+
+ROUTE_WORDS = ("oral", "intravenous", "intramuscular", "subcutaneous", "topical", "ophthalmic", "otic",
+               "nasal", "intranasal", "rectal", "vaginal", "inhalation", "transdermal", "sublingual",
+               "buccal", "parenteral", "intrathecal", "epidural", "intradermal", "intravitreal",
+               "intra-articular", "intralesional", "intravesical", "cutaneous", "dental", "local",
+               "infiltration", "intraocular", "intracameral", "intracavernosal", "intraosseous",
+               "intraperitoneal", "intrapleural", "intrauterine", "irrigation", "perineural",
+               "respiratory", "dermal", "spinal", "iv", "im", "sc", "nebulisation", "nebulization")
+
+
+def is_route(line):
+    parts = [p.strip().lower() for p in re.split(r",|/|\band\b", line) if p.strip()]
+    return 0 < len(parts) <= 6 and len(line) < 80 and all(
+        any(p == w or p.startswith(w + " ") or p.endswith(" " + w) for w in ROUTE_WORDS) for p in parts)
+
+
+def split_indications(text):
+    """'Indications and Dosage' generic -> list baris: Route, Indication, Adult, Child, Elderly, ..."""
+    rows, cur, last = [], None, None
+    for line in [l.strip() for l in str(text).splitlines()]:
+        if not line:
+            continue
+        m = POP_RE.match(line)
+        if is_route(line):
+            cur = {"Route": line}; rows.append(cur); last = "Route"
+        elif cur is None:
+            cur = {"Route": "", "Indication": line}; rows.append(cur); last = "Indication"
+        elif last == "Route":
+            cur["Indication"] = line; last = "Indication"
+        elif m and len(m.group(1).split()) <= 3:
+            pop = m.group(1).strip()
+            cur[pop] = (cur[pop] + " " + m.group(2)).strip() if pop in cur else m.group(2)
+            last = pop
+        else:   # lanjutan teks sebelumnya
+            cur[last] = (cur.get(last, "") + " " + line).strip()
+    return rows
+
+
+def indications_sheet(df):
+    out = []
+    if "Indications and Dosage" not in df:
+        return pd.DataFrame()
+    for _, r in df[df["Indications and Dosage"].notna()].iterrows():
+        for n, row in enumerate(split_indications(r["Indications and Dosage"]), 1):
+            out.append({"Name": r["Name"], "No": n, **row, "Link": r["Link"]})
+    t = pd.DataFrame(out)
+    if t.empty:
+        return t
+    first = ["Name", "No", "Route", "Indication", "Adult", "Child", "Elderly"]
+    cols = [c for c in first if c in t] + [c for c in t if c not in first and c != "Link"] + ["Link"]
+    return t[cols]
+
+
 SAMPLE_SLUGS = ["aciblock", "acidrine", "acitral", "acran", "ranitidine?mtype=generic", "arcolase"]
 
 
@@ -598,12 +698,15 @@ def merge_to_excel():
     df["Category Code"] = df["Link"].map(cats)
     df = clean_df(df)
     front = ["Type", "Name", "Category Code", "Manufacturer", "Distributor", "Marketer",
-             "Contents", "Indications/Uses", "Dosage/Direction for Use", "Administration",
+             "Contents", "Indications/Uses", "Dosage/Direction for Use", "Indications and Dosage",
+             "Renal Impairment", "Hepatic Impairment", "Reconstitution", "Incompatibility", "Administration",
              "Overdosage", "Contraindications", "Special Precautions", "Use In Pregnancy & Lactation",
-             "Adverse Reactions", "Drug Interactions", "Caution For Usage", "Storage",
-             "Description", "Action", "Mechanism of Action", "MIMS Class", "ATC Classification",
-             "Regulatory Classification", "Brands Available in Indonesia", "Other Known Brands",
-             "Presentation/Packing", "Link", "Source URL", "Logged In", "Full Page Text"]
+             "Adverse Reactions", "Patient Counseling Information", "Monitoring Parameters",
+             "Drug Interactions", "Food Interaction", "Lab Interference", "Caution For Usage", "Storage",
+             "Description", "Action", "Mechanism of Action"] + [f"Action ({k})" for k in ACTION_KEYS] + [ "MIMS Class", "ATC Classification",
+             "Regulatory Classification", "Pregnancy Category (US FDA)", "Chemical Structure", "References",
+             "Brands Available in Indonesia", "Other Known Brands",
+             "Presentation/Packing", "Disclaimer", "Link", "Source URL", "Logged In", "Full Page Text"]
     pack_cols = sorted([c for c in df.columns if re.match(r"^(Form|Packing/Price) \d+$", c)],
                        key=lambda c: (int(c.split()[-1]), not c.startswith("Form")))
     tail = [c for c in ("Link", "Source URL", "Logged In", "Full Page Text") if c in df]
@@ -615,7 +718,11 @@ def merge_to_excel():
         part = part.dropna(axis=1, how="all")
         part.to_csv(OUTPUT_DIR / f"mims_{mtype}.csv", index=False, encoding="utf-8-sig")
         xl = part.apply(lambda col: col.map(lambda x: x[:EXCEL_CELL_LIMIT] if isinstance(x, str) else x))
-        xl.to_excel(OUTPUT_DIR / f"mims_{mtype}.xlsx", index=False)
+        ind = indications_sheet(part)
+        with pd.ExcelWriter(OUTPUT_DIR / f"mims_{mtype}.xlsx") as w:
+            xl.to_excel(w, sheet_name="Obat", index=False)
+            if not ind.empty:   # 1 baris per Rute x Indikasi (Adult / Child terpisah)
+                ind.to_excel(w, sheet_name="Indications and Dosage", index=False)
         print(f"📗 {mtype}: {len(part)} obat, {len(part.columns)} kolom -> {OUTPUT_DIR / f'mims_{mtype}.xlsx'}")
     if "unknown" in set(df["Type"]):
         print("ℹ️ Ada obat bertipe 'unknown' (link tanpa mtype). Kirim contoh link-nya agar bisa dipisahkan.")
