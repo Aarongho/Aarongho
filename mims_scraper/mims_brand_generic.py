@@ -54,9 +54,9 @@ PROFILE_DIR = Path("mims_browser_profile")
 MAX_PAGE_RETRY = 3
 MAX_DETAIL_RETRY = 3
 MAX_PAGES = 200                       # pengaman agar paging tidak berputar terus
-DELAY_BETWEEN_DETAILS = (6.0, 12.0)   # detik antar obat; lebih pelan = lebih jarang captcha
-BREAK_EVERY = (40, 60)                # istirahat setelah sekian obat (acak)
-BREAK_SECONDS = (120, 300)            # lama istirahat: 2-5 menit
+DELAY_BETWEEN_DETAILS = (15.0, 30.0)  # detik antar obat; lebih pelan = lebih jarang captcha
+BREAK_EVERY = (12, 18)                # istirahat setelah sekian obat (acak)
+BREAK_SECONDS = (300, 600)            # lama istirahat: 5-10 menit
 _counter = {"n": 0, "next": None}
 CHALLENGE_WAIT = 900                  # detik menunggu kamu menyelesaikan captcha / cek "bukan robot"
 LOGIN_FILE = Path("login.txt")        # baris 1 = email MIMS, baris 2 = password (opsional, untuk auto login)
@@ -218,7 +218,7 @@ async def pace():
     _counter["n"] += 1
     if _counter["n"] >= _counter["next"]:
         secs = random.uniform(*BREAK_SECONDS)
-        print(f"  ☕ Istirahat {secs / 60:.1f} menit (setiap ±50 obat) supaya tidak kena captcha...")
+        print(f"  ☕ Istirahat {secs / 60:.1f} menit (setiap ±15 obat) supaya tidak kena captcha...")
         await asyncio.sleep(secs)
         _counter["n"], _counter["next"] = 0, random.randint(*BREAK_EVERY)
     else:
