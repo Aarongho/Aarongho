@@ -41,8 +41,7 @@ from urllib.parse import parse_qs, quote_plus, urlparse
 import pandas as pd
 from playwright.async_api import async_playwright
 
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+# (Windows: Python 3.8+ sudah memakai Proactor event loop secara default, tidak perlu diset.)
 
 # ================= CONFIG =================
 BASE = "https://www.mims.com/indonesia"
@@ -373,11 +372,27 @@ def merge_to_excel():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Scraper MIMS Indonesia (brand & generic)")
-    ap.add_argument("mode", choices=["alphabet", "class", "merge"])
+    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge"])
     ap.add_argument("items", nargs="*", help="huruf (alphabet) atau kode kelas (class); kosong = semua")
     ap.add_argument("--mtype", nargs="+", choices=MTYPES, default=MTYPES, help="untuk mode class")
     ap.add_argument("--headless", action="store_true", help="tanpa jendela (sering diblokir Cloudflare)")
     args = ap.parse_args()
+
+    if not args.mode:  # dijalankan tanpa argumen (mis. tombol Run di editor) -> menu
+        print("Pilih mode:")
+        print("  1. Alfabet (browse/alphabet/<huruf>)")
+        print("  2. Kelas MIMS (1a, 1b, ... 40c)")
+        print("  3. Gabung hasil yang sudah ada ke Excel")
+        choice = input("Nomor [1/2/3]: ").strip()
+        args.mode = {"1": "alphabet", "2": "class", "3": "merge"}.get(choice)
+        if not args.mode:
+            sys.exit("Pilihan tidak valid.")
+        if args.mode == "alphabet":
+            ans = input("Huruf (pisahkan spasi, kosong = semua a-z), mis. 'a' atau 'a b c': ")
+            args.items = ans.lower().split()
+        elif args.mode == "class":
+            ans = input("Kode kelas (pisahkan spasi, kosong = semua), mis. '1a' atau '1a 1b': ")
+            args.items = ans.lower().split()
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     if args.mode != "merge":
