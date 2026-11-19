@@ -475,6 +475,58 @@ async def main_scrape(args):
 
 
 # ================= GABUNG KE EXCEL =================
+NOISE = re.compile(r"\n?\s*(Click to view .*? (detailed )?prescribing information|View ADR Reporting Link|See More)\s*$",
+                   re.I | re.M)
+
+
+def split_packing(text):
+    """'Form\\nX\\nPacking/Price\\nY\\nForm\\n...' -> [(X, Y), ...]"""
+    lines = [l.strip() for l in str(text).splitlines() if l.strip()]
+    pairs, cur, mode = [], None, None
+    for l in lines:
+        if l.lower() == "form":
+            cur = [ "", "" ]; pairs.append(cur); mode = 0
+        elif l.lower() in ("packing/price", "packing"):
+            if cur is None:
+                cur = ["", ""]; pairs.append(cur)
+            mode = 1
+        elif cur is not None and mode is not None:
+            cur[mode] = (cur[mode] + "; " + l) if cur[mode] else l
+    return [tuple(p) for p in pairs if p[0] or p[1]]
+
+
+def clean_df(df):
+    # buang teks tombol/link seperti "Click to view ... prescribing information"
+    for c in df.columns:
+        df[c] = df[c].map(lambda x: NOISE.sub("", x).strip() if isinstance(x, str) else x)
+    # satukan kolom "What are the brands available for X in Indonesia?"
+    qcols = [c for c in df.columns if c.lower().startswith("what are the brands available")]
+    if qcols:
+        df["Brands Available in Indonesia"] = df[qcols].bfill(axis=1).iloc[:, 0]
+        df = df.drop(columns=qcols)
+    for c in ("Brands Available in Indonesia", "Other Known Brands"):
+        if c in df:
+            df[c] = df[c].map(lambda x: "; ".join(l.strip() for l in x.splitlines() if l.strip())
+                              if isinstance(x, str) else x)
+    # pecah Presentation/Packing -> Form N / Packing/Price N (kalau belum dipecah)
+    if "Presentation/Packing" in df:
+        for i, txt in df["Presentation/Packing"].items():
+            if not isinstance(txt, str) or not txt.strip():
+                continue
+            if any(isinstance(df.at[i, c], str) and df.at[i, c] for c in df.columns if c.startswith("Form ")):
+                continue
+            for n, (form, pack) in enumerate(split_packing(txt), 1):
+                for col, val in ((f"Form {n}", form), (f"Packing/Price {n}", pack)):
+                    if col not in df:
+                        df[col] = None
+                    df.at[i, col] = val
+        pc = [c for c in df.columns if c.startswith("Form ")]
+        if pc:
+            filled = df[pc].notna().any(axis=1)
+            df.loc[filled, "Presentation/Packing"] = None
+    return df.replace("", None)
+
+
 def merge_to_excel():
     files = sorted((OUTPUT_DIR / "parts").glob("*.csv"))
     if not files:
@@ -488,12 +540,14 @@ def merge_to_excel():
     cats = df.groupby("Link")["Category Code"].apply(lambda s: "; ".join(dict.fromkeys(x for x in s if x)))
     df = df.drop_duplicates("Link").copy()
     df["Category Code"] = df["Link"].map(cats)
+    df = clean_df(df)
     front = ["Type", "Name", "Category Code", "Manufacturer", "Distributor", "Marketer",
              "Contents", "Indications/Uses", "Dosage/Direction for Use", "Administration",
              "Overdosage", "Contraindications", "Special Precautions", "Use In Pregnancy & Lactation",
              "Adverse Reactions", "Drug Interactions", "Caution For Usage", "Storage",
              "Description", "Action", "Mechanism of Action", "MIMS Class", "ATC Classification",
-             "Regulatory Classification", "Presentation/Packing", "Link", "Source URL", "Logged In"]
+             "Regulatory Classification", "Brands Available in Indonesia", "Other Known Brands",
+             "Presentation/Packing", "Link", "Source URL", "Logged In"]
     pack_cols = sorted([c for c in df.columns if re.match(r"^(Form|Packing/Price) \d+$", c)],
                        key=lambda c: (int(c.split()[-1]), not c.startswith("Form")))
     tail = [c for c in ("Link", "Source URL", "Logged In") if c in df]
