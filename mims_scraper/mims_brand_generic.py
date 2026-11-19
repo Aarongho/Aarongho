@@ -326,6 +326,36 @@ async def dump_samples(slugs):
     print(f"\n✅ Selesai. Zip folder {OUTPUT_DIR / 'debug'} lalu kirim ke saya.")
 
 
+async def open_full_prescribing(page):
+    """Brand: buka tab 'Full Prescribing Info' kalau ada. Kalau tidak ada, tetap di Concise (basic)."""
+    try:
+        target = await page.evaluate("""
+            () => {
+                const a = Array.from(document.querySelectorAll("a"))
+                    .find(a => /^\\s*full prescribing info(rmation)?\\s*$/i.test(a.innerText || ""));
+                if (!a) return null;
+                const href = a.getAttribute("href") || "";
+                const here = location.href.split("#")[0];
+                if (href && !href.startsWith("#") && !href.startsWith("javascript") && a.href.split("#")[0] !== here)
+                    return {go: a.href};
+                a.click();
+                return {clicked: true};
+            }
+        """)
+        if not target:
+            return
+        if target.get("go"):
+            await page.goto(target["go"], wait_until="domcontentloaded", timeout=60000)
+            await pass_challenge(page)
+            await page.wait_for_selector("h1", timeout=20000)
+            await expand_all(page)
+        else:
+            await asyncio.sleep(1.5)
+            await expand_all(page)
+    except Exception as e:
+        print(f"  ⚠️ Gagal buka Full Prescribing Info, pakai Concise: {e}")
+
+
 async def scrape_detail(page, link):
     for attempt in range(1, MAX_DETAIL_RETRY + 1):
         try:
@@ -340,9 +370,22 @@ async def scrape_detail(page, link):
                 }
             """, timeout=20000)
             await expand_all(page)
+            await open_full_prescribing(page)
             info = await page.evaluate("""
                 () => {
                     const data = {};
+                    // Kalau ada judul "Full Prescribing Info" di isi halaman, ambil section SESUDAHNYA saja
+                    // (Full). Kalau tidak ada, pakai semua section (Concise / basic).
+                    const isFullTitle = e => /^\\s*full prescribing info(rmation)?\\s*$/i.test(e.innerText || "")
+                        && !e.closest("a, li, nav, ul") && e.offsetParent !== null;
+                    const marker = Array.from(document.querySelectorAll("h1,h2,h3,h4,div,span,p"))
+                        .filter(isFullTitle).filter(e => !Array.from(e.children).some(isFullTitle)).pop();
+                    const inScope = el => !marker ||
+                        (marker.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING);
+                    const bodyText = document.body.innerText;
+                    data["Prescribing Info"] = marker ? "Full"
+                        : /Basic Prescribing Info/i.test(bodyText) ? "Basic"
+                        : /Concise Prescribing Info/i.test(bodyText) ? "Concise" : "";
                     const h1 = document.querySelector("h1");
                     data["Name"] = h1 ? h1.innerText.trim() : null;
                     data["Source URL"] = location.href;
@@ -369,10 +412,16 @@ async def scrape_detail(page, link):
                             ? data[title] + "\\n" + content : content;
                     };
                     document.querySelectorAll(".monograph-section-header")
-                        .forEach(h => addSection(h, ".monograph-section-content"));
+                        .forEach(h => { if (inScope(h)) addSection(h, ".monograph-section-content"); });
+                    // Section yang hanya ada di Concise (tidak ada di Full) tetap diambil
+                    if (marker) document.querySelectorAll(".monograph-section-header").forEach(h => {
+                        const t = h.innerText.trim().replace(/:$/, "");
+                        if (!inScope(h) && t && !(t in data)) addSection(h, ".monograph-section-content");
+                    });
                     // Presentation/Packing -> dipecah per Form: "Form N" + "Packing/Price N"
                     const packRows = [];
                     document.querySelectorAll(".packing-price-header").forEach(head => {
+                        if (!inScope(head)) return;
                         let box = head.nextElementSibling;
                         let n = head.nextElementSibling;
                         while (n && !n.matches(".packing-price-content")) n = n.nextElementSibling;
@@ -713,7 +762,7 @@ def merge_to_excel():
     df = df.drop_duplicates("Link").copy()
     df["Category Code"] = df["Link"].map(cats)
     df = clean_df(df)
-    front = ["Type", "Name", "Category Code", "Manufacturer", "Distributor", "Marketer",
+    front = ["Type", "Name", "Category Code", "Prescribing Info", "Manufacturer", "Distributor", "Marketer",
              "Contents", "Indications/Uses", "Dosage/Direction for Use", "Indications and Dosage",
              "Renal Impairment", "Hepatic Impairment", "Reconstitution", "Incompatibility", "Administration",
              "Overdosage", "Contraindications", "Special Precautions", "Use In Pregnancy & Lactation",
