@@ -54,7 +54,10 @@ PROFILE_DIR = Path("mims_browser_profile")
 MAX_PAGE_RETRY = 3
 MAX_DETAIL_RETRY = 3
 MAX_PAGES = 200                       # pengaman agar paging tidak berputar terus
-DELAY_BETWEEN_DETAILS = (3.0, 6.0)    # detik; lebih pelan = lebih jarang muncul captcha
+DELAY_BETWEEN_DETAILS = (6.0, 12.0)   # detik antar obat; lebih pelan = lebih jarang captcha
+BREAK_EVERY = (40, 60)                # istirahat setelah sekian obat (acak)
+BREAK_SECONDS = (120, 300)            # lama istirahat: 2-5 menit
+_counter = {"n": 0, "next": None}
 CHALLENGE_WAIT = 900                  # detik menunggu kamu menyelesaikan captcha / cek "bukan robot"
 LOGIN_FILE = Path("login.txt")        # baris 1 = email MIMS, baris 2 = password (opsional, untuk auto login)
 EXIT_NEED_HUMAN = 2                   # kode keluar: perlu tindakan manusia -> .bat TIDAK restart otomatis
@@ -206,6 +209,20 @@ async def pass_challenge(page):
     print("  🛑 Captcha tidak diselesaikan dalam 15 menit. Script berhenti; progres tersimpan.")
     print("     Jalankan lagi JALANKAN_SEMUA.bat untuk lanjut dari checkpoint.")
     raise SystemExit(EXIT_NEED_HUMAN)
+
+
+async def pace():
+    """Jeda antar obat + istirahat berkala, supaya beban ke MIMS ringan dan captcha jarang muncul."""
+    if _counter["next"] is None:
+        _counter["next"] = random.randint(*BREAK_EVERY)
+    _counter["n"] += 1
+    if _counter["n"] >= _counter["next"]:
+        secs = random.uniform(*BREAK_SECONDS)
+        print(f"  ☕ Istirahat {secs / 60:.1f} menit (setiap ±50 obat) supaya tidak kena captcha...")
+        await asyncio.sleep(secs)
+        _counter["n"], _counter["next"] = 0, random.randint(*BREAK_EVERY)
+    else:
+        await asyncio.sleep(random.uniform(*DELAY_BETWEEN_DETAILS))
 
 
 async def is_captcha(page):
@@ -665,7 +682,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
         else:
             skipped.add(link)          # dicatat, dicoba lagi saat run berikutnya
         save_skipped()
-        await asyncio.sleep(random.uniform(*DELAY_BETWEEN_DETAILS))
+        await pace()
 
     if done_flag.exists():
         if not skipped:
