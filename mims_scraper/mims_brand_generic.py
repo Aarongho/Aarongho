@@ -296,11 +296,28 @@ async def scrape_detail(page, link):
                         const val = h.nextElementSibling?.innerText.trim();
                         if (label && val && !(label in data)) data[label] = val;
                     });
-                    document.querySelectorAll(".monograph-section-header").forEach(sec => {
-                        const title = sec.innerText.trim();
-                        const content = sec.nextElementSibling?.innerText.trim();
-                        if (title && content) data[title] = content;
-                    });
+                    // Semua section monograf (Contents, Indications/Uses, Dosage/Direction for Use,
+                    // Administration, Contraindications, Special Precautions, Adverse Reactions,
+                    // Drug Interactions, MIMS Class, ATC Classification, dst.) -> 1 kolom per judul
+                    const addSection = (head, contentSel) => {
+                        const title = head.innerText.trim().replace(/:$/, "");
+                        if (!title) return;
+                        let el = head.nextElementSibling;
+                        if (contentSel) {
+                            let n = head.nextElementSibling;
+                            while (n && !n.matches(contentSel)) n = n.nextElementSibling;
+                            if (n) el = n;
+                        }
+                        const content = el ? el.innerText.trim() : "";
+                        if (!content) return;
+                        data[title] = (title in data && data[title] !== content)
+                            ? data[title] + "\n" + content : content;
+                    };
+                    document.querySelectorAll(".monograph-section-header")
+                        .forEach(h => addSection(h, ".monograph-section-content"));
+                    // Presentation/Packing memakai elemen berbeda
+                    document.querySelectorAll(".packing-price-header")
+                        .forEach(h => addSection(h, ".packing-price-content"));
                     return data;
                 }
             """)
@@ -420,7 +437,12 @@ def merge_to_excel():
     cats = df.groupby("Link")["Category Code"].apply(lambda s: "; ".join(dict.fromkeys(x for x in s if x)))
     df = df.drop_duplicates("Link").copy()
     df["Category Code"] = df["Link"].map(cats)
-    front = ["Type", "Name", "Category Code", "Link", "Source URL"]
+    front = ["Type", "Name", "Category Code", "Manufacturer", "Distributor", "Marketer",
+             "Contents", "Indications/Uses", "Dosage/Direction for Use", "Administration",
+             "Overdosage", "Contraindications", "Special Precautions", "Use In Pregnancy & Lactation",
+             "Adverse Reactions", "Drug Interactions", "Caution For Usage", "Storage",
+             "Description", "Action", "Mechanism of Action", "MIMS Class", "ATC Classification",
+             "Regulatory Classification", "Presentation/Packing", "Link", "Source URL", "Logged In"]
     df = df[[c for c in front if c in df] + [c for c in df.columns if c not in front]]
 
     for mtype, part in df.groupby("Type"):
