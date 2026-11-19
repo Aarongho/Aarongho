@@ -24,7 +24,9 @@ Penting:
     folder "mims_browser_profile". Kalau muncul pemeriksaan Cloudflare / "Verify you
     are human", selesaikan sendiri di jendela itu; script menunggu sampai 3 menit.
     Kalau kamu login MIMS di jendela itu, login-nya juga tersimpan untuk run berikutnya.
-  - Kalau terputus, jalankan perintah yang sama lagi: obat yang sudah diambil dilewati.
+  - CHECKPOINT: progres disimpan setiap selesai 1 obat di output_mims/parts/<job>.csv.
+    Kalau terputus, jalankan lagi: obat yang sudah diambil dilewati, dan kelas/huruf yang
+    sudah tuntas (ada file <job>.done) tidak dibuka lagi. Hapus file .done untuk mengulang.
   - Perhatikan Terms of Use MIMS dan jangan percepat jeda antar request.
 
 Install (sekali):
@@ -279,6 +281,10 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
     """job = nama unik (mis. 'alphabet_a' atau 'class_1a_brand')."""
     out = job_csv(job)
     out.parent.mkdir(parents=True, exist_ok=True)
+    done_flag = out.with_suffix(".done")
+    if done_flag.exists():
+        print(f"⏭️  {job} sudah selesai sebelumnya, dilewati.")
+        return
     rows = pd.read_csv(out, dtype=str).to_dict("records") if out.exists() else []
     done = {r.get("Link") for r in rows}
     if rows:
@@ -295,6 +301,8 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
             new = [l for l in links if l not in seen_links]
             if not new:
                 print(f"🛑 [{job}] tidak ada link baru, selesai.")
+                if n > 1 or rows:   # jangan tandai selesai kalau halaman pertama gagal/kosong
+                    done_flag.write_text("selesai", encoding="utf-8")
                 break
             seen_links.update(new)
             print(f"  🔗 {len(new)} link obat")
@@ -311,6 +319,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                         mtype = fixed_mtype
                     rows.append({"Type": mtype, "Category Code": category or "", "Link": link, **info})
                     done.add(link)
+                    pd.DataFrame(rows).to_csv(out, index=False, encoding="utf-8-sig")  # checkpoint per obat
                     print(f"  ✅ [{mtype}] {info['Name']}")
                 await asyncio.sleep(random.uniform(*DELAY_BETWEEN_DETAILS))
             pd.DataFrame(rows).to_csv(out, index=False, encoding="utf-8-sig")
