@@ -199,6 +199,42 @@ async def pass_challenge(page):
     return False
 
 
+async def is_logged_in(page):
+    try:
+        return (await page.locator("#HiddenLoginStatus").get_attribute("value")) == "yes"
+    except Exception:
+        return False
+
+
+async def ensure_login(context):
+    """Tanpa login MIMS hanya memberi isi monograf placeholder. Minta user login sekali."""
+    page = await context.new_page()
+    try:
+        await page.goto(f"{BASE}/drug", wait_until="domcontentloaded", timeout=60000)
+        await pass_challenge(page)
+        if await is_logged_in(page):
+            print("✅ Sudah login MIMS.")
+            return True
+        print("\n" + "!" * 60)
+        print("🔐 BELUM LOGIN. Tanpa login, MIMS hanya menampilkan isi palsu (placeholder).")
+        print("   Silakan klik 'Masuk' / 'Daftar Gratis' di jendela Chrome dan login.")
+        print("   Script menunggu sampai 10 menit...")
+        print("!" * 60)
+        for _ in range(200):
+            await asyncio.sleep(3)
+            try:
+                for p in context.pages:
+                    if "mims.com" in p.url and await is_logged_in(p):
+                        print("✅ Login terdeteksi, scraping dimulai.")
+                        return True
+            except Exception:
+                pass
+        print("⚠️ Tidak login dalam 10 menit. Data yang diambil kemungkinan placeholder!")
+        return False
+    finally:
+        await page.close()
+
+
 async def save_debug(page, name):
     d = OUTPUT_DIR / "debug"
     d.mkdir(parents=True, exist_ok=True)
@@ -227,6 +263,8 @@ async def collect_links(page, url, debug_name):
             links = list(dict.fromkeys(links))
             if links:
                 return links
+            if await page.locator("text=No search result found").count():
+                return []   # daftar sudah habis (normal), tidak perlu debug
         except Exception as e:
             print(f"  ⚠️ Gagal buka halaman (percobaan {attempt}): {e}")
         await asyncio.sleep(3)
@@ -253,6 +291,11 @@ async def scrape_detail(page, link):
                     const h1 = document.querySelector("h1");
                     data["Name"] = h1 ? h1.innerText.trim() : null;
                     data["Source URL"] = location.href;
+                    document.querySelectorAll(".monograph-header h3").forEach(h => {
+                        const label = h.innerText.trim().replace(/:$/, "");
+                        const val = h.nextElementSibling?.innerText.trim();
+                        if (label && val && !(label in data)) data[label] = val;
+                    });
                     document.querySelectorAll(".monograph-section-header").forEach(sec => {
                         const title = sec.innerText.trim();
                         const content = sec.nextElementSibling?.innerText.trim();
@@ -262,6 +305,7 @@ async def scrape_detail(page, link):
                 }
             """)
             if info and info.get("Name"):
+                info["Logged In"] = "Ya" if await is_logged_in(page) else "Tidak"
                 if len(info) <= 2:  # cuma Name + URL -> struktur halaman beda, simpan untuk dicek
                     await save_debug(page, "detail_" + link.rsplit("/", 1)[-1])
                 return info
@@ -350,6 +394,7 @@ async def main_scrape(args):
             str(PROFILE_DIR), headless=args.headless,
             viewport={"width": 1366, "height": 768}, locale="en-US", timezone_id="Asia/Jakarta",
         )
+        await ensure_login(context)
         try:
             for job, url, mtype, cat in jobs:
                 print(f"\n{'=' * 60}\n🚀 {job}\n{'=' * 60}")
