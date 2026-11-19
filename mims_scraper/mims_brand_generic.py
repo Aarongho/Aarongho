@@ -311,13 +311,46 @@ async def scrape_detail(page, link):
                         const content = el ? el.innerText.trim() : "";
                         if (!content) return;
                         data[title] = (title in data && data[title] !== content)
-                            ? data[title] + "\n" + content : content;
+                            ? data[title] + "\\n" + content : content;
                     };
                     document.querySelectorAll(".monograph-section-header")
                         .forEach(h => addSection(h, ".monograph-section-content"));
+                    // Presentation/Packing -> dipecah per Form: "Form N" + "Packing/Price N"
+                    const packRows = [];
+                    document.querySelectorAll(".packing-price-header").forEach(head => {
+                        let box = head.nextElementSibling;
+                        let n = head.nextElementSibling;
+                        while (n && !n.matches(".packing-price-content")) n = n.nextElementSibling;
+                        if (n) box = n;
+                        if (!box) return;
+                        const isHead = t => /^(form|packing\\s*\\/?\\s*&?\\s*price|packing|price)$/i.test(t);
+                        const trs = box.querySelectorAll("tr");
+                        if (trs.length) {                       // format tabel
+                            trs.forEach(tr => {
+                                const cells = Array.from(tr.querySelectorAll("td,th"))
+                                    .map(c => c.innerText.trim()).filter(Boolean);
+                                if (!cells.length || cells.every(isHead)) return;
+                                packRows.push({form: cells[0], pack: cells.slice(1).join("; ")});
+                            });
+                            return;
+                        }
+                        // format teks: baris kemasan biasanya berisi "x 10's", "Rp", "'s", dll.
+                        const isPack = t => /(\\d\\s*['’`]s\\b|[x×]\\s*\\d|\\d\\s*[x×]|rp\\s*\\d|\\(rp|\\d+\\s*(ml|g)\\s*x)/i.test(t);
+                        const lines = box.innerText.split("\\n").map(t => t.trim()).filter(t => t && !isHead(t));
+                        let cur = null;
+                        lines.forEach(t => {
+                            if (isPack(t) && cur) { cur.pack = cur.pack ? cur.pack + "; " + t : t; }
+                            else { cur = {form: t, pack: ""}; packRows.push(cur); }
+                        });
+                    });
+                    packRows.forEach((r, i) => {
+                        data["Form " + (i + 1)] = r.form;
+                        data["Packing/Price " + (i + 1)] = r.pack || "";
+                    });
                     // Presentation/Packing memakai elemen berbeda
-                    document.querySelectorAll(".packing-price-header")
-                        .forEach(h => addSection(h, ".packing-price-content"));
+                    if (!packRows.length)   // gagal dipecah -> simpan teks utuh
+                        document.querySelectorAll(".packing-price-header")
+                            .forEach(h => addSection(h, ".packing-price-content"));
                     return data;
                 }
             """)
@@ -443,7 +476,12 @@ def merge_to_excel():
              "Adverse Reactions", "Drug Interactions", "Caution For Usage", "Storage",
              "Description", "Action", "Mechanism of Action", "MIMS Class", "ATC Classification",
              "Regulatory Classification", "Presentation/Packing", "Link", "Source URL", "Logged In"]
-    df = df[[c for c in front if c in df] + [c for c in df.columns if c not in front]]
+    pack_cols = sorted([c for c in df.columns if re.match(r"^(Form|Packing/Price) \d+$", c)],
+                       key=lambda c: (int(c.split()[-1]), not c.startswith("Form")))
+    tail = [c for c in ("Link", "Source URL", "Logged In") if c in df]
+    head = [c for c in front if c in df and c not in tail]
+    rest = [c for c in df.columns if c not in front and c not in pack_cols]
+    df = df[head + pack_cols + rest + tail]
 
     for mtype, part in df.groupby("Type"):
         part = part.dropna(axis=1, how="all")
