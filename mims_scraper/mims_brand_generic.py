@@ -199,6 +199,14 @@ async def pass_challenge(page):
     return False
 
 
+def is_placeholder(info):
+    """MIMS memberi teks 'Lorem Ipsum' ke pengunjung yang belum login."""
+    vals = [str(v) for k, v in info.items() if k not in ("Name", "Source URL")]
+    keys = [k for k in info if k not in ("Name", "Source URL")]
+    hits = sum("lorem ipsum" in v.lower() for v in vals) + sum(k.lower().startswith("lor") for k in keys)
+    return hits >= 2
+
+
 async def is_logged_in(page):
     try:
         return (await page.locator("#HiddenLoginStatus").get_attribute("value")) == "yes"
@@ -354,6 +362,8 @@ async def scrape_detail(page, link):
                     return data;
                 }
             """)
+            if info and info.get("Name") and is_placeholder(info):
+                return "PLACEHOLDER"
             if info and info.get("Name"):
                 info["Logged In"] = "Ya" if await is_logged_in(page) else "Tidak"
                 if len(info) <= 2:  # cuma Name + URL -> struktur halaman beda, simpan untuk dicek
@@ -405,6 +415,14 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                 if link in done:
                     continue
                 info = await scrape_detail(detail_page, link)
+                if info == "PLACEHOLDER":
+                    print("  🔐 Isi halaman masih Lorem Ipsum (placeholder) -> belum login.")
+                    ok = await ensure_login(detail_page.context)
+                    info = await scrape_detail(detail_page, link)
+                    if info == "PLACEHOLDER":
+                        print("  🛑 Masih placeholder setelah menunggu login. Scraping dihentikan agar")
+                        print("     tidak menyimpan data palsu. Login di jendela Chrome lalu jalankan lagi.")
+                        raise SystemExit(1)
                 if info:
                     # tipe dari link obat (halaman brand juga memuat link generic); kalau
                     # link tidak menyebut tipe, pakai tipe halaman pencarian
