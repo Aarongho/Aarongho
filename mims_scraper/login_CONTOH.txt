@@ -1,0 +1,2 @@
+email_kamu@contoh.com
+password_kamu

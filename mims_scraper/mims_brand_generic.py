@@ -54,8 +54,10 @@ PROFILE_DIR = Path("mims_browser_profile")
 MAX_PAGE_RETRY = 3
 MAX_DETAIL_RETRY = 3
 MAX_PAGES = 200                       # pengaman agar paging tidak berputar terus
-DELAY_BETWEEN_DETAILS = (1.5, 3.0)    # detik
-CHALLENGE_WAIT = 180                  # detik menunggu kamu menyelesaikan cek Cloudflare
+DELAY_BETWEEN_DETAILS = (3.0, 6.0)    # detik; lebih pelan = lebih jarang muncul captcha
+CHALLENGE_WAIT = 900                  # detik menunggu kamu menyelesaikan captcha / cek "bukan robot"
+LOGIN_FILE = Path("login.txt")        # baris 1 = email MIMS, baris 2 = password (opsional, untuk auto login)
+EXIT_NEED_HUMAN = 2                   # kode keluar: perlu tindakan manusia -> .bat TIDAK restart otomatis
 EXCEL_CELL_LIMIT = 32767
 MTYPES = ["brand", "generic"]
 
@@ -194,9 +196,25 @@ async def pass_challenge(page):
         if not any(t in title for t in ("just a moment", "attention required", "verify")):
             return True
         if i == 0:
-            print("  ⏳ Pemeriksaan Cloudflare muncul. Selesaikan di jendela browser (kalau diminta)...")
+            print("  🤖 Captcha / cek 'bukan robot' muncul. Selesaikan di jendela Chrome,")
+            print("     script otomatis lanjut setelah itu (menunggu sampai 15 menit)...")
+            alert()
+        elif i % 60 == 0:
+            alert()   # bunyi lagi tiap 1 menit sebagai pengingat
         await asyncio.sleep(1)
-    return False
+    print("  🛑 Captcha tidak diselesaikan dalam 15 menit. Script berhenti; progres tersimpan.")
+    print("     Jalankan lagi JALANKAN_SEMUA.bat untuk lanjut dari checkpoint.")
+    raise SystemExit(EXIT_NEED_HUMAN)
+
+
+def alert():
+    """Bunyi beep supaya kamu tahu perlu menyelesaikan captcha."""
+    try:
+        import winsound
+        for _ in range(3):
+            winsound.Beep(1000, 300)
+    except Exception:
+        print("\a", end="", flush=True)
 
 
 def is_placeholder(info):
@@ -214,6 +232,62 @@ async def is_logged_in(page):
         return False
 
 
+def read_login():
+    try:
+        lines = [l.strip() for l in LOGIN_FILE.read_text(encoding="utf-8").splitlines() if l.strip()]
+        return (lines[0], lines[1]) if len(lines) >= 2 else None
+    except Exception:
+        return None
+
+
+async def auto_login(page):
+    """Klik 'Masuk/Login', isi email & password dari login.txt, lalu submit. Gagal -> login manual."""
+    creds = read_login()
+    if not creds:
+        return False
+    email, password = creds
+    print("🔑 Mencoba login otomatis dengan login.txt ...")
+    try:
+        for label in ("Masuk", "Log in", "Login", "Sign in"):
+            btn = page.get_by_role("link", name=label, exact=False)
+            if not await btn.count():
+                btn = page.get_by_role("button", name=label, exact=False)
+            if await btn.count():
+                await btn.first.click()
+                break
+        await page.wait_for_selector('input[type="password"]', timeout=30000)
+        await pass_challenge(page)
+        user_box = page.locator('input[type="email"], input[name*="mail" i], input[name*="user" i], '
+                                'input[id*="mail" i], input[id*="user" i]').first
+        await user_box.fill(email)
+        pw = page.locator('input[type="password"]').first
+        # beberapa form minta email dulu lalu "Next" sebelum password muncul
+        if not await pw.is_visible():
+            await page.keyboard.press("Enter")
+            await pw.wait_for(state="visible", timeout=15000)
+        await pw.fill(password)
+        await pw.press("Enter")
+        for _ in range(30):
+            await asyncio.sleep(2)
+            await pass_challenge(page)
+            if "mims.com" in page.url:
+                try:
+                    if await is_logged_in(page):
+                        print("✅ Login otomatis berhasil.")
+                        return True
+                except Exception:
+                    pass
+        await page.goto(f"{BASE}/drug", wait_until="domcontentloaded", timeout=60000)
+        if await is_logged_in(page):
+            print("✅ Login otomatis berhasil.")
+            return True
+    except SystemExit:
+        raise
+    except Exception as e:
+        print(f"  ⚠️ Login otomatis gagal ({e}). Silakan login manual.")
+    return False
+
+
 async def ensure_login(context):
     """Tanpa login MIMS hanya memberi isi monograf placeholder. Minta user login sekali."""
     page = await context.new_page()
@@ -222,6 +296,8 @@ async def ensure_login(context):
         await pass_challenge(page)
         if await is_logged_in(page):
             print("✅ Sudah login MIMS.")
+            return True
+        if await auto_login(page):
             return True
         print("\n" + "!" * 60)
         print("🔐 BELUM LOGIN. Tanpa login, MIMS hanya menampilkan isi palsu (placeholder).")
@@ -529,7 +605,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                     if info == "PLACEHOLDER":
                         print("  🛑 Masih placeholder setelah menunggu login. Scraping dihentikan agar")
                         print("     tidak menyimpan data palsu. Login di jendela Chrome lalu jalankan lagi.")
-                        raise SystemExit(1)
+                        raise SystemExit(EXIT_NEED_HUMAN)
                 if info:
                     # tipe dari link obat (halaman brand juga memuat link generic); kalau
                     # link tidak menyebut tipe, pakai tipe halaman pencarian
