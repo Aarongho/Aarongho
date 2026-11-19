@@ -262,51 +262,72 @@ def read_login():
         return None
 
 
-async def auto_login(page):
-    """Klik 'Masuk/Login', isi email & password dari login.txt, lalu submit. Gagal -> login manual."""
-    creds = read_login()
-    if not creds:
-        return False
-    email, password = creds
-    print("🔑 Mencoba login otomatis dengan login.txt ...")
+async def click_login(page):
+    """Klik tombol 'Login / Masuk' di MIMS. Return True kalau ada yang diklik."""
     try:
-        for label in ("Masuk", "Log in", "Login", "Sign in"):
-            btn = page.get_by_role("link", name=label, exact=False)
-            if not await btn.count():
-                btn = page.get_by_role("button", name=label, exact=False)
-            if await btn.count():
-                await btn.first.click()
-                break
-        await page.wait_for_selector('input[type="password"]', timeout=30000)
-        await pass_challenge(page)
-        user_box = page.locator('input[type="email"], input[name*="mail" i], input[name*="user" i], '
-                                'input[id*="mail" i], input[id*="user" i]').first
-        await user_box.fill(email)
-        pw = page.locator('input[type="password"]').first
-        # beberapa form minta email dulu lalu "Next" sebelum password muncul
-        if not await pw.is_visible():
-            await page.keyboard.press("Enter")
-            await pw.wait_for(state="visible", timeout=15000)
-        await pw.fill(password)
-        await pw.press("Enter")
-        for _ in range(30):
-            await asyncio.sleep(2)
-            await pass_challenge(page)
-            if "mims.com" in page.url:
-                try:
-                    if await is_logged_in(page):
-                        print("✅ Login otomatis berhasil.")
-                        return True
-                except Exception:
-                    pass
-        await page.goto(f"{BASE}/drug", wait_until="domcontentloaded", timeout=60000)
-        if await is_logged_in(page):
-            print("✅ Login otomatis berhasil.")
+        clicked = await page.evaluate("""
+            () => {
+                const vis = e => e.offsetParent !== null || e.getClientRects().length > 0;
+                const els = Array.from(document.querySelectorAll("a, button, [role=button], input[type=submit]"));
+                const byText = els.find(e => vis(e) &&
+                    /^\\s*(masuk|login|log in|sign in|log masuk)\\s*$/i.test(e.innerText || e.value || ""));
+                const byHref = els.find(e => vis(e) && /login|signin|sign-in/i.test(e.getAttribute("href") || "")
+                    && !/logout/i.test(e.getAttribute("href") || ""));
+                const byAttr = els.find(e => vis(e) && /login|signin/i.test((e.id || "") + " " + (e.className || "")));
+                const el = byText || byHref || byAttr;
+                if (!el) return null;
+                el.click();
+                return (el.innerText || el.getAttribute("href") || "").trim().slice(0, 60);
+            }
+        """)
+        if clicked:
+            print(f"🔑 Tombol login diklik otomatis ({clicked}).")
             return True
-    except SystemExit:
-        raise
     except Exception as e:
-        print(f"  ⚠️ Login otomatis gagal ({e}). Silakan login manual.")
+        print(f"  ⚠️ Gagal klik tombol login: {e}")
+    return False
+
+
+async def auto_login(page):
+    """Klik 'Login'. Biasanya browser langsung login sendiri (sesi tersimpan); kalau ada
+    login.txt dan form email/password muncul, form diisi otomatis. Captcha tetap kamu yang centang."""
+    if not await click_login(page):
+        return False
+    await asyncio.sleep(3)
+    creds = read_login()
+    if creds:
+        try:
+            pw = page.locator('input[type="password"]').first
+            await pw.wait_for(state="attached", timeout=15000)
+            email, password = creds
+            user_box = page.locator('input[type="email"], input[name*="mail" i], input[name*="user" i], '
+                                    'input[id*="mail" i], input[id*="user" i]').first
+            if await user_box.count() and await user_box.is_visible():
+                await user_box.fill(email)
+                if not await pw.is_visible():
+                    await page.keyboard.press("Enter")
+                    await pw.wait_for(state="visible", timeout=15000)
+            if await pw.is_visible():
+                await pw.fill(password)
+                await pw.press("Enter")
+                print("🔑 Email & password dari login.txt diisi.")
+        except Exception:
+            pass   # tidak ada form (sudah auto login) -> lanjut
+    # tunggu sampai login; captcha 'verify you are human' -> kamu yang centang
+    for i in range(200):
+        try:
+            if await is_captcha(page):
+                if i % 20 == 0:
+                    print("  🤖 Centang 'Verify you are human' di jendela Chrome ya...")
+                    alert()
+            else:
+                for p in page.context.pages:   # login bisa terbuka di tab lain
+                    if "mims.com" in p.url and await is_logged_in(p):
+                        print("✅ Login berhasil.")
+                        return True
+        except Exception:
+            pass
+        await asyncio.sleep(3)
     return False
 
 
