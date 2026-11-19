@@ -280,6 +280,52 @@ async def collect_links(page, url, debug_name):
     return []
 
 
+BASIC_KEYS = {"Name", "Source URL", "Logged In", "Full Page Text", "Contents", "MIMS Class",
+              "ATC Classification"}
+DEBUG_COUNT = [0]
+
+
+async def expand_all(page):
+    """Scroll sampai bawah & klik tombol 'Show more / View full / Read more' agar semua isi muncul."""
+    try:
+        for _ in range(6):
+            await page.mouse.wheel(0, 4000)
+            await asyncio.sleep(0.3)
+        await page.evaluate("""
+            () => document.querySelectorAll("a,button,span,div").forEach(el => {
+                const t = (el.innerText || "").trim().toLowerCase();
+                if (t.length < 40 && /^(show more|read more|view more|see more|expand|view full|show all)/.test(t)
+                    && !el.closest("a[href*='/drug/info/']"))
+                    try { el.click(); } catch (e) {}
+            })
+        """)
+        await asyncio.sleep(1)
+    except Exception:
+        pass
+
+
+async def dump_samples(slugs):
+    """Simpan HTML + screenshot beberapa obat ke output_mims/debug untuk dicek strukturnya."""
+    async with async_playwright() as p:
+        context = await p.chromium.launch_persistent_context(
+            str(PROFILE_DIR), headless=False,
+            viewport={"width": 1366, "height": 768}, locale="en-US", timezone_id="Asia/Jakarta")
+        page = context.pages[0] if context.pages else await context.new_page()
+        await ensure_login(context)
+        for slug in slugs:
+            url = slug if slug.startswith("http") else BASE + "/drug/info/" + slug
+            try:
+                await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                await pass_challenge(page)
+                await asyncio.sleep(3)
+                await expand_all(page)
+                await save_debug(page, "sample_" + url.rsplit("/", 1)[-1].replace("?", "_"))
+            except Exception as e:
+                print(f"  ⚠️ {url}: {e}")
+        await context.close()
+    print(f"\n✅ Selesai. Zip folder {OUTPUT_DIR / 'debug'} lalu kirim ke saya.")
+
+
 async def scrape_detail(page, link):
     for attempt in range(1, MAX_DETAIL_RETRY + 1):
         try:
@@ -293,6 +339,7 @@ async def scrape_detail(page, link):
                     return t.length > 0 && t !== 'mims' && !t.includes('mims.com');
                 }
             """, timeout=20000)
+            await expand_all(page)
             info = await page.evaluate("""
                 () => {
                     const data = {};
@@ -359,6 +406,10 @@ async def scrape_detail(page, link):
                     if (!packRows.length)   // gagal dipecah -> simpan teks utuh
                         document.querySelectorAll(".packing-price-header")
                             .forEach(h => addSection(h, ".packing-price-content"));
+                    // Cadangan: SEMUA teks halaman obat, supaya tidak ada isi yang hilang
+                    const main = document.querySelector(".monograph, #monograph, main, .main-content, article")
+                                 || document.body;
+                    data["Full Page Text"] = main.innerText.trim();
                     return data;
                 }
             """)
@@ -366,8 +417,10 @@ async def scrape_detail(page, link):
                 return "PLACEHOLDER"
             if info and info.get("Name"):
                 info["Logged In"] = "Ya" if await is_logged_in(page) else "Tidak"
-                if len(info) <= 2:  # cuma Name + URL -> struktur halaman beda, simpan untuk dicek
-                    await save_debug(page, "detail_" + link.rsplit("/", 1)[-1])
+                n_sections = len([k for k in info if k not in BASIC_KEYS])
+                if n_sections <= 4 and DEBUG_COUNT[0] < 30:  # sedikit section -> format beda, simpan contoh
+                    DEBUG_COUNT[0] += 1
+                    await save_debug(page, "detail_" + link.rsplit("/", 1)[-1].replace("?", "_"))
                 return info
         except Exception:
             pass
@@ -527,6 +580,9 @@ def clean_df(df):
     return df.replace("", None)
 
 
+SAMPLE_SLUGS = ["aciblock", "acidrine", "acitral", "acran", "ranitidine?mtype=generic", "arcolase"]
+
+
 def merge_to_excel():
     files = sorted((OUTPUT_DIR / "parts").glob("*.csv"))
     if not files:
@@ -547,10 +603,10 @@ def merge_to_excel():
              "Adverse Reactions", "Drug Interactions", "Caution For Usage", "Storage",
              "Description", "Action", "Mechanism of Action", "MIMS Class", "ATC Classification",
              "Regulatory Classification", "Brands Available in Indonesia", "Other Known Brands",
-             "Presentation/Packing", "Link", "Source URL", "Logged In"]
+             "Presentation/Packing", "Link", "Source URL", "Logged In", "Full Page Text"]
     pack_cols = sorted([c for c in df.columns if re.match(r"^(Form|Packing/Price) \d+$", c)],
                        key=lambda c: (int(c.split()[-1]), not c.startswith("Form")))
-    tail = [c for c in ("Link", "Source URL", "Logged In") if c in df]
+    tail = [c for c in ("Link", "Source URL", "Logged In", "Full Page Text") if c in df]
     head = [c for c in front if c in df and c not in tail]
     rest = [c for c in df.columns if c not in front and c not in pack_cols]
     df = df[head + pack_cols + rest + tail]
@@ -567,7 +623,7 @@ def merge_to_excel():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Scraper MIMS Indonesia (brand & generic)")
-    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge"])
+    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge", "sample"])
     ap.add_argument("items", nargs="*", help="huruf (alphabet) atau kode kelas (class); kosong = semua")
     ap.add_argument("--mtype", nargs="+", choices=MTYPES, default=MTYPES, help="untuk mode class")
     ap.add_argument("--headless", action="store_true", help="tanpa jendela (sering diblokir Cloudflare)")
@@ -586,6 +642,9 @@ if __name__ == "__main__":
         sys.exit(0)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+    if args.mode == "sample":
+        asyncio.run(dump_samples(args.items or SAMPLE_SLUGS))
+        sys.exit(0)
     if args.mode != "merge":
         asyncio.run(main_scrape(args))
     merge_to_excel()
