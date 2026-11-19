@@ -10,6 +10,8 @@ Dua cara mengambil daftar obat (bisa satu per satu):
        python mims_brand_generic.py class               # semua kelas di CLASSES
        python mims_brand_generic.py class 1a            # kelas 1a saja
        python mims_brand_generic.py class 1a 1b --mtype generic
+  SEMUA SEKALIGUS (tanpa pilih apa-apa):
+       python mims_brand_generic.py                     # semua kelas + alfabet a-z
   Gabung ulang CSV ke Excel tanpa scraping:
        python mims_brand_generic.py merge
 
@@ -378,21 +380,17 @@ if __name__ == "__main__":
     ap.add_argument("--headless", action="store_true", help="tanpa jendela (sering diblokir Cloudflare)")
     args = ap.parse_args()
 
-    if not args.mode:  # dijalankan tanpa argumen (mis. tombol Run di editor) -> menu
-        print("Pilih mode:")
-        print("  1. Alfabet (browse/alphabet/<huruf>)")
-        print("  2. Kelas MIMS (1a, 1b, ... 40c)")
-        print("  3. Gabung hasil yang sudah ada ke Excel")
-        choice = input("Nomor [1/2/3]: ").strip()
-        args.mode = {"1": "alphabet", "2": "class", "3": "merge"}.get(choice)
-        if not args.mode:
-            sys.exit("Pilihan tidak valid.")
-        if args.mode == "alphabet":
-            ans = input("Huruf (pisahkan spasi, kosong = semua a-z), mis. 'a' atau 'a b c': ")
-            args.items = ans.lower().split()
-        elif args.mode == "class":
-            ans = input("Kode kelas (pisahkan spasi, kosong = semua), mis. '1a' atau '1a 1b': ")
-            args.items = ans.lower().split()
+    run_all = not args.mode   # tanpa argumen = ambil SEMUA, tanpa pertanyaan
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    if run_all:
+        print("▶ Mode SEMUA: semua kelas (brand + generic), lalu alfabet a-z.")
+        for mode in ("class", "alphabet"):
+            asyncio.run(main_scrape(argparse.Namespace(
+                mode=mode, items=[], mtype=MTYPES, headless=args.headless)))
+            merge_to_excel()   # Excel diperbarui setelah tiap tahap
+        if sys.stdin and sys.stdin.isatty():
+            input("\nSelesai. Tekan Enter untuk menutup...")
+        sys.exit(0)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     if args.mode != "merge":
