@@ -192,8 +192,9 @@ def mtype_of(link):
 async def pass_challenge(page):
     """Tunggu sampai halaman bukan halaman cek Cloudflare lagi."""
     for i in range(CHALLENGE_WAIT):
-        title = (await page.title()).lower()
-        if not any(t in title for t in ("just a moment", "attention required", "verify")):
+        if not await is_captcha(page):
+            if i > 0:
+                print("  ✅ Captcha selesai, lanjut.")
             return True
         if i == 0:
             print("  🤖 Captcha / cek 'bukan robot' muncul. Selesaikan di jendela Chrome,")
@@ -205,6 +206,27 @@ async def pass_challenge(page):
     print("  🛑 Captcha tidak diselesaikan dalam 15 menit. Script berhenti; progres tersimpan.")
     print("     Jalankan lagi JALANKAN_SEMUA.bat untuk lanjut dari checkpoint.")
     raise SystemExit(EXIT_NEED_HUMAN)
+
+
+async def is_captcha(page):
+    """Deteksi halaman captcha / 'bukan robot' (Cloudflare, reCAPTCHA, hCaptcha, dll.)."""
+    try:
+        title = (await page.title()).lower()
+        if any(t in title for t in ("just a moment", "attention required", "verify", "captcha",
+                                     "robot", "security check", "access denied")):
+            return True
+        return await page.evaluate("""
+            () => {
+                if (document.querySelector('iframe[src*="captcha"], iframe[src*="challenges.cloudflare"], ' +
+                    'iframe[title*="challenge" i], .g-recaptcha, .h-captcha, #challenge-form, ' +
+                    '#cf-challenge-running, [data-sitekey]')) return true;
+                const t = (document.body && document.body.innerText || "").slice(0, 3000).toLowerCase();
+                return /verify (that )?you are (a )?human|i'?m not a robot|bukan robot|are you a robot|complete the security check|captcha/.test(t)
+                       && t.length < 3000;
+            }
+        """)
+    except Exception:
+        return False
 
 
 def alert():
@@ -328,6 +350,21 @@ async def save_debug(page, name):
     print(f"  🐞 Halaman disimpan untuk dicek: {d / safe}.html / .png")
 
 
+async def read_total(page):
+    """Coba baca jumlah hasil yang ditulis MIMS di halaman daftar (mis. '32 results')."""
+    try:
+        txt = await page.evaluate("() => document.body.innerText")
+        for pat in (r"(?:of|dari)\s+([\d.,]+)\s+(?:results?|hasil|items?|products?|drugs?|obat)\b",
+                    r"([\d.,]+)\s+(?:results?|hasil|items?|products?|drugs?|obat)\s+(?:found|ditemukan)",
+                    r"([\d.,]+)\s+(?:results?|hasil)\b"):
+            m = re.search(pat, txt, re.I)
+            if m:
+                return int(re.sub(r"[.,]", "", m.group(1)))
+    except Exception:
+        pass
+    return None
+
+
 async def collect_links(page, url, debug_name):
     """Ambil semua link /drug/info/ di satu halaman daftar."""
     for attempt in range(1, MAX_PAGE_RETRY + 1):
@@ -423,7 +460,7 @@ async def open_full_prescribing(page):
         if target.get("go"):
             await page.goto(target["go"], wait_until="domcontentloaded", timeout=60000)
             await pass_challenge(page)
-            await page.wait_for_selector("h1", timeout=20000)
+            await page.wait_for_selector("h1", state="attached", timeout=20000)
             await expand_all(page)
         else:
             await asyncio.sleep(1.5)
@@ -548,14 +585,17 @@ async def scrape_detail(page, link):
             if info and info.get("Name"):
                 info["Logged In"] = "Ya" if await is_logged_in(page) else "Tidak"
                 n_sections = len([k for k in info if k not in BASIC_KEYS])
-                if n_sections <= 4 and DEBUG_COUNT[0] < 30:  # sedikit section -> format beda, simpan contoh
+                if n_sections <= 4 and info.get("Prescribing Info") != "Basic" and DEBUG_COUNT[0] < 10:  # sedikit section -> format beda, simpan contoh
                     DEBUG_COUNT[0] += 1
                     await save_debug(page, "detail_" + link.rsplit("/", 1)[-1].replace("?", "_"))
                 return info
+        except SystemExit:
+            raise
         except Exception:
             pass
+        await pass_challenge(page)   # mungkin gagal karena captcha -> tunggu diselesaikan dulu
         await asyncio.sleep(random.uniform(2, 4))
-    print(f"  ❌ Dilewati: {link}")
+    print(f"  ❌ Dilewati (dicoba lagi saat run berikutnya): {link}")
     return None
 
 
@@ -617,6 +657,13 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                 await scrape_one(page, link)
         finally:
             await page.close()
+        cf = out.with_suffix(".count.json")
+        if cf.exists():
+            import json
+            c = json.loads(cf.read_text(encoding="utf-8"))
+            c["skipped"] = len(skipped - done)
+            c["saved"] = c["links_found"] - c["skipped"]
+            cf.write_text(json.dumps(c), encoding="utf-8")
         print(f"🏁 {job}: masih ter-skip {len(skipped - done)} obat")
         return
     if rows:
@@ -625,11 +672,14 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
     list_page = await context.new_page()
     detail_page = await context.new_page()
     seen_links = set()
+    mims_total = None
     try:
         for n in range(1, MAX_PAGES + 1):
             url = with_page(list_url, n)
             print(f"\n🌐 [{job}] halaman {n}: {url}")
             links = await collect_links(list_page, url, f"{job}_page{n}")
+            if n == 1 and links:
+                mims_total = await read_total(list_page)
             if links is None:
                 print(f"  ⚠️ [{job}] halaman {n} gagal dibuka. Kelas ini TIDAK ditandai selesai,")
                 print("     jadi akan diulang saat run berikutnya (obat yang sudah ada tidak diambil ulang).")
@@ -652,6 +702,14 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
         await list_page.close()
         await detail_page.close()
     left = skipped - done
+    if seen_links:
+        saved = len(seen_links & done)
+        count_file = out.with_suffix(".count.json")
+        import json
+        count_file.write_text(json.dumps({"mims_total": mims_total, "links_found": len(seen_links),
+                                          "saved": saved, "skipped": len(seen_links & left)}), encoding="utf-8")
+        print(f"🔎 Crosscheck {job}: MIMS {mims_total if mims_total is not None else '?'} | "
+              f"link ditemukan {len(seen_links)} | tersimpan {saved} | ter-skip {len(seen_links & left)}")
     print(f"🏁 {job}: {len(rows)} obat -> {out}" + (f" | ⚠️ {len(left)} ter-skip (dicoba lagi saat run berikutnya)" if left else ""))
 
 
@@ -861,6 +919,15 @@ def report_unfinished():
     skipped = {f.name.replace(".skipped.txt", ""): len(f.read_text(encoding="utf-8").split())
                for f in parts.glob("*.skipped.txt")}
     unfinished = [f.stem for f in parts.glob("*.csv") if not f.with_suffix(".done").exists()]
+    import json
+    print("\n🔎 Crosscheck jumlah per kelas (MIMS = angka di halaman daftar, '?' = tidak tertulis):")
+    for f in sorted(parts.glob("*.count.json")):
+        c = json.loads(f.read_text(encoding="utf-8"))
+        flag = "" if c["saved"] == c["links_found"] else "  <-- belum lengkap"
+        if c.get("mims_total") not in (None, c["links_found"]):
+            flag += f"  <-- MIMS bilang {c['mims_total']}"
+        print(f"   {f.name.replace('.count.json', ''):<28} MIMS {str(c.get('mims_total') or '?'):>5} | "
+              f"link {c['links_found']:>4} | tersimpan {c['saved']:>4} | skip {c['skipped']:>3}{flag}")
     if not skipped and not unfinished:
         print("\n✅ Cek kelengkapan: semua kelas selesai, tidak ada obat yang ter-skip.")
         return True
@@ -923,7 +990,7 @@ def merge_to_excel():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Scraper MIMS Indonesia (brand & generic)")
-    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge", "sample"])
+    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge", "sample", "cek"])
     ap.add_argument("items", nargs="*", help="huruf (alphabet) atau kode kelas (class); kosong = semua")
     ap.add_argument("--mtype", nargs="+", choices=MTYPES, default=MTYPES, help="untuk mode class")
     ap.add_argument("--headless", action="store_true", help="tanpa jendela (sering diblokir Cloudflare)")
@@ -943,6 +1010,9 @@ if __name__ == "__main__":
         sys.exit(0)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+    if args.mode == "cek":
+        report_unfinished()
+        sys.exit(0)
     if args.mode == "sample":
         asyncio.run(dump_samples(args.items or SAMPLE_SLUGS))
         sys.exit(0)
