@@ -423,7 +423,9 @@ async def collect_links(page, url, debug_name):
             links = list(dict.fromkeys(links))
             if links:
                 return links
-            if await page.locator("text=No search result found").count():
+            body = (await page.evaluate("() => document.body ? document.body.innerText : ''")).lower()
+            if re.search(r"no (search )?results?( found)?|0 results?|tidak ada hasil|tidak ditemukan|"
+                         r"no (drugs?|products?|matches|items?) found", body):
                 return []   # daftar sudah habis (normal), tidak perlu debug
         except Exception as e:
             print(f"  ⚠️ Gagal buka halaman (percobaan {attempt}): {e}")
@@ -712,6 +714,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
     detail_page = await context.new_page()
     seen_links = set()
     mims_total = None
+    prev_count = 0
     try:
         for n in range(1, MAX_PAGES + 1):
             url = with_page(list_url, n)
@@ -719,6 +722,9 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
             links = await collect_links(list_page, url, f"{job}_page{n}")
             if n == 1 and links:
                 mims_total = await read_total(list_page)
+            if links is None and n > 1 and 0 < prev_count < 10:
+                # halaman sebelumnya tidak penuh (<10 obat) -> memang halaman terakhir
+                links = []
             if links is None:
                 print(f"  ⚠️ [{job}] halaman {n} gagal dibuka. Kelas ini TIDAK ditandai selesai,")
                 print("     jadi akan diulang saat run berikutnya (obat yang sudah ada tidak diambil ulang).")
@@ -730,6 +736,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                     done_flag.write_text("selesai", encoding="utf-8")
                 break
             seen_links.update(new)
+            prev_count = len(links)
             print(f"  🔗 {len(new)} link obat")
 
             for link in new:
