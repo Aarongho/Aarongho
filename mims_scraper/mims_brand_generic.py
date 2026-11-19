@@ -622,6 +622,22 @@ def clean_df(df):
         if pc:
             filled = df[pc].notna().any(axis=1)
             df.loc[filled, "Presentation/Packing"] = None
+    # Indications and Dosage -> kolom per indikasi di sheet yang sama:
+    # "Indications and Dosage 1 (Route)", "... 1 (Indication)", "... 1 (Adult)", "... 1 (Child)", dst.
+    if "Indications and Dosage" in df:
+        new = {}
+        for i, txt in df["Indications and Dosage"].items():
+            if not isinstance(txt, str) or not txt.strip():
+                continue
+            rows = split_indications(txt)
+            if not rows:
+                continue
+            for n, r in enumerate(rows, 1):
+                for k, v in r.items():
+                    new.setdefault(f"Indications and Dosage {n} ({k})", {})[i] = v
+            df.at[i, "Indications and Dosage"] = None   # sudah dipecah
+        if new:
+            df = pd.concat([df, pd.DataFrame(new)], axis=1)
     return df.replace("", None)
 
 
@@ -711,18 +727,21 @@ def merge_to_excel():
                        key=lambda c: (int(c.split()[-1]), not c.startswith("Form")))
     tail = [c for c in ("Link", "Source URL", "Logged In", "Full Page Text") if c in df]
     head = [c for c in front if c in df and c not in tail]
-    rest = [c for c in df.columns if c not in front and c not in pack_cols]
+    ind_cols = [c for c in df.columns if re.match(r"^Indications and Dosage \d+ \(", c)]
+    sub = {"Route": 0, "Indication": 1, "Adult": 2, "Child": 3, "Elderly": 4}
+    ind_cols.sort(key=lambda c: (int(re.search(r"\d+", c).group()),
+                                 sub.get(c[c.index("(") + 1:-1], 9), c))
+    if ind_cols:
+        pos = head.index("Indications and Dosage") + 1 if "Indications and Dosage" in head else len(head)
+        head = head[:pos] + ind_cols + head[pos:]
+    rest = [c for c in df.columns if c not in front and c not in pack_cols and c not in ind_cols]
     df = df[head + pack_cols + rest + tail]
 
     for mtype, part in df.groupby("Type"):
         part = part.dropna(axis=1, how="all")
         part.to_csv(OUTPUT_DIR / f"mims_{mtype}.csv", index=False, encoding="utf-8-sig")
         xl = part.apply(lambda col: col.map(lambda x: x[:EXCEL_CELL_LIMIT] if isinstance(x, str) else x))
-        ind = indications_sheet(part)
-        with pd.ExcelWriter(OUTPUT_DIR / f"mims_{mtype}.xlsx") as w:
-            xl.to_excel(w, sheet_name="Obat", index=False)
-            if not ind.empty:   # 1 baris per Rute x Indikasi (Adult / Child terpisah)
-                ind.to_excel(w, sheet_name="Indications and Dosage", index=False)
+        xl.to_excel(OUTPUT_DIR / f"mims_{mtype}.xlsx", index=False, sheet_name="Obat")
         print(f"📗 {mtype}: {len(part)} obat, {len(part.columns)} kolom -> {OUTPUT_DIR / f'mims_{mtype}.xlsx'}")
     if "unknown" in set(df["Type"]):
         print("ℹ️ Ada obat bertipe 'unknown' (link tanpa mtype). Kirim contoh link-nya agar bisa dipisahkan.")
