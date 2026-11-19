@@ -353,7 +353,7 @@ async def collect_links(page, url, debug_name):
             print(f"  ⚠️ Gagal buka halaman (percobaan {attempt}): {e}")
         await asyncio.sleep(3)
     await save_debug(page, debug_name)
-    return []
+    return None   # GAGAL (beda dengan [] = daftar memang habis)
 
 
 BASIC_KEYS = {"Name", "Source URL", "Logged In", "Full Page Text", "Contents", "MIMS Class",
@@ -569,11 +569,56 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
     out = job_csv(job)
     out.parent.mkdir(parents=True, exist_ok=True)
     done_flag = out.with_suffix(".done")
-    if done_flag.exists():
-        print(f"⏭️  {job} sudah selesai sebelumnya, dilewati.")
-        return
+    skip_file = out.with_suffix(".skipped.txt")
     rows = pd.read_csv(out, dtype=str).to_dict("records") if out.exists() else []
     done = {r.get("Link") for r in rows}
+    skipped = set(skip_file.read_text(encoding="utf-8").split()) - done if skip_file.exists() else set()
+
+    def save_skipped():
+        left = sorted(skipped - done)
+        if left:
+            skip_file.write_text("\n".join(left), encoding="utf-8")
+        elif skip_file.exists():
+            skip_file.unlink()
+
+    async def scrape_one(page, link):
+        info = await scrape_detail(page, link)
+        if info == "PLACEHOLDER":
+            print("  🔐 Isi halaman masih Lorem Ipsum (placeholder) -> belum login.")
+            await ensure_login(page.context)
+            info = await scrape_detail(page, link)
+            if info == "PLACEHOLDER":
+                print("  🛑 Masih placeholder setelah menunggu login. Scraping dihentikan agar")
+                print("     tidak menyimpan data palsu. Login di jendela Chrome lalu jalankan lagi.")
+                raise SystemExit(EXIT_NEED_HUMAN)
+        if info:
+            mtype = mtype_of(link)
+            if mtype == "unknown" and fixed_mtype:
+                mtype = fixed_mtype
+            rows.append({"Type": mtype, "Category Code": category or "", "Link": link, **info})
+            done.add(link)
+            skipped.discard(link)
+            pd.DataFrame(rows).to_csv(out, index=False, encoding="utf-8-sig")  # checkpoint per obat
+            print(f"  ✅ [{mtype}] {info['Name']}")
+        else:
+            skipped.add(link)          # dicatat, dicoba lagi saat run berikutnya
+        save_skipped()
+        await asyncio.sleep(random.uniform(*DELAY_BETWEEN_DETAILS))
+
+    if done_flag.exists():
+        if not skipped:
+            print(f"⏭️  {job} sudah selesai sebelumnya, dilewati.")
+            return
+        # kelas sudah selesai, tapi ada obat yang dulu ter-skip -> coba lagi dulu
+        print(f"🔁 {job}: mencoba ulang {len(skipped)} obat yang dulu ter-skip")
+        page = await context.new_page()
+        try:
+            for link in sorted(skipped):
+                await scrape_one(page, link)
+        finally:
+            await page.close()
+        print(f"🏁 {job}: masih ter-skip {len(skipped - done)} obat")
+        return
     if rows:
         print(f"🔁 Resume {job}: {len(rows)} obat sudah ada")
 
@@ -585,6 +630,10 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
             url = with_page(list_url, n)
             print(f"\n🌐 [{job}] halaman {n}: {url}")
             links = await collect_links(list_page, url, f"{job}_page{n}")
+            if links is None:
+                print(f"  ⚠️ [{job}] halaman {n} gagal dibuka. Kelas ini TIDAK ditandai selesai,")
+                print("     jadi akan diulang saat run berikutnya (obat yang sudah ada tidak diambil ulang).")
+                break
             new = [l for l in links if l not in seen_links]
             if not new:
                 print(f"🛑 [{job}] tidak ada link baru, selesai.")
@@ -597,31 +646,13 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
             for link in new:
                 if link in done:
                     continue
-                info = await scrape_detail(detail_page, link)
-                if info == "PLACEHOLDER":
-                    print("  🔐 Isi halaman masih Lorem Ipsum (placeholder) -> belum login.")
-                    ok = await ensure_login(detail_page.context)
-                    info = await scrape_detail(detail_page, link)
-                    if info == "PLACEHOLDER":
-                        print("  🛑 Masih placeholder setelah menunggu login. Scraping dihentikan agar")
-                        print("     tidak menyimpan data palsu. Login di jendela Chrome lalu jalankan lagi.")
-                        raise SystemExit(EXIT_NEED_HUMAN)
-                if info:
-                    # tipe dari link obat (halaman brand juga memuat link generic); kalau
-                    # link tidak menyebut tipe, pakai tipe halaman pencarian
-                    mtype = mtype_of(link)
-                    if mtype == "unknown" and fixed_mtype:
-                        mtype = fixed_mtype
-                    rows.append({"Type": mtype, "Category Code": category or "", "Link": link, **info})
-                    done.add(link)
-                    pd.DataFrame(rows).to_csv(out, index=False, encoding="utf-8-sig")  # checkpoint per obat
-                    print(f"  ✅ [{mtype}] {info['Name']}")
-                await asyncio.sleep(random.uniform(*DELAY_BETWEEN_DETAILS))
+                await scrape_one(detail_page, link)
             pd.DataFrame(rows).to_csv(out, index=False, encoding="utf-8-sig")
     finally:
         await list_page.close()
         await detail_page.close()
-    print(f"🏁 {job}: {len(rows)} obat -> {out}")
+    left = skipped - done
+    print(f"🏁 {job}: {len(rows)} obat -> {out}" + (f" | ⚠️ {len(left)} ter-skip (dicoba lagi saat run berikutnya)" if left else ""))
 
 
 async def main_scrape(args):
@@ -824,6 +855,24 @@ def indications_sheet(df):
 SAMPLE_SLUGS = ["aciblock", "acidrine", "acitral", "acran", "ranitidine?mtype=generic", "arcolase"]
 
 
+def report_unfinished():
+    """Ringkasan: kelas yang belum selesai & obat yang masih ter-skip."""
+    parts = OUTPUT_DIR / "parts"
+    skipped = {f.name.replace(".skipped.txt", ""): len(f.read_text(encoding="utf-8").split())
+               for f in parts.glob("*.skipped.txt")}
+    unfinished = [f.stem for f in parts.glob("*.csv") if not f.with_suffix(".done").exists()]
+    if not skipped and not unfinished:
+        print("\n✅ Cek kelengkapan: semua kelas selesai, tidak ada obat yang ter-skip.")
+        return True
+    print("\n⚠️ Cek kelengkapan:")
+    for j in sorted(unfinished):
+        print(f"   - {j}: belum selesai")
+    for j, n in sorted(skipped.items()):
+        print(f"   - {j}: {n} obat ter-skip")
+    print("   Jalankan JALANKAN_SEMUA.bat lagi -> hanya bagian ini yang diulang.")
+    return False
+
+
 def merge_to_excel():
     files = sorted((OUTPUT_DIR / "parts").glob("*.csv"))
     if not files:
@@ -888,6 +937,7 @@ if __name__ == "__main__":
             asyncio.run(main_scrape(argparse.Namespace(
                 mode=mode, items=[], mtype=MTYPES, headless=args.headless)))
             merge_to_excel()   # Excel diperbarui setelah tiap tahap
+        report_unfinished()
         if sys.stdin and sys.stdin.isatty():
             input("\nSelesai. Tekan Enter untuk menutup...")
         sys.exit(0)
