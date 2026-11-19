@@ -384,8 +384,8 @@ async def scrape_detail(page, link):
                         (marker.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING);
                     const bodyText = document.body.innerText;
                     data["Prescribing Info"] = marker ? "Full"
-                        : /Basic Prescribing Info/i.test(bodyText) ? "Basic"
-                        : /Concise Prescribing Info/i.test(bodyText) ? "Concise" : "";
+                        : /Concise Prescribing Info/i.test(bodyText) ? "Concise"
+                        : /Basic Prescribing Info/i.test(bodyText) ? "Basic" : "";
                     const h1 = document.querySelector("h1");
                     data["Name"] = h1 ? h1.innerText.trim() : null;
                     data["Source URL"] = location.href;
