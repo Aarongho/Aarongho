@@ -269,7 +269,8 @@ async def click_login(page):
             () => {
                 const vis = e => e.offsetParent !== null || e.getClientRects().length > 0;
                 const els = Array.from(document.querySelectorAll("a, button, [role=button], input[type=submit]"));
-                const byText = els.find(e => vis(e) &&
+                const masuk = els.find(e => vis(e) && /^\\s*masuk\\s*$/i.test(e.innerText || e.value || ""));
+                const byText = masuk || els.find(e => vis(e) &&
                     /^\\s*(masuk|login|log in|sign in|log masuk)\\s*$/i.test(e.innerText || e.value || ""));
                 const byHref = els.find(e => vis(e) && /login|signin|sign-in/i.test(e.getAttribute("href") || "")
                     && !/logout/i.test(e.getAttribute("href") || ""));
@@ -281,7 +282,7 @@ async def click_login(page):
             }
         """)
         if clicked:
-            print(f"🔑 Tombol login diklik otomatis ({clicked}).")
+            print(f"🔑 Tombol '{clicked}' diklik otomatis.")
             return True
     except Exception as e:
         print(f"  ⚠️ Gagal klik tombol login: {e}")
