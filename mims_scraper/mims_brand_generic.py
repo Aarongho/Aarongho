@@ -644,6 +644,61 @@ async def scrape_detail(page, link):
 
 
 # ================= JOB RUNNER =================
+TEMAN_DIR = Path("teman")                       # taruh hasil scrape teman di sini (isi mims.zip)
+SUDAH_ADA_FILE = OUTPUT_DIR / "sudah_ada.txt"  # link yang sudah ada di data teman -> tidak di-scrape
+SUDAH_ADA = set()
+
+
+def norm_link(link):
+    """Samakan bentuk link: tanpa #, tanpa '/' di akhir, query hanya mtype."""
+    if not isinstance(link, str):
+        return link
+    u = urlparse(link.split("#")[0].strip())
+    q = parse_qs(u.query)
+    mt = q.get("mtype", [""])[0]
+    base = f"{u.scheme}://{u.netloc}{u.path.rstrip('/')}".lower()
+    return f"{base}?mtype={mt}" if mt else base
+
+
+def import_teman(folder=TEMAN_DIR):
+    """Ubah CSV teman (FINAL_DATAS_BRAND / FINAL_DATAS_GENERIC) ke format kita + daftar link 'sudah ada'."""
+    files = [f for f in Path(folder).rglob("*.csv") if not f.name.upper().startswith("MASTER")]
+    if not files:
+        return False
+    frames = []
+    for f in files:
+        m = re.search(r"_(\d+[a-z]?)(?:_FINAL)?\.csv$", f.name, re.I)
+        d = pd.read_csv(f, dtype=str)
+        if "Source URL" not in d:
+            continue
+        d = d.rename(columns={"Brand Name": "Name"})
+        d["Link"] = d["Source URL"].map(norm_link)
+        d["Category Code"] = m.group(1).lower() if m else ""
+        frames.append(d)
+    if not frames:
+        return False
+    df = pd.concat(frames, ignore_index=True)
+    df = df[df["Link"].notna()]
+    df["Type"] = df["Link"].map(mtype_of).replace("unknown", "brand")
+    df["Sumber"] = "Teman"
+    parts = OUTPUT_DIR / "parts"
+    parts.mkdir(parents=True, exist_ok=True)
+    df.to_csv(parts / "teman_import.csv", index=False, encoding="utf-8-sig")
+    (parts / "teman_import.done").write_text("data teman", encoding="utf-8")
+    links = sorted(set(df["Link"]))
+    SUDAH_ADA_FILE.write_text("\n".join(links), encoding="utf-8")
+    print(f"👥 Data teman diimpor: {len(df)} baris, {len(links)} obat unik -> tidak akan di-scrape ulang.")
+    return True
+
+
+def load_sudah_ada():
+    if TEMAN_DIR.exists() and not SUDAH_ADA_FILE.exists():
+        import_teman()
+    if SUDAH_ADA_FILE.exists():
+        SUDAH_ADA.update(l for l in SUDAH_ADA_FILE.read_text(encoding="utf-8").split() if l)
+        print(f"👥 {len(SUDAH_ADA)} obat sudah ada di data teman -> dilewati.")
+
+
 def job_csv(job):
     return OUTPUT_DIR / "parts" / f"{job}.csv"
 
@@ -655,7 +710,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
     done_flag = out.with_suffix(".done")
     skip_file = out.with_suffix(".skipped.txt")
     rows = pd.read_csv(out, dtype=str).to_dict("records") if out.exists() else []
-    done = {r.get("Link") for r in rows}
+    done = {norm_link(r.get("Link")) for r in rows} | SUDAH_ADA
     skipped = set(skip_file.read_text(encoding="utf-8").split()) - done if skip_file.exists() else set()
 
     def save_skipped():
@@ -732,6 +787,7 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
                 print(f"  ⚠️ [{job}] halaman {n} gagal dibuka. Kelas ini TIDAK ditandai selesai,")
                 print("     jadi akan diulang saat run berikutnya (obat yang sudah ada tidak diambil ulang).")
                 break
+            links = [norm_link(l) for l in links]
             new = [l for l in links if l not in seen_links]
             if not new:
                 print(f"🛑 [{job}] tidak ada link baru, selesai.")
@@ -742,6 +798,9 @@ async def run_job(context, job, list_url, fixed_mtype=None, category=None):
             prev_count = len(links)
             print(f"  🔗 {len(new)} link obat")
 
+            dari_teman = [l for l in new if l in SUDAH_ADA]
+            if dari_teman:
+                print(f"  👥 {len(dari_teman)} obat sudah ada di data teman, dilewati")
             for link in new:
                 if link in done:
                     continue
@@ -994,7 +1053,13 @@ def merge_to_excel():
     if not files:
         print("⚠️ Belum ada data di output_mims/parts")
         return
+    # data kita dulu, data teman terakhir -> kalau dobel, versi kita yang dipakai
+    files = [f for f in files if f.stem != "teman_import"] + [f for f in files if f.stem == "teman_import"]
     df = pd.concat([pd.read_csv(f, dtype=str) for f in files], ignore_index=True)
+    df["Link"] = df["Link"].map(norm_link)
+    if "Sumber" not in df:
+        df["Sumber"] = None
+    df["Sumber"] = df["Sumber"].fillna("Scrape baru")
     # perbaiki tipe dari link (data lama bisa tertandai brand padahal link generic)
     from_link = df["Link"].map(mtype_of)
     df["Type"] = from_link.where(from_link != "unknown", df["Type"])
@@ -1003,7 +1068,7 @@ def merge_to_excel():
     df = df.drop_duplicates("Link").copy()
     df["Category Code"] = df["Link"].map(cats)
     df = clean_df(df)
-    front = ["Type", "Name", "Category Code", "Prescribing Info", "Manufacturer", "Distributor", "Marketer",
+    front = ["Type", "Name", "Category Code", "Sumber", "Prescribing Info", "Manufacturer", "Distributor", "Marketer",
              "Contents", "Indications/Uses", "Dosage/Direction for Use", "Indications and Dosage",
              "Renal Impairment", "Hepatic Impairment", "Reconstitution", "Incompatibility", "Administration",
              "Overdosage", "Contraindications", "Special Precautions", "Use In Pregnancy & Lactation",
@@ -1039,7 +1104,7 @@ def merge_to_excel():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Scraper MIMS Indonesia (brand & generic)")
-    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge", "sample", "cek"])
+    ap.add_argument("mode", nargs="?", choices=["alphabet", "class", "merge", "sample", "cek", "teman"])
     ap.add_argument("items", nargs="*", help="huruf (alphabet) atau kode kelas (class); kosong = semua")
     ap.add_argument("--mtype", nargs="+", choices=MTYPES, default=MTYPES, help="untuk mode class")
     ap.add_argument("--headless", action="store_true", help="tanpa jendela (sering diblokir Cloudflare)")
@@ -1047,6 +1112,11 @@ if __name__ == "__main__":
 
     run_all = not args.mode   # tanpa argumen = ambil SEMUA, tanpa pertanyaan
     OUTPUT_DIR.mkdir(exist_ok=True)
+    if args.mode == "teman":   # impor ulang data teman (mis. setelah folder 'teman' diganti)
+        import_teman(args.items[0] if args.items else TEMAN_DIR)
+        merge_to_excel()
+        sys.exit(0)
+    load_sudah_ada()
     if run_all:
         print("▶ Mode SEMUA: semua kelas (brand + generic), lalu alfabet a-z.")
         for mode in ("class", "alphabet"):
