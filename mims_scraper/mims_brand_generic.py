@@ -356,7 +356,22 @@ async def ensure_login(context):
     """Tanpa login MIMS hanya memberi isi monograf placeholder. Minta user login sekali."""
     page = await context.new_page()
     try:
-        await page.goto(f"{BASE}/drug", wait_until="domcontentloaded", timeout=60000)
+        for attempt in range(1, 6):
+            try:
+                await page.goto(f"{BASE}/drug", wait_until="commit", timeout=90000)
+                try:
+                    await page.wait_for_load_state("domcontentloaded", timeout=60000)
+                except Exception:
+                    pass   # halaman lambat / captcha -> dicek pass_challenge
+                break
+            except Exception as e:
+                print(f"  ⚠️ MIMS belum bisa dibuka (percobaan {attempt}/5): {str(e).splitlines()[0]}")
+                if page.is_closed():
+                    page = await context.new_page()
+                await asyncio.sleep(10 * attempt)
+        else:
+            print("  🛑 MIMS tidak bisa dibuka 5x. Cek internet / buka mims.com manual di Chrome.")
+            raise SystemExit(1)   # .bat akan restart otomatis
         await pass_challenge(page)
         if await is_logged_in(page):
             print("✅ Sudah login MIMS.")
