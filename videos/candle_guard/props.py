@@ -243,17 +243,17 @@ class Candles:
 
 def wisp(name, p, t, coll, n=5, rise=2.2, seed=0):
     rnd = random.Random(hash(name) % 1000 + seed)
-    Ms = mat("wisp_grey", (0.55, 0.57, 0.62), 0.9, emit=(0.15, 0.16, 0.2), estr=0.3, alpha=0.45)
+    Ms = mat("wisp_thin", (0.6, 0.62, 0.68), 0.9, emit=(0.15, 0.16, 0.2), estr=0.2, alpha=0.22)
     for i in range(n):
         d = i * 0.1
-        ob = sphere(f"{name}_{i}", 0.12, p, Ms, coll=coll, seg=10)
+        ob = sphere(f"{name}_{i}", 0.07, p, Ms, coll=coll, seg=12)
         ob.scale = (0.01,) * 3
         ob.keyframe_insert("scale", frame=F(t + d - 0.02))
         ob.keyframe_insert("location", frame=F(t + d))
-        ob.scale = (1.0, 1.0, 1.6)
+        ob.scale = (0.8, 0.8, 2.2)
         ob.keyframe_insert("scale", frame=F(t + d + 0.25))
         ob.location = (p[0] + rnd.uniform(-0.5, 0.5), p[1] + rnd.uniform(-0.5, 0.5), p[2] + rise * rnd.uniform(0.7, 1.2))
-        ob.scale = (2.2, 2.2, 2.2)
+        ob.scale = (1.3, 1.3, 2.6)
         ob.keyframe_insert("location", frame=F(t + d + 1.2))
         ob.scale = (0.01,) * 3
         ob.keyframe_insert("scale", frame=F(t + d + 1.4))
