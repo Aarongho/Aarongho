@@ -1,0 +1,1547 @@
+[
+{
+"word": "The",
+"start": 0.0,
+"end": 0.2
+},
+{
+"word": "eleventh",
+"start": 0.2,
+"end": 0.66
+},
+{
+"word": "candle",
+"start": 0.66,
+"end": 1.18
+},
+{
+"word": "went",
+"start": 1.18,
+"end": 1.5
+},
+{
+"word": "out,",
+"start": 1.5,
+"end": 1.88
+},
+{
+"word": "and",
+"start": 2.1,
+"end": 2.18
+},
+{
+"word": "something",
+"start": 2.18,
+"end": 2.54
+},
+{
+"word": "in",
+"start": 2.54,
+"end": 2.7
+},
+{
+"word": "the",
+"start": 2.7,
+"end": 2.9
+},
+{
+"word": "dark",
+"start": 2.9,
+"end": 3.14
+},
+{
+"word": "whispered",
+"start": 3.18,
+"end": 3.66
+},
+{
+"word": "my",
+"start": 3.66,
+"end": 3.94
+},
+{
+"word": "name.",
+"start": 3.94,
+"end": 4.34
+},
+{
+"word": "It",
+"start": 4.79,
+"end": 4.87
+},
+{
+"word": "was",
+"start": 4.87,
+"end": 5.03
+},
+{
+"word": "standing",
+"start": 5.03,
+"end": 5.57
+},
+{
+"word": "right",
+"start": 5.64,
+"end": 5.93
+},
+{
+"word": "behind",
+"start": 5.93,
+"end": 6.39
+},
+{
+"word": "me.",
+"start": 6.39,
+"end": 6.77
+},
+{
+"word": "You",
+"start": 7.22,
+"end": 7.32
+},
+{
+"word": "see,",
+"start": 7.32,
+"end": 7.54
+},
+{
+"word": "in",
+"start": 7.82,
+"end": 7.92
+},
+{
+"word": "this",
+"start": 7.92,
+"end": 8.1
+},
+{
+"word": "town,",
+"start": 8.1,
+"end": 8.42
+},
+{
+"word": "twelve",
+"start": 8.76,
+"end": 8.98
+},
+{
+"word": "candles",
+"start": 9.0,
+"end": 9.54
+},
+{
+"word": "burn",
+"start": 9.57,
+"end": 9.88
+},
+{
+"word": "in",
+"start": 9.88,
+"end": 10.06
+},
+{
+"word": "the",
+"start": 10.06,
+"end": 10.22
+},
+{
+"word": "square",
+"start": 10.22,
+"end": 10.5
+},
+{
+"word": "all",
+"start": 10.52,
+"end": 10.82
+},
+{
+"word": "night.",
+"start": 10.82,
+"end": 11.12
+},
+{
+"word": "Every",
+"start": 11.46,
+"end": 11.7
+},
+{
+"word": "candle",
+"start": 11.7,
+"end": 12.04
+},
+{
+"word": "that",
+"start": 12.04,
+"end": 12.22
+},
+{
+"word": "goes",
+"start": 12.22,
+"end": 12.36
+},
+{
+"word": "out",
+"start": 12.36,
+"end": 12.68
+},
+{
+"word": "lets",
+"start": 12.78,
+"end": 13.12
+},
+{
+"word": "the",
+"start": 13.12,
+"end": 13.36
+},
+{
+"word": "thing",
+"start": 13.36,
+"end": 13.56
+},
+{
+"word": "in",
+"start": 13.56,
+"end": 13.74
+},
+{
+"word": "the",
+"start": 13.74,
+"end": 13.92
+},
+{
+"word": "forest",
+"start": 13.92,
+"end": 14.14
+},
+{
+"word": "take",
+"start": 14.14,
+"end": 14.5
+},
+{
+"word": "one",
+"start": 14.5,
+"end": 14.82
+},
+{
+"word": "step",
+"start": 14.82,
+"end": 15.18
+},
+{
+"word": "closer.",
+"start": 15.18,
+"end": 15.7
+},
+{
+"word": "Twelve",
+"start": 16.15,
+"end": 16.33
+},
+{
+"word": "steps,",
+"start": 16.33,
+"end": 16.75
+},
+{
+"word": "and",
+"start": 16.95,
+"end": 17.07
+},
+{
+"word": "it",
+"start": 17.07,
+"end": 17.25
+},
+{
+"word": "reaches",
+"start": 17.25,
+"end": 17.47
+},
+{
+"word": "us.",
+"start": 17.47,
+"end": 17.87
+},
+{
+"word": "That's",
+"start": 18.23,
+"end": 18.49
+},
+{
+"word": "why",
+"start": 18.49,
+"end": 18.61
+},
+{
+"word": "nobody",
+"start": 18.61,
+"end": 18.91
+},
+{
+"word": "here",
+"start": 18.91,
+"end": 19.13
+},
+{
+"word": "owns",
+"start": 19.13,
+"end": 19.35
+},
+{
+"word": "a",
+"start": 19.35,
+"end": 19.59
+},
+{
+"word": "fan.",
+"start": 19.59,
+"end": 19.81
+},
+{
+"word": "Every",
+"start": 20.26,
+"end": 20.48
+},
+{
+"word": "window",
+"start": 20.48,
+"end": 20.84
+},
+{
+"word": "is",
+"start": 20.84,
+"end": 21.02
+},
+{
+"word": "nailed",
+"start": 21.02,
+"end": 21.32
+},
+{
+"word": "shut.",
+"start": 21.32,
+"end": 21.66
+},
+{
+"word": "And",
+"start": 21.82,
+"end": 22.06
+},
+{
+"word": "old",
+"start": 22.06,
+"end": 22.32
+},
+{
+"word": "Mr.",
+"start": 22.32,
+"end": 22.64
+},
+{
+"word": "Hollis",
+"start": 22.74,
+"end": 22.98
+},
+{
+"word": "has",
+"start": 22.98,
+"end": 23.26
+},
+{
+"word": "guarded",
+"start": 23.26,
+"end": 23.5
+},
+{
+"word": "the",
+"start": 23.5,
+"end": 23.72
+},
+{
+"word": "candles",
+"start": 23.72,
+"end": 24.12
+},
+{
+"word": "for",
+"start": 24.22,
+"end": 24.46
+},
+{
+"word": "sixty",
+"start": 24.46,
+"end": 24.92
+},
+{
+"word": "years.",
+"start": 25.03,
+"end": 25.5
+},
+{
+"word": "He",
+"start": 25.5,
+"end": 25.9
+},
+{
+"word": "has",
+"start": 25.9,
+"end": 26.08
+},
+{
+"word": "never",
+"start": 26.08,
+"end": 26.46
+},
+{
+"word": "slept.",
+"start": 26.46,
+"end": 26.86
+},
+{
+"word": "But",
+"start": 27.02,
+"end": 27.24
+},
+{
+"word": "last",
+"start": 27.24,
+"end": 27.48
+},
+{
+"word": "night,",
+"start": 27.48,
+"end": 27.78
+},
+{
+"word": "Mr.",
+"start": 27.98,
+"end": 28.12
+},
+{
+"word": "Hollis",
+"start": 28.2,
+"end": 28.46
+},
+{
+"word": "didn't",
+"start": 28.46,
+"end": 28.74
+},
+{
+"word": "show",
+"start": 28.74,
+"end": 28.9
+},
+{
+"word": "up.",
+"start": 28.9,
+"end": 29.3
+},
+{
+"word": "My",
+"start": 29.72,
+"end": 29.84
+},
+{
+"word": "name",
+"start": 29.84,
+"end": 29.98
+},
+{
+"word": "is",
+"start": 29.98,
+"end": 30.16
+},
+{
+"word": "Eddie,",
+"start": 30.16,
+"end": 30.34
+},
+{
+"word": "I'm",
+"start": 30.6,
+"end": 30.76
+},
+{
+"word": "thirteen,",
+"start": 30.76,
+"end": 31.06
+},
+{
+"word": "and",
+"start": 31.32,
+"end": 31.4
+},
+{
+"word": "I",
+"start": 31.4,
+"end": 31.48
+},
+{
+"word": "was",
+"start": 31.48,
+"end": 31.6
+},
+{
+"word": "the",
+"start": 31.6,
+"end": 31.76
+},
+{
+"word": "only",
+"start": 31.76,
+"end": 32.0
+},
+{
+"word": "one",
+"start": 32.0,
+"end": 32.2
+},
+{
+"word": "awake.",
+"start": 32.2,
+"end": 32.5
+},
+{
+"word": "At",
+"start": 32.82,
+"end": 32.88
+},
+{
+"word": "midnight,",
+"start": 32.98,
+"end": 33.2
+},
+{
+"word": "the",
+"start": 33.46,
+"end": 33.6
+},
+{
+"word": "wind",
+"start": 33.6,
+"end": 33.78
+},
+{
+"word": "started.",
+"start": 33.78,
+"end": 34.32
+},
+{
+"word": "Fssst.",
+"start": 34.53,
+"end": 35.02
+},
+{
+"word": "Candle",
+"start": 35.02,
+"end": 35.22
+},
+{
+"word": "one",
+"start": 35.28,
+"end": 35.5
+},
+{
+"word": "went",
+"start": 35.5,
+"end": 35.7
+},
+{
+"word": "out.",
+"start": 35.7,
+"end": 36.06
+},
+{
+"word": "Far",
+"start": 36.18,
+"end": 36.4
+},
+{
+"word": "away,",
+"start": 36.4,
+"end": 36.7
+},
+{
+"word": "in",
+"start": 36.77,
+"end": 36.94
+},
+{
+"word": "the",
+"start": 36.94,
+"end": 37.1
+},
+{
+"word": "trees,",
+"start": 37.1,
+"end": 37.36
+},
+{
+"word": "something",
+"start": 37.62,
+"end": 37.84
+},
+{
+"word": "stepped.",
+"start": 37.84,
+"end": 38.3
+},
+{
+"word": "Thud.",
+"start": 38.75,
+"end": 38.91
+},
+{
+"word": "Fssst.",
+"start": 39.08,
+"end": 39.25
+},
+{
+"word": "Candle",
+"start": 39.51,
+"end": 39.77
+},
+{
+"word": "two.",
+"start": 39.78,
+"end": 40.07
+},
+{
+"word": "Thud.",
+"start": 40.45,
+"end": 40.83
+},
+{
+"word": "Closer.",
+"start": 41.15,
+"end": 41.47
+},
+{
+"word": "Fssst.",
+"start": 41.72,
+"end": 41.93
+},
+{
+"word": "Candle",
+"start": 42.14,
+"end": 42.45
+},
+{
+"word": "three.",
+"start": 42.46,
+"end": 42.75
+},
+{
+"word": "Every",
+"start": 42.99,
+"end": 43.19
+},
+{
+"word": "dog",
+"start": 43.19,
+"end": 43.39
+},
+{
+"word": "in",
+"start": 43.39,
+"end": 43.55
+},
+{
+"word": "town",
+"start": 43.55,
+"end": 43.75
+},
+{
+"word": "stopped",
+"start": 43.75,
+"end": 44.03
+},
+{
+"word": "barking.",
+"start": 44.03,
+"end": 44.39
+},
+{
+"word": "I",
+"start": 44.69,
+"end": 44.83
+},
+{
+"word": "grabbed",
+"start": 44.83,
+"end": 44.97
+},
+{
+"word": "the",
+"start": 44.97,
+"end": 45.13
+},
+{
+"word": "matches.",
+"start": 45.13,
+"end": 45.35
+},
+{
+"word": "Scratch.",
+"start": 45.77,
+"end": 46.01
+},
+{
+"word": "Out.",
+"start": 46.37,
+"end": 46.53
+},
+{
+"word": "Scratch.",
+"start": 46.85,
+"end": 47.11
+},
+{
+"word": "Out.",
+"start": 47.49,
+"end": 47.65
+},
+{
+"word": "Every",
+"start": 48.01,
+"end": 48.29
+},
+{
+"word": "match",
+"start": 48.29,
+"end": 48.53
+},
+{
+"word": "died",
+"start": 48.53,
+"end": 48.83
+},
+{
+"word": "the",
+"start": 48.83,
+"end": 49.05
+},
+{
+"word": "second",
+"start": 49.05,
+"end": 49.29
+},
+{
+"word": "it",
+"start": 49.29,
+"end": 49.49
+},
+{
+"word": "lit.",
+"start": 49.49,
+"end": 49.63
+},
+{
+"word": "Fssst.",
+"start": 49.89,
+"end": 50.21
+},
+{
+"word": "Four.",
+"start": 50.48,
+"end": 50.73
+},
+{
+"word": "Five.",
+"start": 51.15,
+"end": 51.31
+},
+{
+"word": "Six.",
+"start": 51.71,
+"end": 51.93
+},
+{
+"word": "Thud.",
+"start": 52.38,
+"end": 52.6
+},
+{
+"word": "Thud.",
+"start": 52.86,
+"end": 53.26
+},
+{
+"word": "Thud.",
+"start": 53.71,
+"end": 53.81
+},
+{
+"word": "The",
+"start": 54.05,
+"end": 54.17
+},
+{
+"word": "streetlights",
+"start": 54.17,
+"end": 54.57
+},
+{
+"word": "flickered",
+"start": 54.57,
+"end": 54.87
+},
+{
+"word": "off,",
+"start": 54.87,
+"end": 55.15
+},
+{
+"word": "one",
+"start": 55.19,
+"end": 55.43
+},
+{
+"word": "by",
+"start": 55.43,
+"end": 55.63
+},
+{
+"word": "one.",
+"start": 55.63,
+"end": 55.99
+},
+{
+"word": "Every",
+"start": 56.23,
+"end": 56.53
+},
+{
+"word": "front",
+"start": 56.57,
+"end": 56.85
+},
+{
+"word": "door",
+"start": 56.85,
+"end": 57.09
+},
+{
+"word": "creaked",
+"start": 57.09,
+"end": 57.45
+},
+{
+"word": "open",
+"start": 57.45,
+"end": 57.73
+},
+{
+"word": "by",
+"start": 57.73,
+"end": 57.91
+},
+{
+"word": "itself.",
+"start": 57.91,
+"end": 58.33
+},
+{
+"word": "Fssst.",
+"start": 58.73,
+"end": 58.85
+},
+{
+"word": "Seven.",
+"start": 59.23,
+"end": 59.53
+},
+{
+"word": "Eight.",
+"start": 59.79,
+"end": 59.97
+},
+{
+"word": "Footprints",
+"start": 60.29,
+"end": 60.61
+},
+{
+"word": "appeared",
+"start": 60.61,
+"end": 60.87
+},
+{
+"word": "in",
+"start": 60.87,
+"end": 60.99
+},
+{
+"word": "the",
+"start": 60.99,
+"end": 61.13
+},
+{
+"word": "snow.",
+"start": 61.13,
+"end": 61.33
+},
+{
+"word": "Huge",
+"start": 61.61,
+"end": 61.77
+},
+{
+"word": "ones.",
+"start": 61.77,
+"end": 62.03
+},
+{
+"word": "Walking",
+"start": 62.37,
+"end": 62.55
+},
+{
+"word": "toward",
+"start": 62.67,
+"end": 62.85
+},
+{
+"word": "me.",
+"start": 62.85,
+"end": 63.15
+},
+{
+"word": "Fssst.",
+"start": 63.35,
+"end": 63.55
+},
+{
+"word": "Nine.",
+"start": 63.91,
+"end": 64.07
+},
+{
+"word": "Ten.",
+"start": 64.37,
+"end": 64.49
+},
+{
+"word": "A",
+"start": 64.85,
+"end": 64.99
+},
+{
+"word": "tall",
+"start": 64.99,
+"end": 65.23
+},
+{
+"word": "shape",
+"start": 65.23,
+"end": 65.45
+},
+{
+"word": "stood",
+"start": 65.45,
+"end": 65.69
+},
+{
+"word": "at",
+"start": 65.69,
+"end": 65.83
+},
+{
+"word": "the",
+"start": 65.83,
+"end": 65.91
+},
+{
+"word": "edge",
+"start": 65.91,
+"end": 66.01
+},
+{
+"word": "of",
+"start": 66.01,
+"end": 66.13
+},
+{
+"word": "the",
+"start": 66.13,
+"end": 66.23
+},
+{
+"word": "square.",
+"start": 66.23,
+"end": 66.49
+},
+{
+"word": "No",
+"start": 66.71,
+"end": 66.93
+},
+{
+"word": "eyes.",
+"start": 66.93,
+"end": 67.23
+},
+{
+"word": "Just",
+"start": 67.45,
+"end": 67.67
+},
+{
+"word": "a",
+"start": 67.67,
+"end": 67.81
+},
+{
+"word": "mouth.",
+"start": 67.81,
+"end": 68.01
+},
+{
+"word": "Fssst.",
+"start": 68.27,
+"end": 68.49
+},
+{
+"word": "Eleven.",
+"start": 68.87,
+"end": 69.05
+},
+{
+"word": "Thud.",
+"start": 69.41,
+"end": 69.75
+},
+{
+"word": "Cold",
+"start": 70.01,
+"end": 70.21
+},
+{
+"word": "breath",
+"start": 70.21,
+"end": 70.47
+},
+{
+"word": "on",
+"start": 70.47,
+"end": 70.65
+},
+{
+"word": "my",
+"start": 70.65,
+"end": 70.83
+},
+{
+"word": "neck.",
+"start": 70.83,
+"end": 71.01
+},
+{
+"word": "Eddie...",
+"start": 71.41,
+"end": 71.59
+},
+{
+"word": "One",
+"start": 72.04,
+"end": 72.22
+},
+{
+"word": "candle",
+"start": 72.22,
+"end": 72.56
+},
+{
+"word": "left.",
+"start": 72.56,
+"end": 72.86
+},
+{
+"word": "Then",
+"start": 73.31,
+"end": 73.41
+},
+{
+"word": "I",
+"start": 73.41,
+"end": 73.53
+},
+{
+"word": "noticed",
+"start": 73.53,
+"end": 73.69
+},
+{
+"word": "something.",
+"start": 73.69,
+"end": 73.97
+},
+{
+"word": "There",
+"start": 74.15,
+"end": 74.29
+},
+{
+"word": "was",
+"start": 74.29,
+"end": 74.41
+},
+{
+"word": "no",
+"start": 74.41,
+"end": 74.53
+},
+{
+"word": "wind.",
+"start": 74.53,
+"end": 74.75
+},
+{
+"word": "The",
+"start": 74.99,
+"end": 75.13
+},
+{
+"word": "trees",
+"start": 75.13,
+"end": 75.31
+},
+{
+"word": "weren't",
+"start": 75.31,
+"end": 75.49
+},
+{
+"word": "moving.",
+"start": 75.49,
+"end": 75.77
+},
+{
+"word": "It",
+"start": 75.96,
+"end": 76.13
+},
+{
+"word": "wasn't",
+"start": 76.13,
+"end": 76.33
+},
+{
+"word": "the",
+"start": 76.33,
+"end": 76.47
+},
+{
+"word": "wind",
+"start": 76.47,
+"end": 76.71
+},
+{
+"word": "blowing",
+"start": 76.71,
+"end": 77.03
+},
+{
+"word": "out",
+"start": 77.03,
+"end": 77.21
+},
+{
+"word": "the",
+"start": 77.21,
+"end": 77.33
+},
+{
+"word": "candles.",
+"start": 77.33,
+"end": 77.65
+},
+{
+"word": "It",
+"start": 77.97,
+"end": 78.11
+},
+{
+"word": "was",
+"start": 78.11,
+"end": 78.25
+},
+{
+"word": "breathing",
+"start": 78.25,
+"end": 78.63
+},
+{
+"word": "on",
+"start": 78.63,
+"end": 78.83
+},
+{
+"word": "them.",
+"start": 78.83,
+"end": 79.05
+},
+{
+"word": "And",
+"start": 79.37,
+"end": 79.47
+},
+{
+"word": "if",
+"start": 79.47,
+"end": 79.57
+},
+{
+"word": "darkness",
+"start": 79.67,
+"end": 79.83
+},
+{
+"word": "pulls",
+"start": 79.83,
+"end": 80.09
+},
+{
+"word": "it",
+"start": 80.09,
+"end": 80.21
+},
+{
+"word": "closer,",
+"start": 80.21,
+"end": 80.53
+},
+{
+"word": "then",
+"start": 80.77,
+"end": 80.85
+},
+{
+"word": "light",
+"start": 80.85,
+"end": 81.13
+},
+{
+"word": "pushes",
+"start": 81.24,
+"end": 81.53
+},
+{
+"word": "it",
+"start": 81.53,
+"end": 81.69
+},
+{
+"word": "back.",
+"start": 81.69,
+"end": 81.89
+},
+{
+"word": "So",
+"start": 82.17,
+"end": 82.25
+},
+{
+"word": "I",
+"start": 82.25,
+"end": 82.35
+},
+{
+"word": "cupped",
+"start": 82.35,
+"end": 82.55
+},
+{
+"word": "the",
+"start": 82.55,
+"end": 82.67
+},
+{
+"word": "last",
+"start": 82.67,
+"end": 82.87
+},
+{
+"word": "flame",
+"start": 82.87,
+"end": 83.09
+},
+{
+"word": "in",
+"start": 83.09,
+"end": 83.21
+},
+{
+"word": "my",
+"start": 83.21,
+"end": 83.35
+},
+{
+"word": "hands",
+"start": 83.35,
+"end": 83.57
+},
+{
+"word": "and",
+"start": 83.57,
+"end": 83.73
+},
+{
+"word": "lit",
+"start": 83.73,
+"end": 83.93
+},
+{
+"word": "candle",
+"start": 83.93,
+"end": 84.25
+},
+{
+"word": "eleven.",
+"start": 84.25,
+"end": 84.55
+},
+{
+"word": "Thud.",
+"start": 84.97,
+"end": 85.13
+},
+{
+"word": "It",
+"start": 85.39,
+"end": 85.49
+},
+{
+"word": "stepped",
+"start": 85.49,
+"end": 85.69
+},
+{
+"word": "back.",
+"start": 85.69,
+"end": 85.93
+},
+{
+"word": "Ten.",
+"start": 86.21,
+"end": 86.37
+},
+{
+"word": "Thud.",
+"start": 86.65,
+"end": 86.93
+},
+{
+"word": "Nine.",
+"start": 87.15,
+"end": 87.37
+},
+{
+"word": "Thud.",
+"start": 87.79,
+"end": 88.01
+},
+{
+"word": "It",
+"start": 88.25,
+"end": 88.33
+},
+{
+"word": "was",
+"start": 88.33,
+"end": 88.45
+},
+{
+"word": "working!",
+"start": 88.45,
+"end": 88.73
+},
+{
+"word": "Then",
+"start": 89.03,
+"end": 89.13
+},
+{
+"word": "someone",
+"start": 89.16,
+"end": 89.33
+},
+{
+"word": "tapped",
+"start": 89.33,
+"end": 89.53
+},
+{
+"word": "my",
+"start": 89.53,
+"end": 89.73
+},
+{
+"word": "shoulder.",
+"start": 89.73,
+"end": 90.03
+},
+{
+"word": "It",
+"start": 90.37,
+"end": 90.39
+},
+{
+"word": "was",
+"start": 90.39,
+"end": 90.49
+},
+{
+"word": "Mr.",
+"start": 90.49,
+"end": 90.69
+},
+{
+"word": "Hollis.",
+"start": 90.79,
+"end": 90.99
+},
+{
+"word": "Eddie,",
+"start": 91.31,
+"end": 91.41
+},
+{
+"word": "give",
+"start": 91.59,
+"end": 91.67
+},
+{
+"word": "me",
+"start": 91.67,
+"end": 91.77
+},
+{
+"word": "the",
+"start": 91.77,
+"end": 91.89
+},
+{
+"word": "candle.",
+"start": 91.89,
+"end": 92.13
+},
+{
+"word": "I'll",
+"start": 92.39,
+"end": 92.55
+},
+{
+"word": "take",
+"start": 92.55,
+"end": 92.65
+},
+{
+"word": "it",
+"start": 92.65,
+"end": 92.75
+},
+{
+"word": "from",
+"start": 92.75,
+"end": 92.85
+},
+{
+"word": "here.",
+"start": 92.85,
+"end": 93.05
+},
+{
+"word": "He",
+"start": 93.5,
+"end": 93.6
+},
+{
+"word": "reached",
+"start": 93.63,
+"end": 93.8
+},
+{
+"word": "for",
+"start": 93.8,
+"end": 93.96
+},
+{
+"word": "the",
+"start": 93.96,
+"end": 94.04
+},
+{
+"word": "flame.",
+"start": 94.04,
+"end": 94.3
+},
+{
+"word": "And",
+"start": 94.58,
+"end": 94.7
+},
+{
+"word": "that's",
+"start": 94.7,
+"end": 94.88
+},
+{
+"word": "when",
+"start": 94.88,
+"end": 94.96
+},
+{
+"word": "I",
+"start": 94.96,
+"end": 95.08
+},
+{
+"word": "looked",
+"start": 95.08,
+"end": 95.24
+},
+{
+"word": "down",
+"start": 95.24,
+"end": 95.5
+},
+{
+"word": "at",
+"start": 95.5,
+"end": 95.64
+},
+{
+"word": "the",
+"start": 95.64,
+"end": 95.72
+},
+{
+"word": "snow.",
+"start": 95.72,
+"end": 96.0
+},
+{
+"word": "His",
+"start": 96.26,
+"end": 96.4
+},
+{
+"word": "footprints",
+"start": 96.41,
+"end": 96.82
+},
+{
+"word": "were",
+"start": 96.92,
+"end": 97.16
+},
+{
+"word": "huge.",
+"start": 97.16,
+"end": 97.4
+}
+]

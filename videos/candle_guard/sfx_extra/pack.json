@@ -1,0 +1,106 @@
+{
+  "whoosh": {
+    "gain": -2,
+    "lead": 0.15
+  },
+  "poof": {
+    "gain": -2
+  },
+  "sparkle": {
+    "gain": -4
+  },
+  "confetti": {
+    "gain": -2
+  },
+  "boom": {
+    "gain": 3
+  },
+  "rise": {
+    "gain": -4
+  },
+  "zombie": {
+    "gain": -3
+  },
+  "crickets": {
+    "gain": -2
+  },
+  "crowd": {
+    "gain": -4
+  },
+  "footsteps": {
+    "gain": -2
+  },
+  "sneeze": {
+    "gain": -3,
+    "lead": 0.39
+  },
+  "meow": {
+    "gain": -4,
+    "lead": 0.2
+  },
+  "jet": {
+    "gain": -2,
+    "lead": 0.25
+  },
+  "gasp": {
+    "gain": -3
+  },
+  "alarm": {
+    "gain": -4
+  },
+  "splat": {
+    "gain": -2
+  },
+  "hiss": {
+    "gain": -1,
+    "lead": 0.04
+  },
+  "scratch": {
+    "gain": -2
+  },
+  "puff": {
+    "gain": -4
+  },
+  "ignite": {
+    "gain": -2
+  },
+  "sting": {
+    "gain": 1
+  },
+  "drone": {
+    "gain": -3,
+    "lead": 0.4
+  },
+  "heartbeat": {
+    "gain": 0
+  },
+  "whisper": {
+    "gain": -5,
+    "lead": 0.1
+  },
+  "breath": {
+    "gain": -5,
+    "lead": 0.2
+  },
+  "bell": {
+    "gain": -3
+  },
+  "bark": {
+    "gain": -4
+  },
+  "rattle": {
+    "gain": -5
+  },
+  "buzz": {
+    "gain": -7
+  },
+  "sizzle": {
+    "gain": -8
+  },
+  "screech": {
+    "gain": -4
+  },
+  "tap": {
+    "gain": -2
+  }
+}
