@@ -1,0 +1,32 @@
+=== STYLE PROMPT (paste into the style / instructions box) ===
+A scared 13-year-old boy telling a true horror story to his friends, first person, past tense.
+Fast and breathless, never slow or theatrical. No long pauses between sentences.
+Hushed and tense most of the time, whispering the creepy lines, sharp and loud on the sound
+words (Fssst, Thud, Scratch) and on the shouted lines. Real fear in the voice, a little shaky.
+When the creature or Mr. Hollis speaks, change the voice: the creature is a slow, raspy
+whisper; Mr. Hollis is a calm old man. The final line is a terrified whisper.
+
+=== SCRIPT (paste into the text box) ===
+[tense, urgent] The eleventh candle went out, and something in the dark whispered my name. [whispering] It was standing right behind me.
+
+[fast, storyteller] You see, in this town, twelve candles burn in the square all night. Every candle that goes out lets the thing in the forest take one step closer. Twelve steps, and it reaches us. That's why nobody here owns a fan. Every window is nailed shut. And old Mr. Hollis has guarded the candles for sixty years. He has never slept.
+
+But last night, Mr. Hollis didn't show up. My name is Eddie, I'm thirteen, and I was the only one awake.
+
+[hushed] At midnight, the wind started. Fssst. Candle one went out. Far away, in the trees, something stepped. [loud] Thud. Fssst. Candle two. Thud. [whispering] Closer. Fssst. Candle three. Every dog in town stopped barking.
+
+[panicked] I grabbed the matches. Scratch. Out. Scratch. Out. Every match died the second it lit. Fssst. Four. Five. Six. Thud. Thud. Thud. The streetlights flickered off, one by one. Every front door creaked open by itself.
+
+[hushed] Fssst. Seven. Eight. Footprints appeared in the snow. Huge ones. Walking toward me.
+
+Fssst. Nine. Ten. A tall shape stood at the edge of the square. No eyes. Just a mouth. Fssst. Eleven. Thud. Cold breath on my neck. [raspy creature whisper] Eddie...
+
+[terrified whisper] One candle left.
+
+[realizing, faster] Then I noticed something. There was no wind. The trees weren't moving. It wasn't the wind blowing out the candles. It was breathing on them. And if darkness pulls it closer, then light pushes it back.
+
+[determined] So I cupped the last flame in my hands and lit candle eleven. Thud. It stepped back. Ten. Thud. Nine. Thud. [excited] It was working!
+
+[hushed] Then someone tapped my shoulder. It was Mr. Hollis. [calm old man] Eddie, give me the candle. I'll take it from here. [narrator, slow and scared] He reached for the flame. And that's when I looked down at the snow.
+
+[terrified whisper] His footprints were huge.

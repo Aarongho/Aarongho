@@ -1,7 +1,7 @@
 # candle_guard (HORROR) - "In this town, twelve candles burn in the square all night. Every candle that goes out lets the thing in the forest take one step closer."
 # Formula: hook (eleventh candle dies, something whispers my name) -> rule -> 3 society examples ->
 # "But" pivot (old guard missing, Eddie alone at midnight) -> ladder (wind 1-3, matches won't light 4-8, the tall shape 9-11) ->
-# "Then I noticed something" (it isn't the wind, it's its breath; light pushes it back the same way darkness pulls it in) -> payoff (dawn) -> button (thirteen candles).
+# "Then I noticed something" (it isn't the wind, it's its breath; light pushes it back the same way darkness pulls it in) -> cliffhanger (Mr. Hollis shows up... with the creature's huge footprints).
 The eleventh candle went out, and something in the dark whispered my name. It was standing right behind me.
 You see, in this town, twelve candles burn in the square all night. Every candle that goes out lets the thing in the forest take one step closer. Twelve steps, and it reaches us. That's why nobody here owns a fan. Every window is nailed shut. And old Mr. Hollis has guarded the candles for sixty years. He has never slept.
 But last night, Mr. Hollis didn't show up. My name is Eddie, I'm thirteen, and I was the only one awake.
@@ -11,6 +11,6 @@ Fssst. Seven. Eight. Footprints appeared in the snow. Huge ones. Walking toward 
 Fssst. Nine. Ten. A tall shape stood at the edge of the square. No eyes. Just a mouth. Fssst. Eleven. Thud. Cold breath on my neck. Eddie...
 One candle left.
 Then I noticed something. There was no wind. The trees weren't moving. It wasn't the wind blowing out the candles. It was breathing on them. And if darkness pulls it closer, then light pushes it back.
-So I cupped the last flame in my hands and lit candle eleven. Thud. It stepped back. Ten. Thud. Nine, eight, seven! Thud, thud, thud! It screamed and ran back into the forest. Twelve candles. The sun came up.
-Mr. Hollis ran into the square. You did it, Eddie! Then he started counting the candles. Ten. Eleven. Twelve.
-Thirteen.
+So I cupped the last flame in my hands and lit candle eleven. Thud. It stepped back. Ten. Thud. Nine. Thud. It was working!
+Then someone tapped my shoulder. It was Mr. Hollis. Eddie, give me the candle. I'll take it from here. He reached for the flame. And that's when I looked down at the snow.
+His footprints were huge.
